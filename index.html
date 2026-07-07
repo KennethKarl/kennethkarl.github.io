@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="세이프닥 복지몰 메인 개선 인터랙티브 데모 — 7월 리뉴얼 프로토타입">
+<meta name="robots" content="noindex">
+<title>세이프닥 복지몰 메인 개선 데모</title>
+<style>
+  :root{
+    --blue:#1F63FF; --blue-700:#1550E0; --blue-50:#EEF3FF; --blue-100:#DCE6FF;
+    --ink:#0E1726; --muted:#5A6A82; --faint:#8A97AB; --line:#E4E9F2;
+    --bg:#EAEEF6; --card:#FFFFFF; --coral:#FF5A5F; --coral-50:#FFEDED;
+    --good:#12B76A; --warn:#F79009; --warn-50:#FFF6E8;
+    --shadow:0 18px 50px -18px rgba(16,30,56,.35);
+    --font:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 50% -10%, #F4F7FD 0%, var(--bg) 60%);
+    color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;
+    line-height:1.5;padding:28px 16px 64px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+
+  /* ---- header ---- */
+  .pagehead{text-align:center;margin-bottom:22px;}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--blue);font-weight:700;}
+  .pagehead h1{font-size:26px;line-height:1.25;margin:8px 0 6px;font-weight:800;
+    text-wrap:balance;letter-spacing:-.02em;}
+  .pagehead p{margin:0;color:var(--muted);font-size:14px;}
+
+  /* ---- segmented control ---- */
+  .seg{display:flex;gap:4px;background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:4px;width:max-content;margin:22px auto 26px;
+    box-shadow:0 4px 14px -8px rgba(16,30,56,.25);}
+  .seg button{border:0;background:transparent;font-family:inherit;cursor:pointer;
+    font-size:13.5px;font-weight:600;color:var(--muted);padding:9px 18px;border-radius:999px;
+    transition:.2s;white-space:nowrap;}
+  .seg button[aria-selected="true"]{background:var(--blue);color:#fff;
+    box-shadow:0 6px 16px -6px rgba(31,99,255,.6);}
+  .seg button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+
+  .view{display:none;animation:fade .35s ease both;}
+  .view.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .stage{display:grid;grid-template-columns:390px 1fr;gap:36px;align-items:start;
+    justify-content:center;}
+  @media(max-width:900px){.stage{grid-template-columns:1fr;justify-items:center;}}
+
+  /* ---- phone ---- */
+  .phone{width:390px;max-width:92vw;background:#fff;border-radius:44px;
+    box-shadow:var(--shadow);border:1px solid #dfe5f0;padding:12px;position:relative;}
+  .screen{background:#F7F9FD;border-radius:32px;overflow:hidden;position:relative;
+    height:748px;display:flex;flex-direction:column;}
+  .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:118px;height:26px;background:#0E1726;border-radius:999px;z-index:20;}
+  .scroll{overflow-y:auto;flex:1;scrollbar-width:thin;}
+  .scroll::-webkit-scrollbar{width:0}
+  .pad{padding:0 16px;}
+
+  /* app top bar */
+  .appbar{padding:40px 16px 12px;display:flex;align-items:center;justify-content:space-between;
+    background:#fff;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);}
+  .loc{display:flex;align-items:center;gap:4px;font-weight:700;font-size:15px;}
+  .loc svg{width:16px;height:16px;color:var(--blue);}
+  .loc .chev{width:14px;height:14px;color:var(--faint);}
+  .brand{font-weight:800;color:var(--blue);letter-spacing:-.02em;font-size:16px;}
+  .bell{width:22px;height:22px;color:var(--ink);}
+
+  /* search */
+  .search{margin:14px 0 6px;display:flex;align-items:center;gap:9px;background:#fff;
+    border:1.6px solid var(--blue);border-radius:14px;padding:13px 15px;
+    box-shadow:0 8px 20px -12px rgba(31,99,255,.45);}
+  .search svg{width:19px;height:19px;color:var(--blue);flex:none;}
+  .search span{color:var(--faint);font-size:14.5px;font-weight:500;}
+  .search.buried{border-color:var(--line);box-shadow:none;}
+  .search.buried svg{color:var(--faint);}
+
+  /* section */
+  .sec{margin:20px 0 6px;}
+  .sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px;}
+  .sec-h h3{font-size:16.5px;margin:0;font-weight:800;letter-spacing:-.02em;}
+  .sec-h h3 b{color:var(--blue);}
+  .sec-h .more{font-size:12.5px;color:var(--faint);font-weight:600;}
+  .tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;
+    padding:3px 7px;border-radius:6px;background:var(--blue-50);color:var(--blue-700);
+    letter-spacing:.01em;vertical-align:middle;margin-left:7px;}
+  .tag.hot{background:var(--coral-50);color:#E23B40;}
+  .tag.low{background:#F1F3F7;color:var(--faint);}
+
+  /* departments grid */
+  .depts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px 6px;}
+  .dept{border:0;background:transparent;font-family:inherit;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px 0;}
+  .dept i{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;
+    background:var(--blue-50);transition:.18s;}
+  .dept i svg{width:26px;height:26px;color:var(--blue-700);}
+  .dept:hover i{background:var(--blue-100);transform:translateY(-2px);}
+  .dept span{font-size:11.5px;font-weight:600;color:#2b3a52;}
+  .dept .rk{font-size:9.5px;color:var(--coral);font-weight:800;}
+
+  /* personalization */
+  .perso{background:linear-gradient(180deg,#F3F7FF, #fff);border:1px solid var(--blue-100);
+    border-radius:18px;padding:14px 14px 16px;}
+  .perso .who{display:flex;align-items:center;gap:7px;margin-bottom:12px;}
+  .perso .who .av{width:26px;height:26px;border-radius:8px;background:var(--blue);color:#fff;
+    font-size:12px;font-weight:800;display:grid;place-items:center;}
+  .perso .who b{font-size:14px;}
+  .perso .who small{color:var(--muted);font-size:11.5px;}
+  .rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin:0 -2px;scrollbar-width:none;}
+  .rail::-webkit-scrollbar{height:0}
+  .pcard{flex:0 0 132px;background:#fff;border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;}
+  .pcard .ph{height:76px;background:linear-gradient(135deg,#DCE6FF,#EEF3FF);position:relative;}
+  .pcard .ph .disc{position:absolute;left:8px;top:8px;background:var(--coral);color:#fff;
+    font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;}
+  .pcard .b{padding:9px 10px 11px;}
+  .pcard .b .nm{font-size:12.5px;font-weight:700;line-height:1.3;}
+  .pcard .b .price{margin-top:6px;font-size:13.5px;font-weight:800;color:var(--ink);
+    font-variant-numeric:tabular-nums;}
+  .pcard .b .price s{color:var(--faint);font-weight:500;font-size:11px;margin-left:4px;}
+  .pcard .b .rv{margin-top:4px;font-size:10.5px;color:var(--muted);}
+
+  /* deal banner */
+  .deal{flex:0 0 88%;border-radius:16px;padding:16px 16px;color:#fff;
+    background:linear-gradient(120deg,#1F63FF,#5B8CFF);position:relative;overflow:hidden;}
+  .deal:nth-child(2){background:linear-gradient(120deg,#12143A,#2A3AA0);}
+  .deal small{font-size:11px;opacity:.9;font-weight:700;letter-spacing:.02em;}
+  .deal h4{margin:6px 0 2px;font-size:18px;font-weight:800;letter-spacing:-.02em;}
+  .deal p{margin:0;font-size:12px;opacity:.92;}
+  .deal .pill{position:absolute;right:14px;bottom:14px;background:rgba(255,255,255,.2);
+    border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:11px;font-weight:700;
+    padding:5px 11px;}
+
+  /* shortcut chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin:0 -2px;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{height:0}
+  .chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;
+    padding:8px 13px;font-size:12.5px;font-weight:600;color:#33425c;white-space:nowrap;}
+  .chip b{color:var(--blue);}
+
+  /* review list */
+  .rev{display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
+  .rev:last-child{border-bottom:0;}
+  .rev .th{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#E7EDFA,#F5F8FE);flex:none;}
+  .rev .m{flex:1;min-width:0;}
+  .rev .m .nm{font-size:13.5px;font-weight:700;}
+  .rev .m .st{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .rev .m .st .star{color:#FFB020;font-weight:800;}
+  .rev .go{font-size:13px;font-weight:800;color:var(--blue);white-space:nowrap;}
+
+  /* low-value widget (AS-IS) */
+  .lw{background:#fff;border:1px dashed #D6DCE7;border-radius:14px;padding:13px 14px;
+    display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .lw .t{font-size:13.5px;font-weight:700;color:#48566e;}
+  .lw .t small{display:block;font-weight:500;color:var(--faint);font-size:11px;margin-top:2px;}
+  .herobanner{height:150px;border-radius:16px;background:linear-gradient(120deg,#94A9CC,#C3D0E6);
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;
+    text-shadow:0 1px 6px rgba(0,0,0,.25);margin-bottom:14px;}
+
+  /* bottom tab */
+  .tabbar{display:flex;background:#fff;border-top:1px solid var(--line);
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:10.5px;font-weight:600;color:var(--faint);}
+  .tab svg{width:22px;height:22px;}
+  .tab.on{color:var(--blue);}
+
+  /* toggle AS-IS / TO-BE */
+  .swap{display:flex;justify-content:center;margin-bottom:14px;}
+  .swap .t2{display:flex;gap:3px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px;}
+  .swap button{border:0;background:transparent;font-family:inherit;cursor:pointer;font-size:12.5px;
+    font-weight:700;color:var(--muted);padding:7px 16px;border-radius:999px;transition:.18s;}
+  .swap button.on{background:var(--ink);color:#fff;}
+  .swap button.on.tobe{background:var(--blue);}
+  .caption{max-width:390px;margin:12px auto 0;text-align:center;font-size:12.5px;color:var(--muted);}
+  .caption b{color:var(--ink);}
+
+  /* onboarding */
+  .steps{display:flex;gap:6px;padding:40px 16px 4px;background:#fff;}
+  .steps .s{flex:1;height:4px;border-radius:2px;background:var(--line);}
+  .steps .s.on{background:var(--blue);}
+  .ob-h{padding:22px 20px 6px;}
+  .ob-h .k{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.04em;}
+  .ob-h h2{font-size:21px;margin:8px 0 6px;font-weight:800;letter-spacing:-.02em;line-height:1.3;text-wrap:balance;}
+  .ob-h p{margin:0;color:var(--muted);font-size:13px;}
+  .selgrid{display:flex;flex-wrap:wrap;gap:9px;padding:18px 20px 8px;}
+  .pick{border:1.5px solid var(--line);background:#fff;font-family:inherit;cursor:pointer;
+    border-radius:12px;padding:11px 15px;font-size:14px;font-weight:600;color:#33425c;transition:.16s;
+    display:flex;align-items:center;gap:7px;}
+  .pick .ic{width:20px;height:20px;color:var(--faint);}
+  .pick[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-50);color:var(--blue-700);}
+  .pick[aria-pressed="true"] .ic{color:var(--blue);}
+  .pick:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+  .ob-foot{margin-top:auto;padding:14px 18px calc(18px + env(safe-area-inset-bottom));
+    background:linear-gradient(#F7F9FD00,#F7F9FD 30%);}
+  .cta{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;
+    font-size:15.5px;border-radius:14px;padding:15px;cursor:pointer;transition:.16s;
+    box-shadow:0 12px 24px -10px rgba(31,99,255,.6);}
+  .cta:disabled{background:#C7D2E4;box-shadow:none;cursor:not-allowed;}
+  .cta.ghost{background:#fff;color:var(--muted);border:1px solid var(--line);box-shadow:none;
+    font-weight:700;margin-top:9px;}
+  .done{padding:34px 24px;text-align:center;}
+  .done .mk{width:74px;height:74px;border-radius:50%;background:var(--blue-50);display:grid;place-items:center;margin:8px auto 18px;}
+  .done .mk svg{width:38px;height:38px;color:var(--blue);}
+  .done h2{font-size:22px;margin:0 0 8px;font-weight:800;letter-spacing:-.02em;}
+  .done p{color:var(--muted);font-size:13.5px;margin:0 auto;max-width:260px;}
+  .summ{margin:20px 0 0;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;}
+  .summ .row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;}
+  .summ .row+.row{border-top:1px solid var(--line);}
+  .summ .row .lb{color:var(--muted);}
+  .summ .row .vl{font-weight:700;text-align:right;color:var(--ink);}
+
+  /* rationale */
+  .rat{max-width:960px;margin:0 auto;}
+  .rat .lead{text-align:center;color:var(--muted);font-size:14px;max-width:600px;margin:0 auto 24px;}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:720px){.cards{grid-template-columns:1fr;}}
+  .rc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;
+    box-shadow:0 10px 30px -22px rgba(16,30,56,.4);position:relative;overflow:hidden;}
+  .rc .n{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.06em;}
+  .rc h4{margin:8px 0 4px;font-size:16px;font-weight:800;letter-spacing:-.01em;}
+  .rc .chg{font-size:13px;color:#38465e;margin:0 0 14px;}
+  .rc .ev{display:flex;flex-wrap:wrap;gap:8px;}
+  .metric{display:flex;flex-direction:column;background:var(--blue-50);border-radius:10px;
+    padding:8px 11px;min-width:92px;}
+  .metric .v{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--blue-700);letter-spacing:-.02em;}
+  .metric .l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:1px;}
+  .metric.warn{background:var(--warn-50);}
+  .metric.warn .v{color:#B54708;}
+  .src{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);}
+  .src b{color:var(--muted);font-weight:700;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;margin:26px auto 0;
+    font-size:11.5px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:9px;height:9px;border-radius:3px;}
+  .foot{max-width:960px;margin:30px auto 0;text-align:center;font-size:11.5px;color:var(--faint);line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="pagehead">
+    <div class="eyebrow">Product Demo · 7월 리뉴얼</div>
+    <h1>세이프닥 복지몰 메인 개선 데모</h1>
+    <p>Amplitude 활동 데이터 · 2026-07-06 우선순위 회의를 반영한 예약 전환 중심 재편안</p>
+  </header>
+
+  <div class="seg" role="tablist" aria-label="데모 화면 전환">
+    <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
+    <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
+    <button role="tab" aria-selected="false" data-view="rat">개선 포인트 · 근거</button>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <section class="view active" id="v-main">
+    <div class="swap">
+      <div class="t2" role="group" aria-label="개선 전후 비교">
+        <button id="asis" onclick="setMode('asis')">AS-IS 기존</button>
+        <button id="tobe" class="on tobe" onclick="setMode('tobe')">TO-BE 개선</button>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="scroll" id="mainScroll"><!-- injected --></div>
+          <nav class="tabbar">
+            <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>검색</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>예약</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>마이</div>
+          </nav>
+        </div>
+      </div>
+      <div>
+        <p class="caption" id="mainCap"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ONBOARDING ============ -->
+  <section class="view" id="v-onboard">
+    <div class="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="steps"><span class="s on"></span><span class="s"></span><span class="s"></span></div>
+          <div class="scroll" id="obScroll"></div>
+        </div>
+      </div>
+      <div><p class="caption"><b>가입 온보딩에서 관심 정보를 수집</b>합니다. 진료과 → 세부 진료 → 관심 지역 순으로 받아 첫 홈부터 개인화된 추천을 노출합니다.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ RATIONALE ============ -->
+  <section class="view" id="v-rat">
+    <div class="rat">
+      <p class="lead">화면의 모든 변경은 <b>실제 사용 데이터</b>(Amplitude 활동 순위)와 <b>취소 사유 분석</b>에 근거합니다. 각 개선의 근거와 출처입니다.</p>
+      <div class="cards" id="ratCards"></div>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--blue)"></i>Amplitude 활동 데이터 (상대 순위)</span>
+        <span><i class="dot" style="background:var(--warn)"></i>예약 취소 사유 분석</span>
+      </div>
+      <p class="foot">출처 · 2026-07-06 기능 개선 우선순위 회의 · 아이디어 「앱 메인 개선(간소화)」 「가입 온보딩 시 사용자 정보 획득」<br>본 화면은 프로토타입 데모이며 실제 서비스 데이터·가격과 다를 수 있습니다.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------- icons ---------- */
+const I = {
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>',
+  skin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z"/></svg>',
+  face:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3a7 7 0 0 0-7 7v3a7 7 0 0 0 14 0v-3a7 7 0 0 0-7-7Z"/><path d="M9 13c.6.8 1.7 1.3 3 1.3s2.4-.5 3-1.3"/><path d="M9 9.5h.01M15 9.5h.01"/></svg>',
+  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>',
+  tooth:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3c2 0 3-1 5 0s2 4 1.5 8c-.4 3-1 7-2.5 7s-1.5-4-4-4-2.5 4-4 4-2.1-4-2.5-7C5 7 5 4 7 3s3 0 5 0Z"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20s-7-4.4-7-9.5A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 3.5C19 15.6 12 20 12 20Z"/><path d="M8 11h2l1-2 1.5 3 1-1.5h2.5"/></svg>',
+  hair:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 14c0-6 3.5-9 7-9s7 3 7 9"/><path d="M8 14V9M12 14V7M16 14v-5"/><path d="M4 18h16"/></svg>',
+  body:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="5" r="2.4"/><path d="M12 8v7m0 0-3 6m3-6 3 6M7 11l5 1 5-1"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 13 4 4L19 7"/></svg>',
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>'
+};
+
+/* ---------- data ---------- */
+const depts = [
+  {n:'피부과',ic:'skin',rk:'1위'},{n:'성형외과',ic:'face',rk:'2위'},{n:'안과',ic:'eye',rk:'3위'},
+  {n:'치과',ic:'tooth',rk:'4위'},{n:'건강검진',ic:'heart',rk:'5위'},
+  {n:'모발이식',ic:'hair'},{n:'비만/체형',ic:'body'},{n:'전체',ic:'grid'}
+];
+const perso = [
+  {nm:'보톡스 이마 100U',price:'9,900원',was:'39,000원',disc:'74%',rv:'★4.9 (1,284)'},
+  {nm:'물광주사 3cc',price:'59,000원',was:'120,000원',disc:'50%',rv:'★4.8 (860)'},
+  {nm:'리쥬란 힐러 2cc',price:'149,000원',was:'220,000원',disc:'32%',rv:'★4.9 (512)'},
+  {nm:'스마일라식',price:'1,490,000원',was:'',disc:'',rv:'★4.9 (2,010)'}
+];
+const reviews = [
+  {nm:'강남 라인성형외과 · 눈매교정',st:'<span class="star">★ 4.9</span> · 후기 2,310 · 재방문율 상위'},
+  {nm:'압구정 SW피부과 · 리프팅',st:'<span class="star">★ 4.9</span> · 후기 1,742 · 이달의 인기'},
+  {nm:'선릉 굿타임치과 · 임플란트',st:'<span class="star">★ 4.8</span> · 후기 980 · 정찰가 공개'}
+];
+
+/* ---------- MAIN render ---------- */
+const cap = {
+  tobe:'<b>TO-BE.</b> 검색을 최상단으로, 진료과를 인기순으로 간소화하고, 개인화 추천을 신설했습니다. 저활동 위젯(인기·주변 병원)은 하단으로 내리거나 제거했습니다.',
+  asis:'<b>AS-IS.</b> 큰 배너가 검색을 밀어내고, 클릭이 거의 없는 위젯(인기병원·주변병원·메인 리뷰)이 상단을 차지합니다.'
+};
+function deptGrid(showRank){
+  return `<div class="depts">`+depts.map(d=>`
+    <button class="dept"><i>${I[d.ic]}</i><span>${d.n}</span>${showRank&&d.rk?`<span class="rk">▲${d.rk}</span>`:''}</button>`).join('')+`</div>`;
+}
+function topbar(){
+  return `<div class="appbar">
+    <div class="loc">${I.pin}강남<span class="chev">${I.chev}</span></div>
+    <div class="brand">SafeDoc</div>
+    <div class="bell">${I.bell}</div>
+  </div>`;
+}
+function persoRail(){
+  return perso.map(p=>`<div class="pcard">
+    <div class="ph">${p.disc?`<span class="disc">${p.disc}</span>`:''}</div>
+    <div class="b"><div class="nm">${p.nm}</div>
+      <div class="price">${p.price}${p.was?`<s>${p.was}</s>`:''}</div>
+      <div class="rv">${p.rv}</div></div></div>`).join('');
+}
+function renderTOBE(){
+  return topbar()+`<div class="pad">
+    <div class="search">${I.search}<span>어떤 시술을 찾으세요?</span></div>
+    <div class="sec"><div class="sec-h"><h3>진료과 <b>바로가기</b><span class="tag hot">활동 1위</span></h3></div>
+      ${deptGrid(true)}</div>
+    <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">온보딩 관심정보</span></h3><span class="more">더보기</span></div>
+      <div class="perso"><div class="who"><span class="av">재</span><div><b>30대 · 피부과 관심</b> <small>· 최근 본 보톡스 기반</small></div></div>
+        <div class="rail">${persoRail()}</div></div></div>
+    <div class="sec"><div class="sec-h"><h3>이번 주 <b>핵심 특가</b></h3></div>
+      <div class="rail">
+        <div class="deal"><small>7월 한정 특가</small><h4>보톡스 100U · 9,900원</h4><p>선착순 · 오늘 예약 가능</p><span class="pill">예약하기</span></div>
+        <div class="deal"><small>프리미엄 제휴</small><h4>종합 건강검진 199,000원</h4><p>복지 포인트 추가 적립</p><span class="pill">둘러보기</span></div>
+      </div></div>
+    <div class="sec"><div class="sec-h"><h3>바로 찾기</h3></div>
+      <div class="chips">
+        <div class="chip"><b>#</b>오늘예약가능</div><div class="chip"><b>#</b>강남·강남역</div>
+        <div class="chip"><b>#</b>라식·라섹</div><div class="chip"><b>#</b>프리미엄검진</div>
+        <div class="chip"><b>#</b>모발이식</div><div class="chip"><b>#</b>스킨부스터</div>
+      </div></div>
+    <div class="sec"><div class="sec-h"><h3>후기 좋은 <b>시술</b><span class="tag">후기 많은 순</span></h3></div>
+      ${reviews.map(r=>`<div class="rev"><div class="th"></div><div class="m"><div class="nm">${r.nm}</div><div class="st">${r.st}</div></div><div class="go">예약</div></div>`).join('')}</div>
+    <div style="height:20px"></div>
+  </div>`;
+}
+function renderASIS(){
+  return topbar()+`<div class="pad">
+    <div class="herobanner">🎉 세이프닥 7월 이벤트 배너</div>
+    <div class="lw"><div class="t">인기 병원 TOP 10<small>클릭 저조 · 저활동</small></div><span class="tag low">저활동</span></div>
+    <div class="lw"><div class="t">내 주변 병원<small>클릭 저조 · 저활동</small></div><span class="tag low">저활동</span></div>
+    <div class="lw"><div class="t">최근 본 시술<small>중복 · 필요도 낮음</small></div><span class="tag low">중복</span></div>
+    <div class="lw"><div class="t">신규 병원 추천<small>클릭 저조 · 저활동</small></div><span class="tag low">저활동</span></div>
+    <div class="search buried">${I.search}<span>검색어를 입력하세요 (하단에 위치)</span></div>
+    <div class="sec"><div class="sec-h"><h3>진료과</h3></div>${deptGrid(false)}</div>
+    <div class="lw" style="margin-top:14px"><div class="t">메인 리뷰<small>클릭 최하위</small></div><span class="tag low">저활동</span></div>
+    <div style="height:20px"></div>
+  </div>`;
+}
+let mode='tobe';
+function setMode(m){
+  mode=m;
+  document.getElementById('mainScroll').innerHTML = m==='tobe'?renderTOBE():renderASIS();
+  document.getElementById('mainCap').innerHTML = cap[m];
+  const a=document.getElementById('asis'), b=document.getElementById('tobe');
+  a.className = m==='asis'?'on':''; b.className = m==='tobe'?'on tobe':'';
+  document.getElementById('mainScroll').scrollTop=0;
+}
+
+/* ---------- ONBOARDING ---------- */
+const obDepts=[['피부과','skin'],['성형외과','face'],['안과','eye'],['치과','tooth'],['건강검진','heart'],['모발이식','hair'],['비만/체형','body']];
+const obDetail={ '피부과':['보톡스','필러','리프팅','물광·스킨부스터','여드름·흉터','제모'],
+  '성형외과':['눈성형','코성형','안면윤곽','지방이식','리프팅'],
+  '안과':['라식','라섹','스마일라식','렌즈삽입술'],
+  '치과':['임플란트','교정','미백','충치치료'],
+  '건강검진':['종합검진','프리미엄검진','여성검진','내시경'],
+  '모발이식':['절개식','비절개식','두피문신'],
+  '비만/체형':['지방분해주사','체형관리','냉각','인바디'] };
+const obRegion=['강남·강남역','서초·교대','잠실·송파','홍대·신촌','판교·분당','수원·영통','부산 서면','대구 동성로'];
+let ob={step:0, dept:new Set(), detail:new Set(), region:new Set()};
+
+function obRender(){
+  const S=document.querySelectorAll('#v-onboard .steps .s');
+  S.forEach((s,i)=>s.className='s'+(i<=ob.step?' on':''));
+  const el=document.getElementById('obScroll');
+  if(ob.step===0){
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 1 / 3</div><h2>어떤 진료에<br>관심이 있으세요?</h2><p>관심 진료과 위주로 홈을 구성해 드려요. (복수 선택)</p></div>
+      <div class="selgrid">${obDepts.map(([n,ic])=>`<button class="pick" aria-pressed="${ob.dept.has(n)}" onclick="obPick('dept','${n}')"><span class="ic">${I[ic]}</span>${n}</button>`).join('')}</div>
+      <div class="ob-foot"><button class="cta" ${ob.dept.size?'':'disabled'} onclick="obNext()">다음 (${ob.dept.size})</button></div>`;
+  } else if(ob.step===1){
+    const picks=[...ob.dept]; const items=picks.flatMap(d=>(obDetail[d]||[]).map(x=>[d,x]));
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 2 / 3</div><h2>세부 진료를<br>골라주세요</h2><p>선택하신 <b>${picks.join(', ')}</b> 중 관심 시술이에요.</p></div>
+      <div class="selgrid">${items.map(([d,x])=>`<button class="pick" aria-pressed="${ob.detail.has(x)}" onclick="obPick('detail','${x}')">${x}</button>`).join('')}</div>
+      <div class="ob-foot"><button class="cta" ${ob.detail.size?'':'disabled'} onclick="obNext()">다음 (${ob.detail.size})</button>
+        <button class="cta ghost" onclick="obPrev()">이전</button></div>`;
+  } else if(ob.step===2){
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 3 / 3</div><h2>관심 지역을<br>선택해 주세요</h2><p>가까운 지역의 병원·특가를 먼저 보여드려요.</p></div>
+      <div class="selgrid">${obRegion.map(r=>`<button class="pick" aria-pressed="${ob.region.has(r)}" onclick="obPick('region','${r}')"><span class="ic">${I.pin}</span>${r}</button>`).join('')}</div>
+      <div class="ob-foot"><button class="cta" ${ob.region.size?'':'disabled'} onclick="obNext()">맞춤 홈 만들기</button>
+        <button class="cta ghost" onclick="obPrev()">이전</button></div>`;
+  } else {
+    el.innerHTML=`<div class="done"><div class="mk">${I.check}</div>
+      <h2>맞춤 홈이 준비됐어요</h2><p>선택하신 관심 정보로 첫 화면부터 개인화 추천을 노출합니다.</p>
+      <div class="summ">
+        <div class="row"><span class="lb">관심 진료과</span><span class="vl">${[...ob.dept].join(', ')||'-'}</span></div>
+        <div class="row"><span class="lb">관심 시술</span><span class="vl">${[...ob.detail].join(', ')||'-'}</span></div>
+        <div class="row"><span class="lb">관심 지역</span><span class="vl">${[...ob.region].join(', ')||'-'}</span></div>
+      </div>
+      <div class="ob-foot" style="padding-top:22px"><button class="cta" onclick="goMain()">개인화된 홈 보기 →</button>
+        <button class="cta ghost" onclick="obReset()">처음부터 다시</button></div></div>`;
+  }
+  el.scrollTop=0;
+}
+function obPick(k,v){const s=ob[k]; s.has(v)?s.delete(v):s.add(v); obRender();}
+function obNext(){ob.step++; obRender();}
+function obPrev(){ob.step--; obRender();}
+function obReset(){ob={step:0,dept:new Set(),detail:new Set(),region:new Set()}; obRender();}
+function goMain(){switchView('main');}
+
+/* ---------- RATIONALE ---------- */
+const rat=[
+  {n:'01',t:'검색바를 최상단으로',chg:'하단에 묻혀 있던 검색을 진료과 위 최상단으로. 탐색형 유저가 즉시 진입.',
+    ev:[['2위','메인 활동 순위'],['상위','검색 진입']],src:'활동 상위 · 회의 5번 검색 개선'},
+  {n:'02',t:'진료과 아이콘 인기순 간소화',chg:'가장 많이 쓰는 진료과를 인기순으로 정렬하고 개수를 줄여 첫 화면에서 바로 탐색.',
+    ev:[['1위','메인 활동 순위']],src:'활동 1위 · 아이디어 「메인 간소화」'},
+  {n:'03',t:'개인화 추천 영역 신설',chg:'성별·연령·최근 본 시술·온보딩 관심정보 기반 맞춤 추천을 상단에 배치.',
+    ev:[['상위','시술상세 조회'],['핵심','예약 전환 KPI']],src:'아이디어 「온보딩 정보 획득」 · 회의 개인화'},
+  {n:'04',t:'저활동 위젯 축소·제거',chg:'클릭이 거의 없는 인기·주변 병원, 메인 리뷰를 하단 이동 또는 제거해 밀도를 낮춤.',
+    ev:[['최하위','인기병원 클릭'],['최하위','주변병원'],['최하위','메인리뷰']],src:'활동 하위권 · 아이디어 「메인 간소화」'},
+  {n:'05',t:'예약 취소 전 "변경" 분기',chg:'취소 사유의 대부분이 일정·정보 변경. 취소 직전 변경 옵션을 먼저 노출해 이탈 방어.',
+    ev:[['대다수','취소사유=일정/정보 변경','warn']],src:'회의 7번 예약 취소 방어 · 취소사유 분석'},
+  {n:'06',t:'지역 재정비 + 0건 대안',chg:'광역 통합·병원 0개 지역 제외. 결과 0건일 때 “병원 많은 지역” 추천 버튼 제공.',
+    ev:[['하위','지역 필터 활동']],src:'회의 6번 지역 분류 재정비'}
+];
+document.getElementById('ratCards').innerHTML = rat.map(r=>`
+  <div class="rc"><div class="n">${r.n}</div><h4>${r.t}</h4><p class="chg">${r.chg}</p>
+    <div class="ev">${r.ev.map(e=>`<div class="metric ${e[2]||''}"><span class="v">${e[0]}</span><span class="l">${e[1]}</span></div>`).join('')}</div>
+    <div class="src"><b>근거·출처</b> · ${r.src}</div></div>`).join('');
+
+/* ---------- view switching ---------- */
+function switchView(v){
+  document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected', b.dataset.view===v));
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('v-'+(v==='onboard'?'onboard':v)).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+
+/* init */
+setMode('tobe');
+obRender();
+</script>
+
+</body>
+</html>
