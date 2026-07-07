@@ -123,6 +123,18 @@
   .pcard .b .price s{color:var(--faint);font-weight:500;font-size:11px;margin-left:4px;}
   .pcard .b .rv{margin-top:4px;font-size:10.5px;color:var(--muted);}
 
+  /* recently viewed */
+  .rrail{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin:0 -2px;scrollbar-width:none;}
+  .rrail::-webkit-scrollbar{height:0}
+  .rcard{flex:0 0 112px;}
+  .rcard .th{height:112px;border-radius:14px;display:grid;align-content:center;justify-items:center;
+    gap:6px;padding:10px;color:#fff;text-align:center;overflow:hidden;position:relative;}
+  .rcard .th .badge{font-size:9px;font-weight:800;letter-spacing:.02em;background:rgba(255,255,255,.22);
+    border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:2px 6px;}
+  .rcard .th .cap{font-size:11.5px;font-weight:800;line-height:1.25;text-shadow:0 1px 5px rgba(0,0,0,.35);}
+  .rcard .nm{margin-top:7px;font-size:12px;font-weight:700;line-height:1.3;}
+  .rcard .hos{font-size:10.5px;color:var(--muted);margin-top:2px;}
+
   /* deal banner */
   .deal{flex:0 0 88%;border-radius:16px;padding:16px 16px;color:#fff;
     background:linear-gradient(120deg,#1F63FF,#5B8CFF);position:relative;overflow:hidden;}
@@ -344,6 +356,17 @@ const reviews = [
   {nm:'압구정 SW피부과 · 리프팅',st:'<span class="star">★ 4.9</span> · 후기 1,742 · 이달의 인기'},
   {nm:'선릉 굿타임치과 · 임플란트',st:'<span class="star">★ 4.8</span> · 후기 980 · 정찰가 공개'}
 ];
+const recent = [
+  {nm:'오스템 BA 임플란트',hos:'원데이치과',cap:'하루만에 끝나는<br>원데이 임플란트',badge:'원데이치과',g:'linear-gradient(150deg,#12275F,#2E5BD0)'},
+  {nm:'치아미백 3회 / 9cycle',hos:'서울메스티지치과',cap:'서울대 치과대학<br>동문 병원',badge:'서울메스티지치과',g:'linear-gradient(150deg,#0E6E6D,#12A3A0)'},
+  {nm:'동대문 레이저',hos:'동대문 피부과',cap:'',badge:'',g:'linear-gradient(150deg,#3E7C4E,#7CB889)'},
+  {nm:'테스트',hos:'테스트 병원',cap:'',badge:'',g:'linear-gradient(150deg,#7C879E,#AEB8CC)'}
+];
+function recentCards(){
+  return recent.map(r=>`<div class="rcard">
+    <div class="th" style="background:${r.g}">${r.badge?`<span class="badge">${r.badge}</span>`:''}${r.cap?`<span class="cap">${r.cap}</span>`:''}</div>
+    <div class="nm">${r.nm}</div><div class="hos">${r.hos}</div></div>`).join('');
+}
 
 /* ---------- MAIN render ---------- */
 const cap = {
@@ -376,6 +399,8 @@ function renderTOBE(){
     <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">온보딩 관심정보</span></h3><span class="more">더보기</span></div>
       <div class="perso"><div class="who"><span class="av">재</span><div><b>30대 · 피부과 관심</b> <small>· 최근 본 보톡스 기반</small></div></div>
         <div class="rail">${persoRail()}</div></div></div>
+    <div class="sec"><div class="sec-h"><h3>재원님이 <b>최근 본 시술</b></h3></div>
+      <div class="rrail">${recentCards()}</div></div>
     <div class="sec"><div class="sec-h"><h3>이번 주 <b>핵심 특가</b></h3></div>
       <div class="rail">
         <div class="deal"><small>7월 한정 특가</small><h4>보톡스 100U · 9,900원</h4><p>선착순 · 오늘 예약 가능</p><span class="pill">예약하기</span></div>
