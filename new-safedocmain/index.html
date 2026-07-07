@@ -250,6 +250,54 @@
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .dot{width:9px;height:9px;border-radius:3px;}
   .foot{max-width:960px;margin:30px auto 0;text-align:center;font-size:11.5px;color:var(--faint);line-height:1.6;}
+
+  /* ---- overlays / modals (in-phone) ---- */
+  .ovl{position:absolute;inset:0;z-index:40;}
+  .ovl[hidden]{display:none;}
+  .backdrop{position:absolute;inset:0;background:rgba(14,23,38,.45);animation:fade .18s ease;}
+  @keyframes slideup{from{transform:translateY(16px);opacity:.3}to{transform:none;opacity:1}}
+  .search[role]{cursor:pointer;}
+  /* search overlay (full) */
+  .searchscreen{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;animation:slideup .22s ease;}
+  .ss-head{display:flex;align-items:center;gap:10px;padding:40px 14px 12px;border-bottom:1px solid var(--line);}
+  .ss-head .bk{width:26px;height:26px;color:var(--ink);flex:none;background:none;border:0;cursor:pointer;padding:0;}
+  .ss-head .box{flex:1;display:flex;align-items:center;gap:8px;background:#F1F4F9;border-radius:12px;padding:11px 13px;}
+  .ss-head .box svg{width:18px;height:18px;color:var(--blue);flex:none;}
+  .ss-head .box input{border:0;background:none;font-family:inherit;font-size:14.5px;width:100%;outline:none;color:var(--ink);}
+  .ss-body{padding:16px;overflow-y:auto;flex:1;}
+  .ss-body .lbl{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:800;color:#3a475d;margin:8px 0 11px;}
+  .ss-body .lbl button{border:0;background:none;color:var(--faint);font-size:11.5px;font-family:inherit;cursor:pointer;}
+  .recentchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+  .rc-chip{display:inline-flex;align-items:center;gap:7px;background:#F1F4F9;border-radius:999px;padding:8px 11px 8px 14px;font-size:12.5px;font-weight:600;color:#33425c;}
+  .rc-chip button{border:0;background:none;color:var(--faint);cursor:pointer;font-size:15px;line-height:1;padding:0;}
+  .poprank{display:flex;flex-direction:column;}
+  .poprank .pr{display:flex;align-items:center;gap:13px;padding:11px 2px;border:0;background:none;font-family:inherit;cursor:pointer;text-align:left;width:100%;}
+  .poprank .pr .rk{width:16px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;font-size:15px;}
+  .poprank .pr .kw{font-size:14.5px;font-weight:600;color:var(--ink);}
+  .poprank .pr .up{margin-left:auto;font-size:10px;color:var(--coral);font-weight:800;}
+  /* bottom sheet */
+  .sheet{position:absolute;left:0;right:0;bottom:0;max-height:84%;background:#fff;
+    border-radius:22px 22px 0 0;display:flex;flex-direction:column;animation:slideup .24s ease;}
+  .sheet-h{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 13px;border-bottom:1px solid var(--line);}
+  .sheet-h h3{margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.02em;}
+  .sheet-h .x{width:30px;height:30px;border-radius:9px;border:0;background:#F1F4F9;cursor:pointer;display:grid;place-items:center;color:var(--ink);}
+  .sheet-h .x svg{width:18px;height:18px;}
+  .sheet-b{padding:16px 18px 26px;overflow-y:auto;}
+  .sheet-note{background:var(--coral-50);color:#E23B40;font-size:12px;font-weight:700;border-radius:10px;padding:10px 13px;margin-bottom:14px;}
+  .allgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .allcat{border:1px solid var(--line);border-radius:12px;padding:12px 13px;}
+  .allcat .ct{font-size:13px;font-weight:800;margin-bottom:9px;color:var(--ink);}
+  .allcat .it{display:flex;flex-wrap:wrap;gap:6px;}
+  .allcat .it span{font-size:11.5px;background:var(--blue-50);color:var(--blue-700);border-radius:6px;padding:3px 8px;font-weight:600;}
+  .deal-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .deal-row:last-child{border-bottom:0;}
+  .deal-row .dth{width:56px;height:56px;border-radius:12px;flex:none;background:linear-gradient(135deg,#DCE6FF,#EEF3FF);}
+  .deal-row .dm{flex:1;min-width:0;}
+  .deal-row .dm .dn{font-size:13.5px;font-weight:700;}
+  .deal-row .dm .dh{font-size:11px;color:var(--muted);margin-top:2px;}
+  .deal-row .dm .dp{font-size:14px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums;}
+  .deal-row .dm .dp s{color:var(--faint);font-weight:500;font-size:11px;margin-left:5px;}
+  .deal-row .dbtn{font-size:12px;font-weight:800;color:#fff;background:var(--blue);border-radius:9px;padding:9px 14px;border:0;cursor:pointer;flex:none;}
 </style>
 </head>
 <body>
@@ -279,6 +327,7 @@
         <div class="screen">
           <div class="notch"></div>
           <div class="scroll" id="mainScroll"><!-- injected --></div>
+          <div class="ovl" id="mainOvl" hidden></div>
           <nav class="tabbar">
             <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
             <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>검색</div>
@@ -336,7 +385,9 @@ const I = {
   hair:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 14c0-6 3.5-9 7-9s7 3 7 9"/><path d="M8 14V9M12 14V7M16 14v-5"/><path d="M4 18h16"/></svg>',
   body:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="5" r="2.4"/><path d="M12 8v7m0 0-3 6m3-6 3 6M7 11l5 1 5-1"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 13 4 4L19 7"/></svg>',
-  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>'
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg>'
 };
 
 /* ---------- data ---------- */
@@ -368,6 +419,70 @@ function recentCards(){
     <div class="nm">${r.nm}</div><div class="hos">${r.hos}</div></div>`).join('');
 }
 
+/* ---------- search & popups ---------- */
+const recentSearches = ['강남 보톡스','스마일라식','종합검진','임플란트'];
+const popularSearches = ['보톡스','라식·라섹','임플란트','리프팅','눈성형','스킨부스터','치아미백','모발이식'];
+const allProc = [
+  ['피부과',['보톡스','필러','리프팅','물광·스킨부스터','여드름·흉터','제모']],
+  ['성형외과',['눈성형','코성형','안면윤곽','지방이식','실리프팅']],
+  ['안과',['라식','라섹','스마일라식','렌즈삽입술','노안교정']],
+  ['치과',['임플란트','교정','미백','충치치료','라미네이트']],
+  ['건강검진',['종합검진','프리미엄검진','여성검진','내시경','MRI']],
+  ['모발이식',['절개식','비절개식','두피문신']],
+  ['비만/체형',['지방분해주사','체형관리','냉각','인바디']],
+  ['한방',['다이어트 한약','추나요법','침·약침']]
+];
+const deptDeals = {
+  '피부과':[{nm:'보톡스 이마 100U',hos:'강남 SW피부과',price:'9,900원',was:'39,000원'},{nm:'물광주사 3cc',hos:'압구정 라비앙',price:'59,000원',was:'120,000원'},{nm:'리쥬란 힐러 2cc',hos:'청담 온의원',price:'149,000원',was:'220,000원'}],
+  '성형외과':[{nm:'자연유착 눈매교정',hos:'강남 라인성형외과',price:'990,000원',was:'1,400,000원'},{nm:'실리프팅 20line',hos:'신사 더페이스',price:'390,000원',was:'700,000원'}],
+  '안과':[{nm:'스마일라식',hos:'강남밝은눈안과',price:'1,490,000원',was:'1,900,000원'},{nm:'라섹',hos:'서초 리앤안과',price:'890,000원',was:'1,200,000원'}],
+  '치과':[{nm:'국산 임플란트 1개',hos:'선릉 굿타임치과',price:'590,000원',was:'900,000원'},{nm:'전악 치아미백',hos:'역삼 화이트치과',price:'149,000원',was:'250,000원'}],
+  '건강검진':[{nm:'직장인 종합검진',hos:'강남 세이프메디컬',price:'199,000원',was:'350,000원'},{nm:'프리미엄 검진(MRI 포함)',hos:'분당 그린검진센터',price:'490,000원',was:'800,000원'}],
+  '치아':[],
+  '모발이식':[{nm:'비절개 모발이식 2,000모',hos:'강남 모아름',price:'2,900,000원',was:'3,900,000원'}],
+  '비만/체형':[{nm:'지방분해주사 4cc',hos:'강남 라인클리닉',price:'99,000원',was:'180,000원'}]
+};
+function ovl(){return document.getElementById('mainOvl');}
+function closeOvl(){const o=ovl(); o.hidden=true; o.innerHTML='';}
+function openSearch(kw){
+  const o=ovl();
+  o.innerHTML=`<div class="searchscreen">
+    <div class="ss-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button>
+      <div class="box">${I.search}<input placeholder="어떤 시술을 찾으세요?" value="${kw?kw.replace(/"/g,'&quot;'):''}"></div></div>
+    <div class="ss-body">
+      <div class="lbl">최근 검색어 <button onclick="this.closest('.ss-body').querySelector('.recentchips').innerHTML='<span style=&quot;color:var(--faint);font-size:12.5px&quot;>최근 검색어가 없어요</span>'">전체삭제</button></div>
+      <div class="recentchips">${recentSearches.map(s=>`<span class="rc-chip">${s}<button aria-label="삭제" onclick="this.closest('.rc-chip').remove()">×</button></span>`).join('')}</div>
+      <div class="lbl"><span>지금 <span style="color:var(--blue)">많이 찾는</span> 검색어</span></div>
+      <div class="poprank">${popularSearches.map((s,i)=>`<button class="pr" onclick="closeOvl()"><span class="rk">${i+1}</span><span class="kw">${s}</span>${i<3?'<span class="up">▲ 인기</span>':''}</button>`).join('')}</div>
+    </div></div>`;
+  o.hidden=false;
+  const inp=o.querySelector('input'); if(inp) inp.focus();
+}
+function openAllProcedures(){
+  const o=ovl();
+  o.innerHTML=`<div class="backdrop" onclick="closeOvl()"></div>
+    <div class="sheet"><div class="sheet-h"><h3>전체 시술</h3>
+      <button class="x" onclick="closeOvl()" aria-label="닫기">${I.x}</button></div>
+      <div class="sheet-b"><div class="allgrid">
+        ${allProc.map(([c,items])=>`<div class="allcat"><div class="ct">${c}</div><div class="it">${items.map(x=>`<span>${x}</span>`).join('')}</div></div>`).join('')}
+      </div></div></div>`;
+  o.hidden=false;
+}
+function deptClick(name){
+  if(name==='전체'){openAllProcedures();return;}
+  const deals=deptDeals[name]||[];
+  const o=ovl();
+  o.innerHTML=`<div class="backdrop" onclick="closeOvl()"></div>
+    <div class="sheet"><div class="sheet-h"><h3>${name} 특가전</h3>
+      <button class="x" onclick="closeOvl()" aria-label="닫기">${I.x}</button></div>
+      <div class="sheet-b">
+        <div class="sheet-note">${name} 진료과 한정 특가 · 오늘 예약 가능</div>
+        ${deals.length?deals.map(d=>`<div class="deal-row"><div class="dth"></div><div class="dm"><div class="dn">${d.nm}</div><div class="dh">${d.hos}</div><div class="dp">${d.price}<s>${d.was}</s></div></div><button class="dbtn">예약</button></div>`).join(''):'<p style="color:var(--muted);font-size:13px;padding:8px 0">준비 중인 특가전이에요.</p>'}
+      </div></div>`;
+  o.hidden=false;
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){const o=document.getElementById('mainOvl'); if(o&&!o.hidden) closeOvl();} });
+
 /* ---------- MAIN render ---------- */
 const cap = {
   tobe:'<b>TO-BE.</b> 검색을 최상단으로, 진료과를 인기순으로 간소화하고, 개인화 추천을 신설했습니다. 저활동 위젯(인기·주변 병원)은 하단으로 내리거나 제거했습니다.',
@@ -375,7 +490,7 @@ const cap = {
 };
 function deptGrid(showRank){
   return `<div class="depts">`+depts.map(d=>`
-    <button class="dept"><i>${I[d.ic]}</i><span>${d.n}</span>${showRank&&d.rk?`<span class="rk">▲${d.rk}</span>`:''}</button>`).join('')+`</div>`;
+    <button class="dept" onclick="deptClick('${d.n}')"><i>${I[d.ic]}</i><span>${d.n}</span>${showRank&&d.rk?`<span class="rk">▲${d.rk}</span>`:''}</button>`).join('')+`</div>`;
 }
 function topbar(){
   return `<div class="appbar">
@@ -393,7 +508,7 @@ function persoRail(){
 }
 function renderTOBE(){
   return topbar()+`<div class="pad">
-    <div class="search">${I.search}<span>어떤 시술을 찾으세요?</span></div>
+    <div class="search" role="button" tabindex="0" onclick="openSearch()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSearch();}">${I.search}<span>어떤 시술을 찾으세요?</span></div>
     <div class="sec"><div class="sec-h"><h3>진료과 <b>바로가기</b><span class="tag hot">활동 1위</span></h3></div>
       ${deptGrid(true)}</div>
     <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">온보딩 관심정보</span></h3><span class="more">더보기</span></div>
@@ -406,11 +521,11 @@ function renderTOBE(){
         <div class="deal"><small>7월 한정 특가</small><h4>보톡스 100U · 9,900원</h4><p>선착순 · 오늘 예약 가능</p><span class="pill">예약하기</span></div>
         <div class="deal"><small>프리미엄 제휴</small><h4>종합 건강검진 199,000원</h4><p>복지 포인트 추가 적립</p><span class="pill">둘러보기</span></div>
       </div></div>
-    <div class="sec"><div class="sec-h"><h3>바로 찾기</h3></div>
+    <div class="sec"><div class="sec-h"><h3>나와 비슷한 사용자가 <b>많이 찾는</b></h3><span class="more">강남 · 30대 기준</span></div>
       <div class="chips">
-        <div class="chip"><b>#</b>오늘예약가능</div><div class="chip"><b>#</b>강남·강남역</div>
-        <div class="chip"><b>#</b>라식·라섹</div><div class="chip"><b>#</b>프리미엄검진</div>
-        <div class="chip"><b>#</b>모발이식</div><div class="chip"><b>#</b>스킨부스터</div>
+        <div class="chip" onclick="openSearch('보톡스')"><b>#</b>보톡스</div><div class="chip" onclick="openSearch('스마일라식')"><b>#</b>스마일라식</div>
+        <div class="chip" onclick="openSearch('강남 리프팅')"><b>#</b>강남 리프팅</div><div class="chip" onclick="openSearch('종합검진')"><b>#</b>종합검진</div>
+        <div class="chip" onclick="openSearch('치아미백')"><b>#</b>치아미백</div><div class="chip" onclick="openSearch('모발이식')"><b>#</b>모발이식</div>
       </div></div>
     <div class="sec"><div class="sec-h"><h3>후기 좋은 <b>시술</b><span class="tag">후기 많은 순</span></h3></div>
       ${reviews.map(r=>`<div class="rev"><div class="th"></div><div class="m"><div class="nm">${r.nm}</div><div class="st">${r.st}</div></div><div class="go">예약</div></div>`).join('')}</div>
