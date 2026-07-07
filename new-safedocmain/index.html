@@ -298,6 +298,53 @@
   .deal-row .dm .dp{font-size:14px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums;}
   .deal-row .dm .dp s{color:var(--faint);font-weight:500;font-size:11px;margin-left:5px;}
   .deal-row .dbtn{font-size:12px;font-weight:800;color:#fff;background:var(--blue);border-radius:9px;padding:9px 14px;border:0;cursor:pointer;flex:none;}
+  /* full-screen sub pages (진료과 상세 / 특가전) */
+  .subscreen{position:absolute;inset:0;background:#F7F9FD;display:flex;flex-direction:column;animation:slideup .22s ease;}
+  .sub-head{display:flex;align-items:center;gap:10px;padding:40px 14px 12px;background:#fff;border-bottom:1px solid var(--line);}
+  .sub-head .bk{width:26px;height:26px;color:var(--ink);flex:none;background:none;border:0;cursor:pointer;padding:0;}
+  .sub-head .sbox{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:1.6px solid var(--blue);border-radius:12px;padding:10px 13px;cursor:pointer;}
+  .sub-head .sbox svg{width:17px;height:17px;color:var(--blue);flex:none;}
+  .sub-head .sbox span{color:var(--faint);font-size:13px;}
+  .sub-head .ttl{flex:1;text-align:center;font-size:16.5px;font-weight:800;margin-right:26px;}
+  .sub-body{overflow-y:auto;flex:1;}
+  .fairbtn{margin:14px 16px;display:flex;align-items:center;gap:12px;width:calc(100% - 32px);text-align:left;cursor:pointer;
+    background:linear-gradient(100deg,#EDF2FF,#F3ECFF);border:1px solid var(--blue-100);border-radius:14px;padding:14px 16px;}
+  .fairbtn .em{width:38px;height:38px;border-radius:11px;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none;}
+  .fairbtn .em svg{width:20px;height:20px;}
+  .fairbtn .tx{flex:1;} .fairbtn .tx b{font-size:14.5px;font-weight:800;display:block;} .fairbtn .tx small{font-size:11px;color:var(--muted);}
+  .fairbtn .ar{color:var(--blue);font-weight:800;font-size:18px;}
+  .dd-tabs{display:flex;gap:18px;padding:4px 18px 0;background:#fff;border-bottom:1px solid var(--line);}
+  .dd-tabs button{border:0;background:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--faint);padding:12px 2px;cursor:pointer;border-bottom:2.5px solid transparent;}
+  .dd-tabs button.on{color:var(--ink);border-bottom-color:var(--ink);}
+  .dd-filters{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;background:#fff;scrollbar-width:none;}
+  .dd-filters::-webkit-scrollbar{height:0}
+  .ddf{flex:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;color:#33425c;background:#fff;white-space:nowrap;}
+  .ddf.act{border-color:var(--blue);color:var(--blue);background:var(--blue-50);}
+  .slist{padding:2px 16px 24px;background:#fff;}
+  .scard{padding:16px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;}
+  .scard .sth{width:78px;height:78px;border-radius:12px;flex:none;background:linear-gradient(135deg,#E7EDFA,#F5F8FE);}
+  .scard .sm{flex:1;min-width:0;}
+  .scard .hos{font-size:11px;color:var(--muted);}
+  .scard .snm{font-size:14.5px;font-weight:700;margin:3px 0;}
+  .scard .rt{font-size:11.5px;color:var(--muted);} .scard .rt b{color:#FFB020;}
+  .scard .pr{margin-top:5px;} .scard .pr s{color:var(--faint);font-size:11.5px;}
+  .scard .now{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;} .scard .now .pct{color:var(--blue);margin-right:5px;}
+  .scard .cpn{margin-top:8px;border:1px solid var(--blue-100);background:var(--blue-50);border-radius:9px;padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--blue-700);}
+  /* 특가전 page */
+  .fair-tabs{display:flex;gap:16px;overflow-x:auto;padding:4px 18px 0;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none;}
+  .fair-tabs::-webkit-scrollbar{height:0}
+  .fair-tabs button{border:0;background:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--faint);padding:12px 2px;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;}
+  .fair-tabs button.on{color:var(--blue);border-bottom-color:var(--blue);}
+  .fair-sec{padding:16px 16px 0;}
+  .fair-sec h4{font-size:16px;font-weight:800;margin:0 0 12px;}
+  .fdeal{margin-bottom:18px;}
+  .fdeal .cd{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:6px;}
+  .fdeal .cd svg{width:14px;height:14px;}
+  .fdeal .cd .cd-time{font-variant-numeric:tabular-nums;}
+  .fdeal .bn{border-radius:14px;height:98px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#fff;
+    background:linear-gradient(100deg,#7DE3CE,#9DBAF6,#CBAAF2);text-shadow:0 1px 6px rgba(60,40,90,.28);}
+  .fdeal .bn .t{font-size:19px;font-weight:800;letter-spacing:-.02em;}
+  .fdeal .bn .go{font-size:12.5px;font-weight:700;opacity:.95;}
 </style>
 </head>
 <body>
@@ -387,7 +434,9 @@ const I = {
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 13 4 4L19 7"/></svg>',
   grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>',
   x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg>',
-  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg>'
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  ticket:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="M13 6.5v11"/></svg>'
 };
 
 /* ---------- data ---------- */
@@ -443,7 +492,7 @@ const deptDeals = {
   '비만/체형':[{nm:'지방분해주사 4cc',hos:'강남 라인클리닉',price:'99,000원',was:'180,000원'}]
 };
 function ovl(){return document.getElementById('mainOvl');}
-function closeOvl(){const o=ovl(); o.hidden=true; o.innerHTML='';}
+function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';}
 function openSearch(kw){
   const o=ovl();
   o.innerHTML=`<div class="searchscreen">
@@ -470,17 +519,80 @@ function openAllProcedures(){
 }
 function deptClick(name){
   if(name==='전체'){openAllProcedures();return;}
-  const deals=deptDeals[name]||[];
+  openDeptDetail(name);
+}
+// ---- 진료과 상세 페이지 (스샷2 스타일: 검색 + 필터 + 시술 리스트 + 특가전 보기) ----
+function won(s){return (+String(s).replace(/[^0-9]/g,''))||0;}
+function comma(n){return n.toLocaleString('en-US');}
+function scard(d){
+  const p=won(d.price), w=won(d.was);
+  const pct = w>0 ? Math.round((1-p/w)*100)+'%' : '';
+  const cpn = w>0 ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
+  return `<div class="scard"><div class="sth"></div><div class="sm">
+    <div class="hos">(T) 세이프닥 제휴 · ${d.hos}</div>
+    <div class="snm">${d.nm}</div>
+    <div class="rt"><b>★ 9.7</b> (46) · VAT 포함</div>
+    <div class="pr">${w>0?`<s>${d.was}</s><div class="now"><span class="pct">${pct}</span>${d.price}</div>`:`<div class="now">${d.price}</div>`}</div>
+    ${cpn?`<div class="cpn">쿠폰 적용 시 ${cpn}</div>`:''}
+  </div></div>`;
+}
+function openDeptDetail(name){
+  clearFair();
+  const deals = (deptDeals[name]&&deptDeals[name].length)?deptDeals[name]:[{nm:name+' 대표 시술',hos:'세이프닥 제휴병원',price:'가격 문의',was:''}];
   const o=ovl();
-  o.innerHTML=`<div class="backdrop" onclick="closeOvl()"></div>
-    <div class="sheet"><div class="sheet-h"><h3>${name} 특가전</h3>
-      <button class="x" onclick="closeOvl()" aria-label="닫기">${I.x}</button></div>
-      <div class="sheet-b">
-        <div class="sheet-note">${name} 진료과 한정 특가 · 오늘 예약 가능</div>
-        ${deals.length?deals.map(d=>`<div class="deal-row"><div class="dth"></div><div class="dm"><div class="dn">${d.nm}</div><div class="dh">${d.hos}</div><div class="dp">${d.price}<s>${d.was}</s></div></div><button class="dbtn">예약</button></div>`).join(''):'<p style="color:var(--muted);font-size:13px;padding:8px 0">준비 중인 특가전이에요.</p>'}
-      </div></div>`;
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button>
+      <div class="sbox" onclick="openSearch()">${I.search}<span>시술명, 병원명, 지역을 검색해보세요</span></div></div>
+    <div class="sub-body">
+      <button class="fairbtn" onclick="openDealFair('${name}')">
+        <span class="em">${I.ticket}</span>
+        <span class="tx"><b>${name} 특가전 보기</b><small>${name} 진료과 7월 한정 특가만 모아봤어요</small></span>
+        <span class="ar">›</span></button>
+      <div class="dd-tabs"><button class="on">시술 1,395</button><button>병원</button></div>
+      <div class="dd-filters"><div class="ddf">인기순 ▾</div><div class="ddf">지역 ▾</div><div class="ddf act">${name} ▾</div>
+        <div class="ddf">쿠폰 추가할인</div><div class="ddf">당일할인</div><div class="ddf">특가전</div></div>
+      <div class="slist">${deals.map(scard).join('')}</div>
+    </div></div>`;
   o.hidden=false;
 }
+// ---- 특가전 페이지 (스샷4 스타일: 탭 + 실시간 카운트다운 + 그라데이션 카드) ----
+const fairDeals = {
+  '안과':['7월 스마일라식','7월 스마트라식','7월 투데이라섹','7월 라섹','7월 라식'],
+  '치과':['7월 임플란트 페스타','7월 투명교정','7월 치아미백'],
+  '피부과':['7월 보톡스 페스타','7월 물광·스킨부스터','7월 리프팅 위크'],
+  '성형외과':['7월 눈성형 특가','7월 코성형 위크','7월 안면윤곽'],
+  '건강검진':['7월 종합검진 특가','7월 프리미엄검진','7월 여성검진'],
+  '모발이식':['7월 모발이식 특가','7월 두피케어 위크'],
+  '비만/체형':['7월 다이어트 특가','7월 지방분해주사']
+};
+let fairTarget=0, fairTimer=null;
+function pad(n){return String(n).padStart(2,'0');}
+function fmtLeft(ms){const s=Math.max(0,Math.floor(ms/1000));const d=Math.floor(s/86400);return `${d}일 ${pad(Math.floor(s%86400/3600))}:${pad(Math.floor(s%3600/60))}:${pad(s%60)}`;}
+function fdeal(t){return `<div class="fdeal"><div class="cd">${I.clock}<span>종료까지 <span class="cd-time">--</span></span></div>
+  <div class="bn"><span class="t">${t}</span><span class="go">${t} 입장하기 ›</span></div></div>`;}
+function renderFair(active, focus){
+  const cats=['전체', ...Object.keys(fairDeals)];
+  const show = active==='전체' ? Object.keys(fairDeals) : [active];
+  const o=ovl();
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="openDeptDetail('${focus}')" aria-label="뒤로">${I.back}</button>
+      <div class="ttl">세이프닥 특가전</div></div>
+    <div class="fair-tabs">${cats.map(c=>`<button class="${c===active?'on':''}" onclick="switchFair('${c}','${focus}')">${c}</button>`).join('')}</div>
+    <div class="sub-body">${show.map(c=>`<div class="fair-sec"><h4>${c}</h4>${(fairDeals[c]||[]).map(fdeal).join('')}</div>`).join('')}</div>
+  </div>`;
+  o.hidden=false;
+}
+function tickFair(){const left=fairTarget-Date.now();document.querySelectorAll('#mainOvl .cd-time').forEach(el=>el.textContent=fmtLeft(left));}
+function clearFair(){if(fairTimer){clearInterval(fairTimer);fairTimer=null;}}
+function openDealFair(name){
+  clearFair();
+  const active = fairDeals[name] ? name : '전체';
+  fairTarget = Date.now() + (24*86400+11*3600+42*60+23)*1000;
+  renderFair(active, name);
+  tickFair();
+  fairTimer=setInterval(tickFair,1000);
+}
+function switchFair(cat, focus){ renderFair(cat, focus); tickFair(); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){const o=document.getElementById('mainOvl'); if(o&&!o.hidden) closeOvl();} });
 
 /* ---------- MAIN render ---------- */
