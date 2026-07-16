@@ -402,6 +402,48 @@
   .soon-badge{background:var(--warn-50);color:#B54708;}
   .spec-src{margin:14px 0 0;font-size:11px;color:var(--faint);}
   @media(max-width:900px){.obspec{max-width:420px;margin:8px auto 0;}}
+
+  /* ---- STEP 3 관심 지역 (A 하이브리드 / B 검색우선) ---- */
+  .locbody{padding:16px 20px 8px;}
+  .locbody .selgrid{padding:0;gap:9px;}
+  .geo{width:100%;display:flex;align-items:center;gap:12px;border:1.5px solid var(--blue-100);background:var(--blue-50);
+    border-radius:14px;padding:12px 14px;font-family:inherit;cursor:pointer;text-align:left;margin-bottom:14px;transition:.16s;}
+  .geo:hover{border-color:var(--blue);}
+  .geo .geoic{width:36px;height:36px;border-radius:11px;background:#fff;display:grid;place-items:center;color:var(--blue);flex:none;}
+  .geo .geoic svg{width:20px;height:20px;} .geo .geoic.on{background:var(--blue);color:#fff;}
+  .geo .geotx{flex:1;min-width:0;} .geo .geotx b{display:block;font-size:14px;font-weight:800;color:var(--ink);} .geo .geotx small{font-size:11.5px;color:var(--muted);}
+  .geo .geoar{color:var(--blue);font-weight:800;font-size:18px;} .geo .geochk{color:var(--blue);} .geo .geochk svg{width:22px;height:22px;}
+  .selstrip{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px;}
+  .selstrip.empty{font-size:12px;color:var(--faint);background:#F4F6FA;border-radius:10px;padding:11px 13px;}
+  .selstrip .s{display:inline-flex;align-items:center;gap:5px;background:var(--blue);color:#fff;border-radius:999px;padding:7px 8px 7px 11px;font-size:12.5px;font-weight:700;}
+  .selstrip .s svg{width:13px;height:13px;}
+  .selstrip .s button{border:0;background:rgba(255,255,255,.28);color:#fff;width:17px;height:17px;border-radius:50%;cursor:pointer;font-size:12px;line-height:1;display:grid;place-items:center;padding:0;margin-left:2px;}
+  .loclbl{display:flex;align-items:baseline;gap:8px;font-size:12.5px;font-weight:800;color:#3a475d;margin:4px 0 11px;}
+  .loclbl span{font-size:11px;font-weight:600;color:var(--faint);}
+  .pick.wide{width:100%;justify-content:center;margin-top:11px;}
+  .locsearchbtn{width:100%;display:flex;align-items:center;gap:9px;border:1px dashed #C7D2E4;background:#fff;border-radius:12px;
+    padding:13px 14px;font-family:inherit;cursor:pointer;margin-top:12px;color:#5A6A82;font-size:13px;font-weight:600;transition:.16s;}
+  .locsearchbtn:hover{border-color:var(--blue);color:var(--blue);}
+  .locsearchbtn svg{width:17px;height:17px;color:var(--blue);flex:none;} .locsearchbtn .ar{margin-left:auto;color:var(--blue);font-weight:800;}
+  .locsearchbox{display:flex;align-items:center;gap:9px;border:1.6px solid var(--blue);border-radius:12px;padding:12px 14px;margin-bottom:13px;
+    box-shadow:0 8px 20px -12px rgba(31,99,255,.45);}
+  .locsearchbox svg{width:18px;height:18px;color:var(--blue);flex:none;}
+  .locsearchbox input{border:0;background:none;font-family:inherit;font-size:14.5px;width:100%;outline:none;color:var(--ink);}
+  .locback{border:0;background:none;font-family:inherit;color:var(--muted);font-weight:700;font-size:12.5px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;padding:0 0 12px;}
+  .locback svg{width:16px;height:16px;}
+  .locres{display:flex;flex-direction:column;}
+  .locres .r{display:flex;align-items:center;gap:11px;padding:11px 4px;border:0;background:none;font-family:inherit;cursor:pointer;
+    text-align:left;width:100%;border-bottom:1px solid var(--line);}
+  .locres .r:last-child{border-bottom:0;}
+  .locres .ric{width:30px;height:30px;border-radius:9px;background:var(--blue-50);display:grid;place-items:center;color:var(--blue-700);flex:none;transition:.14s;}
+  .locres .ric svg{width:17px;height:17px;}
+  .locres .rl{font-size:14px;font-weight:700;color:var(--ink);}
+  .locres .rk{font-size:11px;color:var(--faint);}
+  .locres .rchk{margin-left:auto;color:var(--blue);} .locres .rchk svg{width:18px;height:18px;}
+  .locres .r[aria-pressed="true"] .ric{background:var(--blue);color:#fff;}
+  .locres .r[aria-pressed="true"] .rl{color:var(--blue-700);}
+  .locempty{font-size:12.5px;color:var(--muted);padding:20px 4px;text-align:center;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -531,7 +573,9 @@ const I = {
   beauty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8Z"/></svg>',
   shot:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m13 3 8 8M18.5 5.5l-11 11L4 20l1-4.5 8.5-8.5"/><path d="M8.5 10.5l2 2M11 8l2 2"/></svg>',
   ent:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7.5 9.5a4.5 4.5 0 1 1 9 0c0 2.3-2 3.2-2 5.3A2.8 2.8 0 0 1 9 15"/><path d="M9.8 9.6a2.2 2.2 0 0 1 4.2.4"/></svg>',
-  cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 7v10M7 12h10"/><rect x="4" y="4" width="16" height="16" rx="5"/></svg>'
+  cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 7v10M7 12h10"/><rect x="4" y="4" width="16" height="16" rx="5"/></svg>',
+  subway:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="14" rx="4"/><path d="M6 11h12M8.5 21l1.7-3M15.5 21l-1.7-3"/><circle cx="9.3" cy="13.7" r="1"/><circle cx="14.7" cy="13.7" r="1"/></svg>',
+  globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.6 3 14.4 0 18M12 3c-3 3.6-3 14.4 0 18"/></svg>'
 };
 
 /* ---------- data ---------- */
@@ -790,6 +834,19 @@ function deptIcon(n){return I[deptIconMap[n]]||I.cross;}
 const obRegion=['강남·강남역','서초·교대','잠실·송파','홍대·신촌','판교·분당','수원·영통','부산 서면','대구 동성로'];
 let obSort='ganada'; // 'ganada'(현재 기본) | 'popular'(추후 검색량 기반 재정렬)
 let ob={step:0, dept:new Set(), detail:new Set(), region:new Set()};
+/* STEP 3 관심 지역 — A(하이브리드) / B(검색우선) 두 방식 데모 */
+let obLoc='A';        // 'A' 하이브리드 | 'B' 검색우선
+let obSearchOn=false; // A에서 검색 서브뷰 열림 여부
+let obQuery='';
+let obGeoArea='';     // 현재위치 감지 결과(시뮬레이션)
+const obPopularAreas=['강남·압구정','서초·교대','잠실·송파','건대·성수','홍대·신촌','노원·수유','분당·판교','부산 서면','대구 동성로'];
+const obSearchIndex=[
+  {l:'강남·압구정',k:'상권',t:'서울 강남'},{l:'강남역',k:'역',t:'2호선·신분당'},{l:'신논현·논현',k:'역',t:'서울 강남'},{l:'압구정로데오',k:'역',t:'서울 강남'},{l:'선릉·삼성',k:'역',t:'서울 강남'},{l:'서초·교대',k:'상권',t:'서울 서초'},{l:'사당·이수',k:'역',t:'서울 동작'},
+  {l:'잠실·송파',k:'상권',t:'서울 송파'},{l:'강동·천호',k:'상권',t:'서울 강동'},{l:'홍대·신촌',k:'상권',t:'서울 마포'},{l:'건대·성수',k:'상권',t:'서울 광진'},{l:'용산·이태원',k:'상권',t:'서울 용산'},{l:'영등포·여의도',k:'상권',t:'서울 영등포'},{l:'목동·양천',k:'상권',t:'서울 양천'},{l:'노원·수유',k:'상권',t:'서울 노원'},{l:'종로·광화문',k:'상권',t:'서울 종로'},
+  {l:'강남구',k:'구',t:'서울'},{l:'서초구',k:'구',t:'서울'},{l:'송파구',k:'구',t:'서울'},{l:'마포구',k:'구',t:'서울'},{l:'강서구',k:'구',t:'서울'},{l:'관악구',k:'구',t:'서울'},{l:'은평구',k:'구',t:'서울'},{l:'성북구',k:'구',t:'서울'},{l:'동대문구',k:'구',t:'서울'},
+  {l:'분당·서현',k:'상권',t:'경기 성남'},{l:'판교',k:'역',t:'경기 성남'},{l:'수원·영통',k:'상권',t:'경기 수원'},{l:'일산·라페스타',k:'상권',t:'경기 고양'},{l:'부천 중동',k:'상권',t:'경기 부천'},{l:'안양·평촌',k:'상권',t:'경기 안양'},{l:'인천 부평',k:'상권',t:'인천'},{l:'인천 구월',k:'상권',t:'인천'},
+  {l:'부산 서면',k:'상권',t:'부산'},{l:'부산 해운대',k:'상권',t:'부산'},{l:'대구 동성로',k:'상권',t:'대구'},{l:'대전 둔산',k:'상권',t:'대전'},{l:'광주 상무',k:'상권',t:'광주'},{l:'울산 삼산',k:'상권',t:'울산'},{l:'창원 상남',k:'상권',t:'경남'},{l:'천안 신불당',k:'상권',t:'충남'},{l:'청주 성안길',k:'상권',t:'충북'},{l:'전주 객사',k:'상권',t:'전북'},{l:'제주시청',k:'상권',t:'제주'}
+];
 function obDeptList(){const a=obDeptData.slice(); if(obSort==='ganada') a.sort((x,y)=>x.n.localeCompare(y.n,'ko')); return a;}
 function obSetSort(s){obSort=s; obRender();}
 
@@ -817,10 +874,27 @@ function obRender(){
       <div class="ob-foot"><button class="cta" ${(ob.detail.size||!hasAny)?'':'disabled'} onclick="obNext()">다음 (${ob.detail.size})</button>
         <button class="cta ghost" onclick="obPrev()">이전</button></div>`;
   } else if(ob.step===2){
-    el.innerHTML=`<div class="ob-h"><div class="k">STEP 3 / 3</div><h2>관심 지역을<br>선택해 주세요</h2><p>가까운 지역의 병원·특가를 먼저 보여드려요.</p></div>
-      <div class="selgrid">${obRegion.map(r=>`<button class="pick" aria-pressed="${ob.region.has(r)}" onclick="obPick('region','${r}')"><span class="ic">${I.pin}</span>${r}</button>`).join('')}</div>
-      <div class="ob-foot"><button class="cta" ${ob.region.size?'':'disabled'} onclick="obNext()">맞춤 홈 만들기</button>
-        <button class="cta ghost" onclick="obPrev()">이전</button></div>`;
+    let body;
+    if(obLoc==='B' || obSearchOn){
+      body=`${obLoc==='A'?`<button class="locback" onclick="obCloseSearch()">${I.back}인기 상권으로</button>`:''}
+        <div class="locsearchbox">${I.search}<input id="obSearchInput" placeholder="동네·지하철역·지역 검색" value="${obQuery.replace(/"/g,'&quot;')}" oninput="obSearchFilter(this.value)" autocomplete="off"></div>
+        ${selStripHTML()}
+        <div class="locres" id="obSearchResults">${searchResultsHTML(obQuery)}</div>`;
+    } else {
+      body=`<button class="geo" id="obGeo" onclick="obDetectLoc()">${obGeoHTML()}</button>
+        ${selStripHTML()}
+        <div class="loclbl">인기 상권 <span>병원 밀집순</span></div>
+        <div class="selgrid">${obPopularAreas.map(r=>`<button class="pick" data-region="${r}" aria-pressed="${ob.region.has(r)}" onclick="obToggleRegion('${r}')"><span class="ic">${I.pin}</span>${r}</button>`).join('')}</div>
+        <button class="locsearchbtn" onclick="obOpenSearch()">${I.search}<span>찾는 지역이 없나요? 지역·지하철역 검색</span><span class="ar">›</span></button>
+        <button class="pick wide" data-region="전국·어디든" aria-pressed="${ob.region.has('전국·어디든')}" onclick="obToggleRegion('전국·어디든')"><span class="ic">${I.globe}</span>전국·어디든 상관없어요</button>`;
+    }
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 3 / 3</div><h2>관심 지역을<br>선택해 주세요</h2><p>어느 지역에서 진료·시술받고 싶으세요? (복수 선택)</p>
+      <div class="obsort" role="group" aria-label="지역 선택 방식">
+        <button class="${obLoc==='A'?'on':''}" onclick="obSetLoc('A')">A · 하이브리드</button>
+        <button class="${obLoc==='B'?'on':''}" onclick="obSetLoc('B')">B · 검색 우선</button>
+      </div></div>
+      <div class="locbody">${body}</div>
+      <div class="ob-foot" id="obStep3Foot">${step3FootHTML()}</div>`;
   } else {
     const detNames=[...ob.detail].map(k=>k.split('::')[1]);
     el.innerHTML=`<div class="done"><div class="mk">${I.check}</div>
@@ -839,8 +913,50 @@ function obPick(k,v){const s=ob[k]; s.has(v)?s.delete(v):s.add(v); obRender();}
 function obPickKey(k){ob.detail.has(k)?ob.detail.delete(k):ob.detail.add(k); obRender();}
 function obNext(){ob.step++; obRender();}
 function obPrev(){ob.step--; obRender();}
-function obReset(){obSort='ganada'; ob={step:0,dept:new Set(),detail:new Set(),region:new Set()}; obRender();}
+function obReset(){obSort='ganada'; obLoc='A'; obSearchOn=false; obQuery=''; obGeoArea=''; ob={step:0,dept:new Set(),detail:new Set(),region:new Set()}; obRender();}
 function goMain(){switchView('main');}
+
+/* ---------- STEP 3 관심 지역: A 하이브리드 / B 검색우선 ---------- */
+function step3FootHTML(){
+  return `<button class="cta" ${ob.region.size?'':'disabled'} onclick="obNext()">맞춤 홈 만들기${ob.region.size?` (${ob.region.size})`:''}</button>
+    <button class="cta ghost" onclick="obPrev()">이전</button>`;
+}
+function obGeoHTML(){
+  if(obGeoArea) return `<span class="geoic on">${I.pin}</span><span class="geotx"><b>현재 위치 · ${obGeoArea}</b><small>탭하여 다시 감지</small></span><span class="geochk">${I.check}</span>`;
+  return `<span class="geoic">${I.pin}</span><span class="geotx"><b>현재 위치로 설정</b><small>내 주변 병원을 먼저 볼게요</small></span><span class="geoar">›</span>`;
+}
+function selStripHTML(){
+  const arr=[...ob.region];
+  if(!arr.length) return `<div class="selstrip empty" id="obSelStrip">아직 선택한 지역이 없어요 · 최소 1곳을 골라주세요</div>`;
+  return `<div class="selstrip" id="obSelStrip">${arr.map(r=>`<span class="s">${I.pin}${r}<button aria-label="${r} 삭제" onclick="obToggleRegion('${r}')">×</button></span>`).join('')}</div>`;
+}
+function searchResultsHTML(q){
+  q=(q||'').trim();
+  const nq=q.replace(/[·\s]/g,'');
+  let list = q ? obSearchIndex.filter(e=>e.l.replace(/[·\s]/g,'').includes(nq) || e.t.replace(/[·\s]/g,'').includes(nq)) : obSearchIndex.slice(0,7);
+  if(!list.length) return `<div class="locempty">'${q}' 검색 결과가 없어요.<br>다른 지역명이나 지하철역을 입력해 보세요.</div>`;
+  return list.slice(0,40).map(e=>`<button class="r" data-region="${e.l}" aria-pressed="${ob.region.has(e.l)}" onclick="obToggleRegion('${e.l}')">
+    <span class="ric">${e.k==='역'?I.subway:I.pin}</span><span class="rl">${e.l}</span><span class="rk">${e.t}</span>
+    <span class="rchk">${ob.region.has(e.l)?I.check:''}</span></button>`).join('');
+}
+function obToggleRegion(v){
+  ob.region.has(v)?ob.region.delete(v):ob.region.add(v);
+  document.querySelectorAll('#obScroll [data-region]').forEach(b=>b.setAttribute('aria-pressed', ob.region.has(b.dataset.region)));
+  const r=document.getElementById('obSearchResults'); if(r) r.innerHTML=searchResultsHTML(obQuery);
+  const strip=document.getElementById('obSelStrip'); if(strip) strip.outerHTML=selStripHTML();
+  const foot=document.getElementById('obStep3Foot'); if(foot) foot.innerHTML=step3FootHTML();
+}
+function obSearchFilter(q){obQuery=q; const r=document.getElementById('obSearchResults'); if(r) r.innerHTML=searchResultsHTML(q);}
+function obSetLoc(m){obLoc=m; obSearchOn=false; obRender(); if(m==='B') obFocusSearch();}
+function obOpenSearch(){obSearchOn=true; obRender(); obFocusSearch();}
+function obCloseSearch(){obSearchOn=false; obRender();}
+function obFocusSearch(){const i=document.getElementById('obSearchInput'); if(i){i.focus(); const v=i.value; i.value=''; i.value=v;}}
+function obDetectLoc(){
+  const g=document.getElementById('obGeo'); if(!g) return;
+  g.classList.add('loading');
+  g.innerHTML=`<span class="geoic">${I.pin}</span><span class="geotx"><b>위치 확인 중…</b><small>네이버 지오코딩으로 상권 매칭</small></span>`;
+  setTimeout(()=>{ obGeoArea='강남·강남역'; ob.region.add(obGeoArea); obRender(); }, 700);
+}
 
 /* ---------- RATIONALE ---------- */
 const rat=[
