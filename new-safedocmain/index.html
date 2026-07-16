@@ -529,6 +529,50 @@
   .locbody .pick:disabled{opacity:.4;cursor:not-allowed;}
   .locres .r:disabled{opacity:.45;cursor:not-allowed;}
   .subscreen .ttl .rg-max{margin-left:6px;}
+  /* ── 예약 플로우 ── */
+  #rvScroll{background:#F4F6FA;letter-spacing:-.02em;}
+  .rv-head{display:flex;align-items:center;gap:8px;padding:38px 16px 12px;background:#fff;position:sticky;top:0;z-index:10;font-size:16px;font-weight:800;color:#111;}
+  .rv-head .rv-back{border:0;background:none;padding:0;cursor:pointer;color:#111;} .rv-head .rv-back svg{width:22px;height:22px;}
+  .rv-prog{display:flex;gap:12px;align-items:center;padding:14px 16px;background:#fff;border-bottom:8px solid #EDF0F5;}
+  .rv-prog-th{width:56px;height:56px;border-radius:10px;flex:none;background:linear-gradient(135deg,#12275F,#2E5BD0);}
+  .rv-prog-nm{font-size:14px;font-weight:700;color:#111;} .rv-prog-pr{font-size:18px;font-weight:800;color:#111;margin-top:3px;}
+  .rv-benefit{margin:14px 16px 0;border:1.5px solid var(--blue);border-radius:12px;overflow:hidden;background:#fff;}
+  .rv-benefit-h{background:var(--blue);color:#fff;font-size:12.5px;font-weight:700;padding:10px 13px;}
+  .rv-benefit ul{margin:0;padding:11px 13px 12px 27px;} .rv-benefit li{font-size:12.5px;color:#38465e;line-height:1.75;}
+  .rv-point{margin:12px 16px 0;background:#EEF3FF;border-radius:12px;padding:12px 14px;} .rv-point b{font-size:13px;color:#1550E0;} .rv-point small{display:block;color:var(--muted);font-size:11.5px;margin-top:3px;}
+  .rv-sec{margin:8px 0 0;padding:18px 16px;background:#fff;border-top:8px solid #EDF0F5;}
+  .rv-sec-t{font-size:15px;font-weight:800;color:#111;margin-bottom:12px;} .rv-sec-t small{font-size:11.5px;font-weight:500;color:var(--blue);margin-left:6px;}
+  .rv-warn{background:#FFEDED;border-radius:10px;padding:11px 13px;margin-bottom:14px;} .rv-warn b{font-size:12.5px;color:#E23B40;} .rv-warn p{margin:4px 0 0;font-size:11.5px;color:#9A6a6a;line-height:1.55;}
+  .rv-cal-h{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:800;margin-bottom:10px;} .rv-cal-nav{color:var(--faint);font-weight:700;}
+  .rv-wd{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:11px;color:var(--faint);margin-bottom:4px;}
+  .rv-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px 0;}
+  .rv-day{border:0;background:none;font-family:inherit;font-size:13.5px;font-weight:600;color:#111;cursor:pointer;height:38px;border-radius:50%;} .rv-e{height:38px;}
+  .rv-day.past{color:#C7CDD6;cursor:default;} .rv-day.sel{background:var(--blue);color:#fff;}
+  .rv-ampm{font-size:12.5px;font-weight:700;color:#3a475d;margin:16px 0 9px;}
+  .rv-times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .rv-time{border:1px solid var(--line);background:#fff;border-radius:9px;padding:11px 0;font-family:inherit;font-size:12.5px;font-weight:600;color:#33425c;cursor:pointer;}
+  .rv-time:disabled{background:#EDF0F5;color:#B7BEC9;cursor:default;} .rv-time.sel{border-color:var(--blue);background:var(--blue);color:#fff;}
+  .rv-agree{display:flex;align-items:center;gap:9px;padding:16px;background:#fff;border-top:8px solid #EDF0F5;font-size:12.5px;color:#38465e;}
+  .rv-agree .rv-chk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:#C7CDD6;flex:none;cursor:pointer;display:grid;place-items:center;padding:0;} .rv-agree .rv-chk svg{width:13px;height:13px;} .rv-agree .rv-chk.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .rv-agree b{color:#E23B40;}
+  .rv-moved{margin:12px 16px 0;font-size:11.5px;color:var(--blue-700);background:var(--blue-50);border-radius:10px;padding:10px 13px;text-align:center;} .rv-moved b{font-weight:700;}
+  .rv-foot{padding:14px 16px calc(18px + env(safe-area-inset-bottom));background:#fff;position:sticky;bottom:0;border-top:1px solid var(--line);margin-top:8px;}
+  .rv-cta{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:12px;padding:15px;cursor:pointer;}
+  .rv-cta:disabled{background:#C7D2E4;cursor:not-allowed;} .rv-cta.ok{background:#E7F7EC;color:#06A42D;}
+  .rv-cta.ghost{background:#fff;color:var(--muted);border:1px solid var(--line);font-weight:700;margin-top:9px;}
+  .rv-done{display:flex;align-items:center;gap:12px;margin:14px 16px 0;background:#fff;border:1px solid var(--blue-100);border-radius:14px;padding:16px;}
+  .rv-done-ic{width:44px;height:44px;border-radius:50%;background:var(--blue-50);color:var(--blue);display:grid;place-items:center;flex:none;} .rv-done-ic svg{width:24px;height:24px;}
+  .rv-done-tx b{font-size:15px;font-weight:800;color:#111;} .rv-done-tx p{margin:3px 0 0;font-size:12px;color:var(--muted);line-height:1.5;}
+  .rv-summary{margin:10px 16px 0;font-size:12.5px;color:var(--muted);background:#fff;border-radius:12px;padding:13px 15px;} .rv-summary b{color:#111;font-size:13.5px;}
+  .rv-extra-h{padding:20px 16px 2px;font-size:15.5px;font-weight:800;color:#111;} .rv-extra-h span{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-top:4px;}
+  .rv-target{border:1.5px solid var(--blue);border-radius:12px;padding:13px 15px;margin-bottom:10px;}
+  .rv-target-h{font-size:14px;font-weight:800;color:#111;} .rv-badge{font-size:11px;font-weight:700;color:var(--blue-700);background:var(--blue-50);border-radius:6px;padding:1px 7px;margin-left:4px;}
+  .rv-target-d{font-size:12.5px;color:#48566e;margin-top:5px;}
+  .rv-addfam{width:100%;border:0;background:var(--ink);color:#fff;font-family:inherit;font-weight:800;font-size:13.5px;border-radius:10px;padding:13px;cursor:pointer;margin:4px 0 12px;} .rv-addfam:disabled{opacity:.4;cursor:not-allowed;}
+  .rv-notes{margin:0;padding-left:18px;} .rv-notes li{font-size:11.5px;color:var(--muted);line-height:1.7;}
+  .rv-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:13px;resize:none;outline:none;color:var(--ink);}
+  .rv-sel{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 12px;font-family:inherit;font-size:13.5px;color:var(--ink);background:#fff;outline:none;}
+  #rvSpec .sc-b s{color:var(--faint);}
   .rg-apply{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:14.5px;border-radius:12px;padding:14px;cursor:pointer;margin-top:14px;box-shadow:0 12px 24px -10px rgba(31,99,255,.6);}
   /* diff 설명 태그 */
   .df-tag{font-size:10px;font-weight:800;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle;white-space:nowrap;}
@@ -570,6 +614,7 @@
     <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
     <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
+    <button role="tab" aria-selected="false" data-view="reserve">예약플로우</button>
   </div>
 
   <!-- ============ MAIN ============ -->
@@ -652,6 +697,34 @@
         </div>
         <p class="spec-src">2026-07-06 회의 반영 · 지역 선택 재조회 · 결과 없음 시 병원 폴백</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ 예약 플로우 ============ -->
+  <section class="view" id="v-reserve">
+    <div class="stage">
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="scroll" id="rvScroll"></div>
+      </div></div>
+      <div><div class="obspec" id="rvSpec">
+        <div class="spec-h">예약 플로우 개선 — 선(先)신청 · 후(後)상세입력</div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>예약 신청 마찰 최소화</b><p>기존 예약 화면에서 <b>진료 대상 · 병원 전달사항 · 추가 상담 희망 시술</b>을 <b>제거</b>하고, <b>내원 희망 일시 + 약관 동의</b>만으로 <b>‘예약 신청하기’ 즉시 신청</b>되도록 간소화했습니다.</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>팝업 → 접수 페이지 전환</b><p>신청 후 <s>완료 팝업</s> 대신 <b>새 페이지</b>가 열립니다. 상단에 <b>‘예약 신청이 접수되었어요’</b> 안내(기존 팝업 내용)를 노출합니다.</p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>상세정보 후속 수집 → DB 업데이트</b><p>접수 페이지 하단에서 <b>진료 대상(가족·지인 추가) · 병원 전달사항 · 추가 상담 희망 시술</b>을 추가로 입력받아 <b>예약 건에 이어붙여 DB 업데이트</b>합니다. ‘나중에 입력’도 가능.</p></div></div>
+          <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>예약 신청 단계의 입력 부담을 낮춰 <em>신청 전환율 ↑</em>, 필수 상세는 접수 직후 자연스럽게 수집해 <em>완결성</em>도 유지합니다.</p></div></div>
+        </div>
+        <div class="spec-try">
+          <div class="try-h">▶ 직접 해보기</div>
+          <ol>
+            <li>날짜(예: <b>16일</b>) · 시간(<b>오후 05:00</b>) 선택 → 약관 동의 → <b>‘예약 신청하기’</b></li>
+            <li>접수 페이지 상단 <b>접수 안내</b> 확인</li>
+            <li>하단에서 <b>가족·지인 추가</b> · 전달사항 · 추가 상담 입력 → <b>‘입력 완료·저장하기’</b> (DB 업데이트)</li>
+          </ol>
+        </div>
+        <p class="spec-src">기준: welfaremall.stage.safedoc.kr/reservation · 프로토타입</p>
+      </div></div>
     </div>
   </section>
 
@@ -1418,6 +1491,64 @@ function sgNext(){
 }
 function sgPrev(e){ if(e)e.stopPropagation(); if(sg>0){sg--; sgRender();} }
 
+/* ---------- 예약 플로우 (선신청 · 후상세입력) ---------- */
+let rvStep='form', rvDate=16, rvTime='', rvAgree=false, rvNote='', rvExtra='', rvSaved=false;
+let rvTargets=[{n:'최재원',rel:'본인',tel:'010-2713-5533',birth:'1983.11.25',sex:'♂'}];
+const rvTimesDis=['12:00','12:30','02:00','02:30','03:00','03:30','04:00','04:30'];
+const rvTimesOpen=['05:00','05:30','06:00'];
+const rvExtraOpts=['스케일링','잇몸치료','신경치료','치아미백','사랑니 발치'];
+function rvCalendar(){
+  let cells=''; for(let i=0;i<3;i++) cells+='<span class="rv-e"></span>';
+  for(let d=1;d<=31;d++){const past=d<16,sel=d===rvDate; cells+=`<button class="rv-day${past?' past':''}${sel?' sel':''}" ${past?'disabled':''} onclick="rvSetDate(${d})">${d}</button>`;}
+  return `<div class="rv-cal-h"><b>2026년 07월</b><span class="rv-cal-nav">‹　›</span></div>
+    <div class="rv-wd"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="rv-cal">${cells}</div>`;
+}
+function rvTimeGrid(){
+  return `<div class="rv-times">${rvTimesDis.map(t=>`<button class="rv-time" disabled>${t}</button>`).join('')}${rvTimesOpen.map(t=>`<button class="rv-time${rvTime===t?' sel':''}" onclick="rvSetTime('${t}')">${t}</button>`).join('')}</div>`;
+}
+function rvProgram(){
+  return `<div class="rv-head"><button class="rv-back">${I.back}</button><span>원데이치과</span></div>
+    <div class="rv-prog"><div class="rv-prog-th"></div><div><div class="rv-prog-nm">오스템 BA 임플란트</div><div class="rv-prog-pr">450,000원</div></div></div>`;
+}
+function renderReserve(){
+  const el=document.getElementById('rvScroll');
+  if(rvStep==='form'){
+    el.innerHTML=`${rvProgram()}
+      <div class="rv-benefit"><div class="rv-benefit-h">병원으로 직접 예약 시, 아래 혜택은 제공되지 않아요</div>
+        <ul><li>예약할 때마다 세이프닥 회원 전용 우대가 적용</li><li>의료 분쟁 발생 시, 전문 법률 상담 무료 지원</li><li>병원 이용 불편 시, 세이프닥이 신속 조율 지원</li></ul></div>
+      <div class="rv-point"><b>예약하고 리뷰 쓰면 최대 10,000P 적립!</b><small>포인트로 기프티콘 교환해 보세요!</small></div>
+      <div class="rv-sec"><div class="rv-sec-t">내원 희망 일시 선택</div>
+        <div class="rv-warn"><b>본 신청은 예약 확정이 아니에요</b><p>일정 조율 및 예약 확정은 병원에서 별도 안내 드려요. 예약 신청 후 병원의 연락을 기다려 주세요.</p></div>
+        ${rvCalendar()}<div class="rv-ampm">오후</div>${rvTimeGrid()}</div>
+      <div class="rv-agree"><button class="rv-chk${rvAgree?' on':''}" onclick="rvToggleAgree()">${I.check}</button><span><b>[필수]</b> 예약 서비스 이용을 위한 개인정보 수집 및 제3자 제공 동의</span></div>
+      <div class="rv-moved">진료 대상 · 병원 전달사항 · 추가 상담은 <b>신청 접수 후</b> 입력합니다</div>
+      <div class="rv-foot"><button class="rv-cta" ${(rvTime&&rvAgree)?'':'disabled'} onclick="rvSubmit()">예약 신청하기</button></div>`;
+  } else {
+    el.innerHTML=`<div class="rv-head"><button class="rv-back">${I.back}</button><span>예약 신청 접수</span></div>
+      <div class="rv-done"><div class="rv-done-ic">${I.check}</div><div class="rv-done-tx"><b>예약 신청이 접수되었어요</b><p>예약 확정 안내를 위해 병원에서 연락 드릴 예정이에요</p></div></div>
+      <div class="rv-summary">원데이치과 · 오스템 BA 임플란트<br><b>2026.07.${String(rvDate).padStart(2,'0')} (희망) · 오후 ${rvTime}</b></div>
+      <div class="rv-extra-h">예약을 더 빠르게 — <b>추가 정보 입력</b><span>지금 입력하면 병원 연락·상담이 빨라져요</span></div>
+      <div class="rv-sec"><div class="rv-sec-t">진료 대상 <small>진료 받는 분만 선택해주세요.</small></div>
+        ${rvTargets.map(t=>`<div class="rv-target"><div class="rv-target-h"><b>${t.sex} ${t.n}</b> <span class="rv-badge">${t.rel}</span></div><div class="rv-target-d">연락처 ${t.tel}</div><div class="rv-target-d">생년월일 ${t.birth}</div></div>`).join('')}
+        <button class="rv-addfam" ${rvTargets.length>=5?'disabled':''} onclick="rvAddTarget()">+ 가족 · 지인 추가하기</button>
+        <ul class="rv-notes"><li>가족/지인도 동일한 우대가로 이용 가능합니다.</li><li>상담/예약 진행을 위해 이름, 전화번호를 정확하게 입력해주세요.</li><li>가족/지인은 최대 5명까지 등록이 가능합니다.</li></ul></div>
+      <div class="rv-sec"><div class="rv-sec-t">병원 전달사항 (선택)</div>
+        <textarea class="rv-ta" maxlength="200" placeholder="병원에 전달하실 내용을 적어주세요. (0/200)" oninput="rvNote=this.value">${rvNote}</textarea></div>
+      <div class="rv-sec"><div class="rv-sec-t">추가 상담 희망 시술</div>
+        <select class="rv-sel" onchange="rvExtra=this.value"><option value="">추가로 상담을 원하는 시술을 선택해주세요</option>${rvExtraOpts.map(o=>`<option ${rvExtra===o?'selected':''}>${o}</option>`).join('')}</select></div>
+      <div class="rv-foot">${rvSaved?`<button class="rv-cta ok" disabled>저장 완료 ✓ · 예약 건에 반영(DB 업데이트)</button>`:`<button class="rv-cta" onclick="rvSaveExtra()">입력 완료 · 저장하기</button><button class="rv-cta ghost" onclick="rvReset()">나중에 입력</button>`}</div>`;
+  }
+  el.scrollTop=0;
+}
+function rvSetDate(d){rvDate=d; renderReserve();}
+function rvSetTime(t){rvTime=t; renderReserve();}
+function rvToggleAgree(){rvAgree=!rvAgree; renderReserve();}
+function rvSubmit(){ if(!(rvTime&&rvAgree))return; rvStep='done'; rvSaved=false; renderReserve(); }
+function rvAddTarget(){ if(rvTargets.length<5){const n=rvTargets.length; rvTargets.push({n:'가족 '+n,rel:'가족',tel:'010-****-****',birth:'직접 입력',sex:'○'}); renderReserve();} }
+function rvSaveExtra(){ rvSaved=true; renderReserve(); }
+function rvReset(){ rvStep='form'; rvTime=''; rvAgree=false; rvNote=''; rvExtra=''; rvSaved=false; rvTargets=[{n:'최재원',rel:'본인',tel:'010-2713-5533',birth:'1983.11.25',sex:'♂'}]; renderReserve(); }
+
 /* ---------- view switching ---------- */
 function switchView(v){
   document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected', b.dataset.view===v));
@@ -1425,6 +1556,7 @@ function switchView(v){
   document.getElementById('v-'+v).classList.add('active');
   if(v==='signup'){ sg=0; sgRender(); }
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; plRegion='강남'; closeRegionPicker(); renderProcList(); }
+  if(v==='reserve'){ rvReset(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
@@ -1437,6 +1569,7 @@ document.addEventListener('keydown',e=>{
 /* init */
 renderMain();
 renderProcList();
+renderReserve();
 obRender();
 sgRender();
 </script>
