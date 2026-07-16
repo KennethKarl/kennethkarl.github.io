@@ -75,8 +75,6 @@
     box-shadow:0 8px 20px -12px rgba(31,99,255,.45);}
   .search svg{width:19px;height:19px;color:var(--blue);flex:none;}
   .search span{color:var(--faint);font-size:14.5px;font-weight:500;}
-  .search.buried{border-color:var(--line);box-shadow:none;}
-  .search.buried svg{color:var(--faint);}
 
   /* section */
   .sec{margin:20px 0 6px;}
@@ -163,15 +161,6 @@
   .rev .m .st .star{color:#FFB020;font-weight:800;}
   .rev .go{font-size:13px;font-weight:800;color:var(--blue);white-space:nowrap;}
 
-  /* low-value widget (AS-IS) */
-  .lw{background:#fff;border:1px dashed #D6DCE7;border-radius:14px;padding:13px 14px;
-    display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-  .lw .t{font-size:13.5px;font-weight:700;color:#48566e;}
-  .lw .t small{display:block;font-weight:500;color:var(--faint);font-size:11px;margin-top:2px;}
-  .herobanner{height:150px;border-radius:16px;background:linear-gradient(120deg,#94A9CC,#C3D0E6);
-    display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;
-    text-shadow:0 1px 6px rgba(0,0,0,.25);margin-bottom:14px;}
-
   /* bottom tab */
   .tabbar{display:flex;background:#fff;border-top:1px solid var(--line);
     padding:8px 6px calc(8px + env(safe-area-inset-bottom));}
@@ -180,13 +169,6 @@
   .tab svg{width:22px;height:22px;}
   .tab.on{color:var(--blue);}
 
-  /* toggle AS-IS / TO-BE */
-  .swap{display:flex;justify-content:center;margin-bottom:14px;}
-  .swap .t2{display:flex;gap:3px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px;}
-  .swap button{border:0;background:transparent;font-family:inherit;cursor:pointer;font-size:12.5px;
-    font-weight:700;color:var(--muted);padding:7px 16px;border-radius:999px;transition:.18s;}
-  .swap button.on{background:var(--ink);color:#fff;}
-  .swap button.on.tobe{background:var(--blue);}
   .caption{max-width:390px;margin:12px auto 0;text-align:center;font-size:12.5px;color:var(--muted);}
   .caption b{color:var(--ink);}
 
@@ -463,12 +445,6 @@
 
   <!-- ============ MAIN ============ -->
   <section class="view active" id="v-main">
-    <div class="swap">
-      <div class="t2" role="group" aria-label="개선 전후 비교">
-        <button id="asis" onclick="setMode('asis')">AS-IS 기존</button>
-        <button id="tobe" class="on tobe" onclick="setMode('tobe')">TO-BE 개선</button>
-      </div>
-    </div>
     <div class="stage">
       <div class="phone">
         <div class="screen">
@@ -735,10 +711,7 @@ function switchFair(cat, focus){ renderFair(cat, focus); tickFair(); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){const o=document.getElementById('mainOvl'); if(o&&!o.hidden) closeOvl();} });
 
 /* ---------- MAIN render ---------- */
-const cap = {
-  tobe:'<b>TO-BE.</b> 검색을 최상단으로, 진료과를 인기순으로 간소화하고, 개인화 추천을 신설했습니다. 저활동 위젯(인기·주변 병원)은 하단으로 내리거나 제거했습니다.',
-  asis:'<b>AS-IS.</b> 큰 배너가 검색을 밀어내고, 클릭이 거의 없는 위젯(인기병원·주변병원·메인 리뷰)이 상단을 차지합니다.'
-};
+const cap = '검색을 <b>최상단</b>으로 올리고, 진료과를 <b>인기순</b>으로 간소화했으며, <b>개인화 추천</b> 영역을 신설했습니다. 클릭이 저조한 위젯(인기·주변 병원, 메인 리뷰)은 하단으로 내리거나 제거했습니다.';
 function deptGrid(showRank){
   return `<div class="depts">`+depts.map(d=>`
     <button class="dept" onclick="deptClick('${d.n}')"><i>${I[d.ic]}</i><span>${d.n}</span>${showRank&&d.rk?`<span class="rk">▲${d.rk}</span>`:''}</button>`).join('')+`</div>`;
@@ -783,26 +756,9 @@ function renderTOBE(){
     <div style="height:20px"></div>
   </div>`;
 }
-function renderASIS(){
-  return topbar()+`<div class="pad">
-    <div class="herobanner">🎉 세이프닥 7월 이벤트 배너</div>
-    <div class="lw"><div class="t">인기 병원 TOP 10<small>클릭 저조 · 저활동</small></div><span class="tag low">저활동</span></div>
-    <div class="lw"><div class="t">내 주변 병원<small>클릭 저조 · 저활동</small></div><span class="tag low">저활동</span></div>
-    <div class="lw"><div class="t">최근 본 시술<small>중복 · 필요도 낮음</small></div><span class="tag low">중복</span></div>
-    <div class="lw"><div class="t">신규 병원 추천<small>클릭 저조 · 저활동</small></div><span class="tag low">저활동</span></div>
-    <div class="search buried">${I.search}<span>검색어를 입력하세요 (하단에 위치)</span></div>
-    <div class="sec"><div class="sec-h"><h3>진료과</h3></div>${deptGrid(false)}</div>
-    <div class="lw" style="margin-top:14px"><div class="t">메인 리뷰<small>클릭 최하위</small></div><span class="tag low">저활동</span></div>
-    <div style="height:20px"></div>
-  </div>`;
-}
-let mode='tobe';
-function setMode(m){
-  mode=m;
-  document.getElementById('mainScroll').innerHTML = m==='tobe'?renderTOBE():renderASIS();
-  document.getElementById('mainCap').innerHTML = cap[m];
-  const a=document.getElementById('asis'), b=document.getElementById('tobe');
-  a.className = m==='asis'?'on':''; b.className = m==='tobe'?'on tobe':'';
+function renderMain(){
+  document.getElementById('mainScroll').innerHTML = renderTOBE();
+  document.getElementById('mainCap').innerHTML = cap;
   document.getElementById('mainScroll').scrollTop=0;
 }
 
@@ -1028,7 +984,7 @@ document.addEventListener('keydown',e=>{
 });
 
 /* init */
-setMode('tobe');
+renderMain();
 obRender();
 sgRender();
 </script>
