@@ -1521,9 +1521,8 @@ function renderReserve(){
       <div class="rv-sec"><div class="rv-sec-t">내원 희망 일시 선택</div>
         <div class="rv-warn"><b>본 신청은 예약 확정이 아니에요</b><p>일정 조율 및 예약 확정은 병원에서 별도 안내 드려요. 예약 신청 후 병원의 연락을 기다려 주세요.</p></div>
         ${rvCalendar()}<div class="rv-ampm">오후</div>${rvTimeGrid()}</div>
-      <div class="rv-agree"><button class="rv-chk${rvAgree?' on':''}" onclick="rvToggleAgree()">${I.check}</button><span><b>[필수]</b> 예약 서비스 이용을 위한 개인정보 수집 및 제3자 제공 동의</span></div>
       <div class="rv-moved">진료 대상 · 병원 전달사항 · 추가 상담은 <b>신청 접수 후</b> 입력합니다</div>
-      <div class="rv-foot"><button class="rv-cta" ${(rvTime&&rvAgree)?'':'disabled'} onclick="rvSubmit()">예약 신청하기</button></div>`;
+      <div class="rv-foot"><button class="rv-cta" ${rvTime?'':'disabled'} onclick="rvSubmit()">예약 신청하기</button></div>`;
   } else {
     el.innerHTML=`<div class="rv-head"><button class="rv-back">${I.back}</button><span>예약 신청 접수</span></div>
       <div class="rv-done"><div class="rv-done-ic">${I.check}</div><div class="rv-done-tx"><b>예약 신청이 접수되었어요</b><p>예약 확정 안내를 위해 병원에서 연락 드릴 예정이에요</p></div></div>
@@ -1544,7 +1543,7 @@ function renderReserve(){
 function rvSetDate(d){rvDate=d; renderReserve();}
 function rvSetTime(t){rvTime=t; renderReserve();}
 function rvToggleAgree(){rvAgree=!rvAgree; renderReserve();}
-function rvSubmit(){ if(!(rvTime&&rvAgree))return; rvStep='done'; rvSaved=false; renderReserve(); }
+function rvSubmit(){ if(!rvTime)return; rvStep='done'; rvSaved=false; renderReserve(); }
 function rvAddTarget(){ if(rvTargets.length<5){const n=rvTargets.length; rvTargets.push({n:'가족 '+n,rel:'가족',tel:'010-****-****',birth:'직접 입력',sex:'○'}); renderReserve();} }
 function rvSaveExtra(){ rvSaved=true; renderReserve(); }
 function rvReset(){ rvStep='form'; rvTime=''; rvAgree=false; rvNote=''; rvExtra=''; rvSaved=false; rvTargets=[{n:'최재원',rel:'본인',tel:'010-2713-5533',birth:'1983.11.25',sex:'♂'}]; renderReserve(); }
