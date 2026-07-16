@@ -517,6 +517,18 @@
   .sd-nav .tab{color:#3d4148;font-size:11px;font-weight:500;letter-spacing:-.02em;}
   .sd-nav .tab svg{width:23px;height:23px;stroke-width:1.7;}
   .sd-nav .sd-call{display:inline-flex;} .sd-nav .sd-call svg{color:#3d4148;}
+  /* 개선 메인 관심 지역(최대 3곳) */
+  .appbar .loc{border:0;background:none;font-family:inherit;cursor:pointer;padding:0;}
+  .appbar .loc b{font-weight:700;font-size:15px;color:var(--ink);}
+  .appbar .loc:hover b{color:var(--blue);}
+  .rg-max{font-size:11px;font-weight:700;color:#fff;background:var(--blue);border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:middle;}
+  .rg-help{font-size:12.5px;color:var(--muted);margin:0 0 12px;} .rg-help b{color:var(--blue);}
+  .rp.dis{opacity:.4;cursor:not-allowed;}
+  .rg-apply{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:14.5px;border-radius:12px;padding:14px;cursor:pointer;margin-top:14px;box-shadow:0 12px 24px -10px rgba(31,99,255,.6);}
+  /* diff 설명 태그 */
+  .df-tag{font-size:10px;font-weight:800;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle;white-space:nowrap;}
+  .df-tag.add{background:#E7F7EC;color:#06A42D;} .df-tag.mod{background:var(--blue-50);color:var(--blue-700);} .df-tag.del{background:#FDECEC;color:#D64545;}
+  #diffSpec .sc-n{font-size:15px;font-weight:800;}
   .pl-filters.hos{border-bottom:1px solid var(--line);}
   .pl-hlist{padding:2px 16px 8px;}
   .hcard{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);}
@@ -573,6 +585,17 @@
       </div>
       <div>
         <p class="caption" id="mainCap"></p>
+        <div class="obspec" id="diffSpec">
+          <div class="spec-h">실제 메인(welfaremall.stage) 대비 변경점</div>
+          <div class="spec">
+            <div class="sc"><div class="sc-n">＋</div><div class="sc-b"><b>관심 지역 선택 신설 <span class="df-tag add">추가</span></b><p>실제 메인엔 없는 <b>지역 지정(최대 3곳)</b>을 상단에 신설. 선택 지역 기준으로 추천·특가를 우선 노출합니다.</p></div></div>
+            <div class="sc"><div class="sc-n">＋</div><div class="sc-b"><b>검색바 최상단 고정 <span class="df-tag add">추가</span></b><p>실제는 배너·프로모 아이콘에 밀려 검색이 하단에 묻힘 → <b>검색을 최상단으로</b> 끌어올려 탐색형 유저 즉시 진입.</p></div></div>
+            <div class="sc"><div class="sc-n">＋</div><div class="sc-b"><b>개인화 추천 영역 신설 <span class="df-tag add">추가</span></b><p>실제엔 없는 <b>‘재원님 맞춤 추천’</b>(관심 진료과·최근 본 시술 기반) + <b>‘많이 찾는’ 추천 칩</b>을 상단에 배치.</p></div></div>
+            <div class="sc"><div class="sc-n">↻</div><div class="sc-b"><b>진료과 인기순 간소화 <span class="df-tag mod">변경</span></b><p>실제는 다수 진료과가 비정렬로 나열 → <b>활동 인기순 정렬 + 개수 축소</b>(▲순위 표기)로 첫 화면에서 바로 탐색.</p></div></div>
+            <div class="sc"><div class="sc-n">－</div><div class="sc-b"><b>저활동 위젯 축소·제거 <span class="df-tag del">제거</span></b><p>큰 프로모션 배너·프로모 퀵아이콘 행·인기/주변/신규 병원 위젯·메인 리뷰 등 <b>클릭 저조 영역</b>을 하단 이동 또는 제거.</p></div></div>
+          </div>
+          <p class="spec-src">기준: welfaremall.stage.safedoc.kr 현행 메인 · 2026-07-06 회의 개선안 반영 · 프로토타입</p>
+        </div>
         <div class="obspec" id="searchSpec" hidden>
           <div class="spec-h">검색 화면 — 지역·관심 진료과 맞춤 추천</div>
           <div class="spec">
@@ -783,8 +806,8 @@ const deptDeals = {
 };
 function ovl(){return document.getElementById('mainOvl');}
 function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';
-  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap');
-  if(sp) sp.hidden=true; if(mc) mc.style.display='';}
+  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap'), df=document.getElementById('diffSpec');
+  if(sp) sp.hidden=true; if(mc) mc.style.display=''; if(df) df.hidden=false;}
 /* 검색 라벨 클릭 → 시술리스트 탭에서 실제 검색 결과 노출 */
 function runSearch(kw){ closeOvl(); switchView('proclist'); plTry(kw); }
 function openSearch(kw){
@@ -807,8 +830,8 @@ function openSearch(kw){
       </div>
     </div></div>`;
   o.hidden=false;
-  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap');
-  if(sp) sp.hidden=false; if(mc) mc.style.display='none';
+  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap'), df=document.getElementById('diffSpec');
+  if(sp) sp.hidden=false; if(mc) mc.style.display='none'; if(df) df.hidden=true;
   const inp=o.querySelector('input'); if(inp) inp.focus();
 }
 function openAllProcedures(){
@@ -905,13 +928,39 @@ function deptGrid(showRank){
   return `<div class="depts">`+depts.map(d=>`
     <button class="dept" onclick="deptClick('${d.n}')"><i>${I[d.ic]}</i><span>${d.n}</span>${showRank&&d.rk?`<span class="rk">▲${d.rk}</span>`:''}</button>`).join('')+`</div>`;
 }
+/* 개선 메인 — 관심 지역 최대 3곳 선택 */
+let mainRegions=['강남'];
+function mainRegionLabel(){ return mainRegions.length<=1 ? (mainRegions[0]||'지역') : `${mainRegions[0]} 외 ${mainRegions.length-1}`; }
 function topbar(){
   return `<div class="appbar">
-    <div class="loc">${I.pin}강남<span class="chev">${I.chev}</span></div>
+    <button class="loc" onclick="openMainRegion()">${I.pin}<b>${mainRegionLabel()}</b><span class="chev">${I.chev}</span></button>
     <div class="brand">SafeDoc</div>
     <div class="bell">${I.bell}</div>
   </div>`;
 }
+function mainRegionBody(){
+  const full=mainRegions.length>=3;
+  return `<p class="rg-help">선택한 지역의 병원·특가를 먼저 보여드려요. <b>${mainRegions.length}/3</b> 선택됨</p>
+    <div class="rp-list">${plRegions.map(r=>{const on=mainRegions.includes(r); const dis=!on&&full;
+      return `<button class="rp ${on?'on':''}${dis?' dis':''}" ${dis?'disabled':''} onclick="toggleMainRegion('${r}')"><span class="rp-ic">${I.pin}</span><span class="rp-nm">${r}</span>${on?`<span class="rp-chk">${I.check}</span>`:''}</button>`;
+    }).join('')}</div>
+    <button class="rg-apply" onclick="closeMainRegion()">${mainRegions.length}곳 적용</button>`;
+}
+function openMainRegion(){
+  const o=ovl();
+  o.innerHTML=`<div class="backdrop" onclick="closeMainRegion()"></div>
+    <div class="sheet"><div class="sheet-h"><h3>관심 지역 <span class="rg-max">최대 3곳</span></h3>
+      <button class="x" onclick="closeMainRegion()" aria-label="닫기">${I.x}</button></div>
+      <div class="sheet-b" id="mrBody">${mainRegionBody()}</div></div>`;
+  o.hidden=false;
+}
+function toggleMainRegion(r){
+  const i=mainRegions.indexOf(r);
+  if(i>=0){ if(mainRegions.length>1) mainRegions.splice(i,1); }
+  else if(mainRegions.length<3){ mainRegions.push(r); }
+  const b=document.getElementById('mrBody'); if(b) b.innerHTML=mainRegionBody();
+}
+function closeMainRegion(){ const o=ovl(); o.hidden=true; o.innerHTML=''; renderMain(); }
 function persoRail(){
   return perso.map(p=>`<div class="pcard">
     <div class="ph">${p.disc?`<span class="disc">${p.disc}</span>`:''}</div>
@@ -934,7 +983,7 @@ function renderTOBE(){
         <div class="deal"><small>7월 한정 특가</small><h4>보톡스 100U · 9,900원</h4><p>선착순 · 오늘 예약 가능</p><span class="pill">예약하기</span></div>
         <div class="deal"><small>프리미엄 제휴</small><h4>종합 건강검진 199,000원</h4><p>복지 포인트 추가 적립</p><span class="pill">둘러보기</span></div>
       </div></div>
-    <div class="sec"><div class="sec-h"><h3>나와 비슷한 사용자가 <b>많이 찾는</b></h3><span class="more">강남 · 30대 기준</span></div>
+    <div class="sec"><div class="sec-h"><h3>나와 비슷한 사용자가 <b>많이 찾는</b></h3><span class="more">${mainRegionLabel()} · 30대 기준</span></div>
       <div class="chips">
         <div class="chip" onclick="runSearch('보톡스')"><b>#</b>보톡스</div><div class="chip" onclick="runSearch('스마일라식')"><b>#</b>스마일라식</div>
         <div class="chip" onclick="runSearch('리프팅')"><b>#</b>리프팅</div><div class="chip" onclick="runSearch('종합검진')"><b>#</b>종합검진</div>
