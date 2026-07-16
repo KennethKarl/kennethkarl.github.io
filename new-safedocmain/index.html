@@ -473,9 +473,10 @@
     padding:2px 6px;border-radius:6px;letter-spacing:.04em;}
   /* 시술리스트 상단 검색 헤더 */
   .pl-sbar{padding:38px 16px 8px;background:#fff;position:sticky;top:0;z-index:12;}
-  .pl-sbar .box{display:flex;align-items:center;gap:9px;border:1.6px solid var(--blue);border-radius:12px;padding:11px 13px;box-shadow:0 8px 20px -12px rgba(31,99,255,.4);}
+  .pl-sbar .box{display:flex;align-items:center;gap:9px;border:1.6px solid var(--blue);border-radius:12px;padding:12px 13px;box-shadow:0 8px 20px -12px rgba(31,99,255,.4);width:100%;background:#fff;font-family:inherit;cursor:pointer;text-align:left;}
   .pl-sbar .box svg{width:18px;height:18px;color:var(--blue);flex:none;}
-  .pl-sbar .box input{border:0;background:none;font-family:inherit;font-size:14px;width:100%;outline:none;color:var(--ink);}
+  .pl-sbar .pl-sbtxt{font-size:14px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pl-sbar .pl-sbtxt.has{color:var(--ink);font-weight:600;}
   .pl-eg{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:6px 16px 10px;background:#fff;scrollbar-width:none;border-bottom:1px solid var(--line);}
   .pl-eg::-webkit-scrollbar{height:0}
   .pl-eg>span{font-size:11px;font-weight:700;color:var(--faint);flex:none;}
@@ -808,12 +809,11 @@ function ovl(){return document.getElementById('mainOvl');}
 function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';
   const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap'), df=document.getElementById('diffSpec');
   if(sp) sp.hidden=true; if(mc) mc.style.display=''; if(df) df.hidden=false;}
-/* 검색 라벨 클릭 → 시술리스트 탭에서 실제 검색 결과 노출 */
-function runSearch(kw){ closeOvl(); switchView('proclist'); plTry(kw); }
-function openSearch(kw){
-  const o=ovl(); pTab=0;
-  o.innerHTML=`<div class="searchscreen">
-    <div class="ss-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button>
+/* 검색 화면 마크업(개선 메인·시술리스트 공용). closeFn = 뒤로가기 시 호출할 함수명 문자열 */
+function searchScreenHTML(kw, closeFn){
+  pTab=0;
+  return `<div class="searchscreen">
+    <div class="ss-head"><button class="bk" onclick="${closeFn}()" aria-label="뒤로">${I.back}</button>
       <div class="box">${I.search}<input placeholder="어떤 시술을 찾으세요?" value="${kw?kw.replace(/"/g,'&quot;'):''}" onkeydown="if(event.key==='Enter'&&this.value.trim()){runSearch(this.value.trim());}"></div></div>
     <div class="ss-body">
       <div class="lbl">최근 검색어 <button onclick="this.closest('.ss-body').querySelector('.recentchips').innerHTML='<span style=&quot;color:var(--faint);font-size:12.5px&quot;>최근 검색어가 없어요</span>'">전체삭제</button></div>
@@ -829,11 +829,32 @@ function openSearch(kw){
         <div class="trend-col">${trendKeywords.slice(5,10).map((s,i)=>`<button class="tr" onclick="runSearch('${s}')"><span class="rk">${i+6}</span><span class="kw">${s}</span></button>`).join('')}</div>
       </div>
     </div></div>`;
+}
+/* 검색 라벨/엔터 → 어느 오버레이든 닫고 시술리스트에서 결과 노출 */
+function runSearch(kw){
+  const mo=document.getElementById('mainOvl'); if(mo){mo.hidden=true; mo.innerHTML='';}
+  const po=document.getElementById('plOvl'); if(po){po.hidden=true; po.innerHTML='';}
+  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap'), df=document.getElementById('diffSpec');
+  if(sp) sp.hidden=true; if(mc) mc.style.display=''; if(df) df.hidden=false;
+  switchView('proclist'); plTry(kw);
+}
+/* 개선 메인 검색바 → mainOvl */
+function openSearch(kw){
+  const o=ovl();
+  o.innerHTML=searchScreenHTML(kw,'closeOvl');
   o.hidden=false;
   const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap'), df=document.getElementById('diffSpec');
   if(sp) sp.hidden=false; if(mc) mc.style.display='none'; if(df) df.hidden=true;
   const inp=o.querySelector('input'); if(inp) inp.focus();
 }
+/* 시술리스트 검색바 → plOvl (같은 검색 화면) */
+function plOpenSearch(kw){
+  const o=document.getElementById('plOvl'); if(!o) return;
+  o.innerHTML=searchScreenHTML(kw,'plCloseSearch');
+  o.hidden=false;
+  const inp=o.querySelector('input'); if(inp) inp.focus();
+}
+function plCloseSearch(){ const o=document.getElementById('plOvl'); if(o){o.hidden=true; o.innerHTML='';} }
 function openAllProcedures(){
   const o=ovl();
   o.innerHTML=`<div class="backdrop" onclick="closeOvl()"></div>
@@ -1078,7 +1099,7 @@ function plHosAll(){ const q=plQuery.trim(); return hosList.filter(h=> itemInReg
 function plRegionLabel(){ return plRegion; }
 function renderProcList(){
   document.getElementById('plScroll').innerHTML=`
-    <div class="pl-sbar"><div class="box">${I.search}<input id="plInput" placeholder="시술명, 병원명, 지역을 검색해보세요" value="${plQuery.replace(/"/g,'&quot;')}" oninput="plSearch(this.value)" autocomplete="off"></div></div>
+    <div class="pl-sbar"><button class="box" onclick="plOpenSearch(plQuery)">${I.search}<span class="pl-sbtxt${plQuery?' has':''}">${plQuery||'시술명, 병원명, 지역을 검색해보세요'}</span></button></div>
     <div class="pl-eg"><span>예시</span>
       <button onclick="plTry('이갈이/코골이')">이갈이/코골이</button>
       <button onclick="plTry('임플란트')">임플란트</button>
