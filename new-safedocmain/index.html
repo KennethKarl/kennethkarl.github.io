@@ -269,6 +269,9 @@
   .trend .tr:hover .kw{color:var(--blue);}
   .rc-chip{display:inline-flex;align-items:center;gap:7px;background:#F1F4F9;border-radius:999px;padding:8px 11px 8px 14px;font-size:12.5px;font-weight:600;color:#33425c;}
   .rc-chip button{border:0;background:none;color:var(--faint);cursor:pointer;font-size:15px;line-height:1;padding:0;}
+  .rc-chip .rc-t{font-family:inherit;font-size:12.5px;font-weight:600;color:#33425c;}
+  .rc-chip .rc-t:hover{color:var(--blue);}
+  .rc-chip .rc-x{font-size:15px;color:var(--faint);}
   .poprank{display:flex;flex-direction:column;}
   .poprank .pr{display:flex;align-items:center;gap:13px;padding:11px 2px;border:0;background:none;font-family:inherit;cursor:pointer;text-align:left;width:100%;}
   .poprank .pr .rk{width:16px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;font-size:15px;}
@@ -722,7 +725,7 @@ const persoSearch = [
   {dept:'치과', items:['임플란트','치아미백','투명교정','라미네이트','충치치료']}
 ];
 let pTab=0;
-function persoBody(i){return persoSearch[i].items.map(x=>`<button class="pchip" onclick="openSearch('${x}')">${x}</button>`).join('');}
+function persoBody(i){return persoSearch[i].items.map(x=>`<button class="pchip" onclick="runSearch('${x}')">${x}</button>`).join('');}
 function setPTab(i){pTab=i; const b=document.getElementById('pbody'); if(b) b.innerHTML=persoBody(i); document.querySelectorAll('.ptabs .pt').forEach((el,idx)=>el.classList.toggle('on',idx===i));}
 const allProc = [
   ['피부과',['보톡스','필러','리프팅','물광·스킨부스터','여드름·흉터','제모']],
@@ -748,23 +751,25 @@ function ovl(){return document.getElementById('mainOvl');}
 function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';
   const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap');
   if(sp) sp.hidden=true; if(mc) mc.style.display='';}
+/* 검색 라벨 클릭 → 시술리스트 탭에서 실제 검색 결과 노출 */
+function runSearch(kw){ closeOvl(); switchView('proclist'); plTry(kw); }
 function openSearch(kw){
   const o=ovl(); pTab=0;
   o.innerHTML=`<div class="searchscreen">
     <div class="ss-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button>
-      <div class="box">${I.search}<input placeholder="어떤 시술을 찾으세요?" value="${kw?kw.replace(/"/g,'&quot;'):''}"></div></div>
+      <div class="box">${I.search}<input placeholder="어떤 시술을 찾으세요?" value="${kw?kw.replace(/"/g,'&quot;'):''}" onkeydown="if(event.key==='Enter'&&this.value.trim()){runSearch(this.value.trim());}"></div></div>
     <div class="ss-body">
       <div class="lbl">최근 검색어 <button onclick="this.closest('.ss-body').querySelector('.recentchips').innerHTML='<span style=&quot;color:var(--faint);font-size:12.5px&quot;>최근 검색어가 없어요</span>'">전체삭제</button></div>
-      <div class="recentchips">${recentSearches.map(s=>`<span class="rc-chip">${s}<button aria-label="삭제" onclick="this.closest('.rc-chip').remove()">×</button></span>`).join('')}</div>
+      <div class="recentchips">${recentSearches.map(s=>`<span class="rc-chip"><button class="rc-t" onclick="runSearch('${s}')">${s}</button><button class="rc-x" aria-label="삭제" onclick="event.stopPropagation();this.closest('.rc-chip').remove()">×</button></span>`).join('')}</div>
       <div class="lbl"><span>재원님 <span style="color:var(--blue)">맞춤 추천</span></span><span class="lbl-sub">강남·강남역 · 관심 진료과 기반</span></div>
       <div class="ptabs">${persoSearch.map((p,i)=>`<button class="pt${i===pTab?' on':''}" onclick="setPTab(${i})">${p.dept}</button>`).join('')}</div>
       <div class="pbody" id="pbody">${persoBody(pTab)}</div>
       <div class="lbl"><span>지금 <span style="color:var(--blue)">많이 찾는</span> 시술</span></div>
-      <div class="hotchips">${hotProcedures.map(s=>`<button class="hotchip" onclick="openSearch('${s}')">${s}</button>`).join('')}</div>
+      <div class="hotchips">${hotProcedures.map(s=>`<button class="hotchip" onclick="runSearch('${s}')">${s}</button>`).join('')}</div>
       <div class="lbl"><span><span style="color:var(--blue)">인기</span> 검색어 트렌드</span><span class="lbl-sub">${nowStamp()}</span></div>
       <div class="trend">
-        <div class="trend-col">${trendKeywords.slice(0,5).map((s,i)=>`<button class="tr" onclick="openSearch('${s}')"><span class="rk">${i+1}</span><span class="kw">${s}</span></button>`).join('')}</div>
-        <div class="trend-col">${trendKeywords.slice(5,10).map((s,i)=>`<button class="tr" onclick="openSearch('${s}')"><span class="rk">${i+6}</span><span class="kw">${s}</span></button>`).join('')}</div>
+        <div class="trend-col">${trendKeywords.slice(0,5).map((s,i)=>`<button class="tr" onclick="runSearch('${s}')"><span class="rk">${i+1}</span><span class="kw">${s}</span></button>`).join('')}</div>
+        <div class="trend-col">${trendKeywords.slice(5,10).map((s,i)=>`<button class="tr" onclick="runSearch('${s}')"><span class="rk">${i+6}</span><span class="kw">${s}</span></button>`).join('')}</div>
       </div>
     </div></div>`;
   o.hidden=false;
@@ -922,7 +927,7 @@ const procList=[
   {nm:'국산 임플란트 1개', hos:'선릉 굿타임치과', dept:'치과', region:'선릉·삼성', price:'590,000원', was:'900,000원', rate:'9.4', rv:'331', coupon:true},
   {nm:'리프팅 슈링크 300샷', hos:'신사 더페이스의원', dept:'피부과', region:'압구정', price:'190,000원', was:'350,000원', rate:'9.5', rv:'604', coupon:true},
   {nm:'치아미백 3회', hos:'역삼 화이트치과', dept:'치과', region:'강남·강남역', price:'149,000원', was:'250,000원', rate:'9.2', rv:'188', coupon:true},
-  {nm:'종합 건강검진', hos:'강남 세이프메디컬', dept:'건강검진', region:'강남·강남역', price:'199,000원', was:'350,000원', rate:'9.3', rv:'97', coupon:false},
+  {nm:'종합검진 (종합 건강검진)', hos:'강남 세이프메디컬', dept:'건강검진', region:'강남·강남역', price:'199,000원', was:'350,000원', rate:'9.3', rv:'97', coupon:false},
   {nm:'비절개 모발이식 2,000모', hos:'강남 모아름의원', dept:'두피/탈모', region:'강남·강남역', price:'2,900,000원', was:'3,900,000원', rate:'9.4', rv:'145', coupon:false}
 ];
 // 이갈이/코골이 등 검색 예시용 시술 추가
