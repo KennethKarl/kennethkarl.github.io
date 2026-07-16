@@ -507,6 +507,7 @@
   .sd-body{flex:1;min-width:0;}
   .sd-badge{display:inline-block;background:#E7F7EC;color:#06A42D;font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;margin-bottom:5px;letter-spacing:-.02em;}
   .sd-hos{font-size:12px;font-weight:400;color:#808B96;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sd-st{color:#808B96;} .sd-st svg{width:11px;height:11px;vertical-align:-1.5px;margin-right:1px;}
   .sd-title{font-size:15.5px;font-weight:600;color:#000;margin:2px 0 4px;line-height:1.32;}
   .sd-rate{display:flex;align-items:center;gap:3px;font-size:13.5px;font-weight:600;color:#000;}
   .sd-rate svg{width:13px;height:13px;color:#1B1B1F;}
@@ -638,6 +639,7 @@
           <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>지역 선택 → 재조회</b><p>상단 <b>지역 버튼(강남)</b>을 누르면 지역을 바꿀 수 있고, 변경 즉시 해당 지역의 시술·병원으로 <b>재조회</b>됩니다. (강남·압구정·잠실·부산 서면·대구 동성로) 재조회 결과는 <b>상단 AD 2건 방어</b> 후 <b>차 순위부터 인기순</b>으로 정렬됩니다.</p></div></div>
           <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>시술 0건 → 병원 탭 자동 전환</b><p>선택한 지역에 <b>노출할 시술이 없으면</b> 자동으로 <em>병원 탭</em>을 기본으로 보여줍니다. (‘검색 결과가 없어요 → 희망 시술 요청’ + 해당 지역 병원 노출)</p></div></div>
           <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>지역별 시술·병원 수 자동 표시</b><p>지역 선택 시트에서 각 지역마다 <b>‘시술 N · 병원 M’</b> 개수를 자동 노출합니다. 선택 전에 지역별 <b>매물 규모(커버리지)</b>를 한눈에 비교할 수 있어, 시술이 0건인 지역(예: 부산 서면)도 미리 파악됩니다.</p></div></div>
+          <div class="sc"><div class="sc-n">05</div><div class="sc-b"><b>카드 정보 = 병원명 · 지역 · 지하철역</b><p>각 시술 카드 상단에 <b>병원명 · 지역 · 지하철역</b>을 표기합니다. (예: ‘강남 SW피부과 · 강남 · 🚇강남역’) <b>지하철역 정보가 없는 병원은 지하철역을 표시하지 않습니다.</b> (예: ‘청담 온의원 · 압구정’)</p></div></div>
         </div>
         <div class="spec-try">
           <div class="try-h">▶ 직접 해보기</div>
@@ -1072,25 +1074,25 @@ function renderMain(){
 
 /* ---------- 시술 리스트 ---------- */
 const procList=[
-  {ad:true, nm:'보톡스 이마 100U', hos:'강남 SW피부과', dept:'피부과', region:'강남·강남역', price:'9,900원', was:'39,000원', rate:'9.8', rv:'1,284', coupon:true},
-  {ad:true, nm:'스마일라식', hos:'강남밝은눈안과', dept:'안과', region:'강남·강남역', price:'1,490,000원', was:'1,900,000원', rate:'9.7', rv:'2,010', coupon:true},
-  {nm:'물광주사 3cc', hos:'압구정 라비앙', dept:'피부과', region:'압구정', price:'59,000원', was:'120,000원', rate:'9.6', rv:'860', coupon:true},
-  {nm:'리쥬란 힐러 2cc', hos:'청담 온의원', dept:'피부과', region:'압구정', price:'149,000원', was:'220,000원', rate:'9.5', rv:'512', coupon:true},
-  {nm:'자연유착 눈매교정', hos:'강남 라인성형외과', dept:'성형외과', region:'강남·강남역', price:'990,000원', was:'1,400,000원', rate:'9.6', rv:'742', coupon:false},
-  {nm:'국산 임플란트 1개', hos:'선릉 굿타임치과', dept:'치과', region:'선릉·삼성', price:'590,000원', was:'900,000원', rate:'9.4', rv:'331', coupon:true},
-  {nm:'리프팅 슈링크 300샷', hos:'신사 더페이스의원', dept:'피부과', region:'압구정', price:'190,000원', was:'350,000원', rate:'9.5', rv:'604', coupon:true},
-  {nm:'치아미백 3회', hos:'역삼 화이트치과', dept:'치과', region:'강남·강남역', price:'149,000원', was:'250,000원', rate:'9.2', rv:'188', coupon:true},
-  {nm:'종합검진 (종합 건강검진)', hos:'강남 세이프메디컬', dept:'건강검진', region:'강남·강남역', price:'199,000원', was:'350,000원', rate:'9.3', rv:'97', coupon:false},
-  {nm:'비절개 모발이식 2,000모', hos:'강남 모아름의원', dept:'두피/탈모', region:'강남·강남역', price:'2,900,000원', was:'3,900,000원', rate:'9.4', rv:'145', coupon:false}
+  {ad:true, nm:'보톡스 이마 100U', hos:'강남 SW피부과', dept:'피부과', region:'강남', station:'강남역', price:'9,900원', was:'39,000원', rate:'9.8', rv:'1,284', coupon:true},
+  {ad:true, nm:'스마일라식', hos:'강남밝은눈안과', dept:'안과', region:'강남', station:'강남역', price:'1,490,000원', was:'1,900,000원', rate:'9.7', rv:'2,010', coupon:true},
+  {nm:'물광주사 3cc', hos:'압구정 라비앙', dept:'피부과', region:'압구정', station:'압구정로데오역', price:'59,000원', was:'120,000원', rate:'9.6', rv:'860', coupon:true},
+  {nm:'리쥬란 힐러 2cc', hos:'청담 온의원', dept:'피부과', region:'압구정', station:'', price:'149,000원', was:'220,000원', rate:'9.5', rv:'512', coupon:true},
+  {nm:'자연유착 눈매교정', hos:'강남 라인성형외과', dept:'성형외과', region:'강남', station:'강남역', price:'990,000원', was:'1,400,000원', rate:'9.6', rv:'742', coupon:false},
+  {nm:'국산 임플란트 1개', hos:'선릉 굿타임치과', dept:'치과', region:'선릉·삼성', station:'선릉역', price:'590,000원', was:'900,000원', rate:'9.4', rv:'331', coupon:true},
+  {nm:'리프팅 슈링크 300샷', hos:'신사 더페이스의원', dept:'피부과', region:'압구정', station:'신사역', price:'190,000원', was:'350,000원', rate:'9.5', rv:'604', coupon:true},
+  {nm:'치아미백 3회', hos:'역삼 화이트치과', dept:'치과', region:'강남', station:'역삼역', price:'149,000원', was:'250,000원', rate:'9.2', rv:'188', coupon:true},
+  {nm:'종합검진 (종합 건강검진)', hos:'강남 세이프메디컬', dept:'건강검진', region:'강남', station:'', price:'199,000원', was:'350,000원', rate:'9.3', rv:'97', coupon:false},
+  {nm:'비절개 모발이식 2,000모', hos:'강남 모아름의원', dept:'두피/탈모', region:'강남', station:'강남역', price:'2,900,000원', was:'3,900,000원', rate:'9.4', rv:'145', coupon:false}
 ];
 // 이갈이/코골이 + 잠실·송파(지역 전환 데모용) 시술 추가
 procList.push(
-  {nm:'나이트가드 (이갈이 장치)', hos:'성누가병원', dept:'치과', region:'강남·강남역', price:'200,000원', was:'250,000원', rate:'9.2', rv:'5', coupon:false},
-  {nm:'코골이 장치', hos:'스카이치과', dept:'치과', region:'강남·역삼역', price:'350,000원', was:'450,000원', rate:'9.5', rv:'14', coupon:false},
-  {nm:'이갈이 장치 하드', hos:'스카이치과', dept:'치과', region:'강남·역삼역', price:'500,000원', was:'700,000원', rate:'9.5', rv:'14', coupon:false},
-  {nm:'라식', hos:'잠실 밝은눈안과', dept:'안과', region:'잠실·송파', price:'990,000원', was:'1,300,000원', rate:'9.3', rv:'120', coupon:true},
-  {nm:'임플란트(단일)', hos:'송파 굿플란트치과', dept:'치과', region:'잠실·송파', price:'650,000원', was:'950,000원', rate:'9.2', rv:'88', coupon:true},
-  {nm:'물광주사 3cc', hos:'잠실 라비앙의원', dept:'피부과', region:'잠실·송파', price:'69,000원', was:'130,000원', rate:'9.1', rv:'54', coupon:true}
+  {nm:'나이트가드 (이갈이 장치)', hos:'성누가병원', dept:'치과', region:'강남', station:'강남역', price:'200,000원', was:'250,000원', rate:'9.2', rv:'5', coupon:false},
+  {nm:'코골이 장치', hos:'스카이치과', dept:'치과', region:'강남', station:'역삼역', price:'350,000원', was:'450,000원', rate:'9.5', rv:'14', coupon:false},
+  {nm:'이갈이 장치 하드', hos:'스카이치과', dept:'치과', region:'강남', station:'역삼역', price:'500,000원', was:'700,000원', rate:'9.5', rv:'14', coupon:false},
+  {nm:'라식', hos:'잠실 밝은눈안과', dept:'안과', region:'잠실·송파', station:'잠실역', price:'990,000원', was:'1,300,000원', rate:'9.3', rv:'120', coupon:true},
+  {nm:'임플란트(단일)', hos:'송파 굿플란트치과', dept:'치과', region:'잠실·송파', station:'', price:'650,000원', was:'950,000원', rate:'9.2', rv:'88', coupon:true},
+  {nm:'물광주사 3cc', hos:'잠실 라비앙의원', dept:'피부과', region:'잠실·송파', station:'잠실역', price:'69,000원', was:'130,000원', rate:'9.1', rv:'54', coupon:true}
 );
 // 병원 리스트 (강남권 + 잠실·송파 + 부산 서면 + 대구 동성로) — 지역 기반 노출 & 시술 0건 시 병원 폴백 데모용
 const hosList=[
@@ -1123,7 +1125,7 @@ function procCard(d){
     <div class="sd-thumb">${d.ad?'<span class="sd-ad">AD</span>':''}</div>
     <div class="sd-body">
       ${d.coupon?`<span class="sd-badge">고유가 지원금 사용가능</span>`:''}
-      <div class="sd-hos">${d.hos} · ${d.region}</div>
+      <div class="sd-hos">${d.hos} · ${d.region}${d.station?` · <span class="sd-st">${I.subway}${d.station}</span>`:''}</div>
       <div class="sd-title">${d.nm}</div>
       <div class="sd-rate">${I.star}<b>${d.rate}</b> <span class="sd-cnt">(${d.rv})</span></div>
       ${w>0?`<div class="sd-was"><s>${d.was}</s> · VAT 포함</div>`:''}
