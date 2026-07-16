@@ -368,6 +368,40 @@
   .sg-nav:hover:not(:disabled){border-color:var(--blue);color:var(--blue);}
   .sg-nav:disabled{opacity:.35;cursor:not-allowed;}
   .sg-count{font-size:12px;color:var(--faint);font-weight:700;font-variant-numeric:tabular-nums;}
+
+  /* ---- onboarding: sort toggle · detail groups · spec card ---- */
+  .obsort{display:inline-flex;gap:3px;background:#EEF1F7;border-radius:999px;padding:3px;margin-top:14px;}
+  .obsort button{border:0;background:transparent;font-family:inherit;cursor:pointer;font-size:12px;font-weight:700;
+    color:var(--muted);padding:7px 13px;border-radius:999px;transition:.16s;display:inline-flex;align-items:center;gap:5px;}
+  .obsort button.on{background:#fff;color:var(--blue);box-shadow:0 2px 6px -2px rgba(16,30,56,.25);}
+  .obsort .soon{font-size:9px;font-weight:800;color:#fff;background:var(--warn);border-radius:5px;padding:1px 4px;letter-spacing:.02em;}
+  .selgrid.tight{gap:7px;padding:10px 0 0;}
+  .selgroups{padding:14px 20px 8px;}
+  .selgrp{margin-bottom:16px;}
+  .selgrp .grp-t{display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  .selgrp .grp-t .gic{width:18px;height:18px;color:var(--blue);display:inline-flex;}
+  .selgrp .grp-t .gic svg{width:18px;height:18px;}
+  .pick.sm{padding:9px 12px;font-size:12.5px;}
+  .nodetail{font-size:12.5px;color:var(--muted);background:var(--blue-50);border-radius:12px;padding:13px 15px;margin:4px 0 0;}
+
+  .obspec{max-width:420px;}
+  .obspec .spec-h{font-size:13px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 12px;
+    padding-bottom:10px;border-bottom:1px solid var(--line);}
+  .spec .sc{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .spec .sc:last-child{border-bottom:0;}
+  .spec .sc-n{flex:none;width:26px;height:26px;border-radius:8px;background:var(--blue-50);color:var(--blue-700);
+    font-size:11px;font-weight:800;display:grid;place-items:center;font-variant-numeric:tabular-nums;}
+  .spec .sc-b{flex:1;min-width:0;}
+  .spec .sc-b b{font-size:13.5px;font-weight:800;color:var(--ink);}
+  .spec .sc-b p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55;}
+  .spec .sc-b p b{font-weight:800;color:#38465e;font-size:12.5px;}
+  .spec .sc-b em{font-style:normal;font-weight:700;color:var(--blue);}
+  .spec .sc-b a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid var(--blue-100);}
+  .now-badge,.soon-badge{display:inline-block;font-size:10px;font-weight:800;border-radius:5px;padding:1px 6px;margin-left:2px;white-space:nowrap;}
+  .now-badge{background:var(--blue-50);color:var(--blue-700);}
+  .soon-badge{background:var(--warn-50);color:#B54708;}
+  .spec-src{margin:14px 0 0;font-size:11px;color:var(--faint);}
+  @media(max-width:900px){.obspec{max-width:420px;margin:8px auto 0;}}
 </style>
 </head>
 <body>
@@ -440,7 +474,17 @@
           <div class="scroll" id="obScroll"></div>
         </div>
       </div>
-      <div><p class="caption"><b>가입 온보딩에서 관심 정보를 수집</b>합니다. 진료과 → 세부 진료 → 관심 지역 순으로 받아 첫 홈부터 개인화된 추천을 노출합니다.</p></div>
+      <div class="obspec">
+        <p class="caption" style="text-align:left;margin:0 0 18px"><b>가입 온보딩에서 관심 정보를 수집</b>합니다. 진료과 → 세부 시술 → 관심 지역 순으로 받아 첫 홈부터 개인화된 추천을 노출합니다.</p>
+        <div class="spec-h">카테고리 노출 &amp; 정렬 로직</div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>전체 카테고리 노출</b><p><a href="https://safedoc.io/menu" target="_blank" rel="noopener">safedoc.io/menu</a>의 진료과 <b>17종 전부</b>를 STEP 1에 노출합니다. (기존 데모 7종 → 전체) 세부 시술이 없는 과(건강검진 등)도 포함.</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>1차 정렬 · 가나다순</b><p>신규 유저는 탐색 기준이 없으므로, 카테고리를 <b>이름 가나다순</b>으로 예측 가능하게 정렬해 노출합니다. <span class="now-badge">현재 기본</span></p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>추후 · 많이 찾는 순 재정렬</b><p>검색·선택 로그가 쌓이면 <b>사용자 검색량 기반 '많이 찾는 순'</b>으로 카테고리를 자동 재정렬합니다. STEP 1의 <em>[많이 찾는 순]</em> 토글로 적용 모습을 미리 볼 수 있어요. <span class="soon-badge">추후 적용</span></p></div></div>
+          <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>세부 시술 = /menu 동일</b><p>카테고리를 선택하면 해당 진료과의 <b>세부 시술</b>이 STEP 2에 나오며, 그 목록은 <a href="https://safedoc.io/menu" target="_blank" rel="noopener">safedoc.io/menu</a>와 동일하게 구성됩니다.</p></div></div>
+        </div>
+        <p class="spec-src">출처 · api.safedoc.io/department/list (safedoc.io/menu) · 2026-07-16 기준</p>
+      </div>
     </div>
   </section>
 
@@ -477,7 +521,17 @@ const I = {
   x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg>',
   clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  ticket:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="M13 6.5v11"/></svg>'
+  ticket:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="M13 6.5v11"/></svg>',
+  steth:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3v5a4 4 0 0 0 8 0V3"/><path d="M5.5 3H7M13 3h1.5M10 16.5V18a4 4 0 0 0 8 0v-2.5"/><circle cx="18" cy="13" r="2"/></svg>',
+  woman:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="5"/><path d="M12 13v8M9 18h6"/></svg>',
+  man:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="10" cy="14" r="5"/><path d="M14.5 9.5 20 4M20 4h-5M20 4v5"/></svg>',
+  mind:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M13 21H9a2 2 0 0 1-2-2v-3c0-1.5-1-2.5-1-4.5A6 6 0 0 1 18 9"/><path d="M13.5 12.2c.7-1.1 2.7-.8 2.7.5 0 1.2-1.5 1.8-2.7 2.8-1.2-1-2.7-1.6-2.7-2.8 0-1.3 2-1.6 2.7-.5Z"/></svg>',
+  bone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 15 15 9"/><path d="M9 15a1.9 1.9 0 1 1-2.6-.8 1.9 1.9 0 1 1 .8-2.6l6.2 6.2a1.9 1.9 0 1 1 2.6.8 1.9 1.9 0 1 1-.8 2.6Z" transform="translate(-1 -1)"/><path d="M8.5 15.5a2 2 0 1 1-3-1 2 2 0 1 1 1-3l6 6a2 2 0 1 1-1 3 2 2 0 1 1-3-1Z"/></svg>',
+  herb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M11 21c-5 0-7-4.5-7-8.5C4 8 7 5 11 5c4 0 6 3 6 7"/><path d="M11 21c0-6 3-9.5 8-10.5"/></svg>',
+  beauty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8Z"/></svg>',
+  shot:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m13 3 8 8M18.5 5.5l-11 11L4 20l1-4.5 8.5-8.5"/><path d="M8.5 10.5l2 2M11 8l2 2"/></svg>',
+  ent:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7.5 9.5a4.5 4.5 0 1 1 9 0c0 2.3-2 3.2-2 5.3A2.8 2.8 0 0 1 9 15"/><path d="M9.8 9.6a2.2 2.2 0 0 1 4.2.4"/></svg>',
+  cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 7v10M7 12h10"/><rect x="4" y="4" width="16" height="16" rx="5"/></svg>'
 };
 
 /* ---------- data ---------- */
@@ -708,31 +762,59 @@ function setMode(m){
   document.getElementById('mainScroll').scrollTop=0;
 }
 
-/* ---------- ONBOARDING ---------- */
-const obDepts=[['피부과','skin'],['성형외과','face'],['안과','eye'],['치과','tooth'],['건강검진','heart'],['모발이식','hair'],['비만/체형','body']];
-const obDetail={ '피부과':['보톡스','필러','리프팅','물광·스킨부스터','여드름·흉터','제모'],
-  '성형외과':['눈성형','코성형','안면윤곽','지방이식','리프팅'],
-  '안과':['라식','라섹','스마일라식','렌즈삽입술'],
-  '치과':['임플란트','교정','미백','충치치료'],
-  '건강검진':['종합검진','프리미엄검진','여성검진','내시경'],
-  '모발이식':['절개식','비절개식','두피문신'],
-  '비만/체형':['지방분해주사','체형관리','냉각','인바디'] };
+/* ---------- ONBOARDING (safedoc.io/menu 전체 카테고리) ---------- */
+// 진료과 17종 + 세부 시술 — 출처: api.safedoc.io/department/list (safedoc.io/menu 동일)
+// 배열 순서 = 앱 노출 순서(=검색·이용 기반 '많이 찾는 순' 프록시)
+const obDeptData=[
+  {n:'치과',t:['충치치료','임플란트','틀니','전체교정','부분교정','심미치료','치아복구','소아치료','보톡스/턱관절/양악','이갈이/코골이','기타진료']},
+  {n:'안과',t:['시력교정술','노안 시력교정술','백내장','드림렌즈','안구건조증 IPL','기타진료']},
+  {n:'피부과',t:['리프팅레이저','스킨부스터','제모','보톡스','필러','미백/색소/점','여드름/모공/피부관리','실리프팅','줄기세포','수액/영양주사','기타진료','그 외 시술']},
+  {n:'성형외과',t:['눈성형','눈지방성형','코성형','입술/인중성형','안면윤곽/양악','가슴성형','지방흡입','지방이식','거상술','기타진료']},
+  {n:'건강검진',t:[]},
+  {n:'다이어트',t:['지방분해/바디라인','다이어트','그 외 시술']},
+  {n:'두피/탈모',t:['모발이식','두피치료','기타진료','반영구/문신']},
+  {n:'산부인과',t:['예방접종','여성 시술/수술','검진','기타진료']},
+  {n:'심리상담',t:['상담/검사','기타진료']},
+  {n:'비뇨기과',t:['남성 시술/수술','검진','기타진료']},
+  {n:'정형외과',t:['치료/비수술','수술','기타진료']},
+  {n:'내과',t:['내과진료','기타진료']},
+  {n:'한의원',t:['한약','약침','도수치료/충격파','기타진료','피부 질환']},
+  {n:'뷰티',t:['반영구/문신','기타진료']},
+  {n:'예방접종',t:['예방접종','기타진료']},
+  {n:'이비인후과',t:['호흡/청각/수면','기타진료']},
+  {n:'외과',t:['외과진료','기타진료']}
+];
+const deptTreat=Object.fromEntries(obDeptData.map(d=>[d.n,d.t]));
+const deptIconMap={'치과':'tooth','안과':'eye','피부과':'skin','성형외과':'face','건강검진':'steth','다이어트':'body','두피/탈모':'hair','산부인과':'woman','심리상담':'mind','비뇨기과':'man','정형외과':'bone','내과':'steth','한의원':'herb','뷰티':'beauty','예방접종':'shot','이비인후과':'ent','외과':'cross'};
+function deptIcon(n){return I[deptIconMap[n]]||I.cross;}
 const obRegion=['강남·강남역','서초·교대','잠실·송파','홍대·신촌','판교·분당','수원·영통','부산 서면','대구 동성로'];
+let obSort='ganada'; // 'ganada'(현재 기본) | 'popular'(추후 검색량 기반 재정렬)
 let ob={step:0, dept:new Set(), detail:new Set(), region:new Set()};
+function obDeptList(){const a=obDeptData.slice(); if(obSort==='ganada') a.sort((x,y)=>x.n.localeCompare(y.n,'ko')); return a;}
+function obSetSort(s){obSort=s; obRender();}
 
 function obRender(){
   const S=document.querySelectorAll('#v-onboard .steps .s');
   S.forEach((s,i)=>s.className='s'+(i<=ob.step?' on':''));
   const el=document.getElementById('obScroll');
   if(ob.step===0){
-    el.innerHTML=`<div class="ob-h"><div class="k">STEP 1 / 3</div><h2>어떤 진료에<br>관심이 있으세요?</h2><p>관심 진료과 위주로 홈을 구성해 드려요. (복수 선택)</p></div>
-      <div class="selgrid">${obDepts.map(([n,ic])=>`<button class="pick" aria-pressed="${ob.dept.has(n)}" onclick="obPick('dept','${n}')"><span class="ic">${I[ic]}</span>${n}</button>`).join('')}</div>
+    const list=obDeptList();
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 1 / 3</div><h2>어떤 진료에<br>관심이 있으세요?</h2><p>관심 진료과 위주로 홈을 구성해 드려요. (복수 선택)</p>
+      <div class="obsort" role="group" aria-label="카테고리 정렬 기준">
+        <button class="${obSort==='ganada'?'on':''}" onclick="obSetSort('ganada')">가나다순</button>
+        <button class="${obSort==='popular'?'on':''}" onclick="obSetSort('popular')">많이 찾는 순<span class="soon">추후</span></button>
+      </div></div>
+      <div class="selgrid">${list.map(d=>`<button class="pick" aria-pressed="${ob.dept.has(d.n)}" onclick="obPick('dept','${d.n}')"><span class="ic">${deptIcon(d.n)}</span>${d.n}</button>`).join('')}</div>
       <div class="ob-foot"><button class="cta" ${ob.dept.size?'':'disabled'} onclick="obNext()">다음 (${ob.dept.size})</button></div>`;
   } else if(ob.step===1){
-    const picks=[...ob.dept]; const items=picks.flatMap(d=>(obDetail[d]||[]).map(x=>[d,x]));
-    el.innerHTML=`<div class="ob-h"><div class="k">STEP 2 / 3</div><h2>세부 진료를<br>골라주세요</h2><p>선택하신 <b>${picks.join(', ')}</b> 중 관심 시술이에요.</p></div>
-      <div class="selgrid">${items.map(([d,x])=>`<button class="pick" aria-pressed="${ob.detail.has(x)}" onclick="obPick('detail','${x}')">${x}</button>`).join('')}</div>
-      <div class="ob-foot"><button class="cta" ${ob.detail.size?'':'disabled'} onclick="obNext()">다음 (${ob.detail.size})</button>
+    const picks=[...ob.dept];
+    const groups=picks.map(d=>({d,items:deptTreat[d]||[]})).filter(g=>g.items.length);
+    const hasAny=groups.length>0;
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 2 / 3</div><h2>세부 진료를<br>골라주세요</h2><p>선택하신 <b>${picks.join(', ')}</b>의 세부 시술이에요.</p></div>
+      <div class="selgroups">${groups.map(g=>`<div class="selgrp"><div class="grp-t"><span class="gic">${deptIcon(g.d)}</span>${g.d}</div>
+        <div class="selgrid tight">${g.items.map(x=>{const k=g.d+'::'+x; return `<button class="pick sm" aria-pressed="${ob.detail.has(k)}" onclick="obPickKey('${k}')">${x}</button>`;}).join('')}</div></div>`).join('')}
+        ${hasAny?'':'<p class="nodetail">선택하신 진료과는 세부 시술 없이 바로 예약할 수 있어요.</p>'}</div>
+      <div class="ob-foot"><button class="cta" ${(ob.detail.size||!hasAny)?'':'disabled'} onclick="obNext()">다음 (${ob.detail.size})</button>
         <button class="cta ghost" onclick="obPrev()">이전</button></div>`;
   } else if(ob.step===2){
     el.innerHTML=`<div class="ob-h"><div class="k">STEP 3 / 3</div><h2>관심 지역을<br>선택해 주세요</h2><p>가까운 지역의 병원·특가를 먼저 보여드려요.</p></div>
@@ -740,11 +822,12 @@ function obRender(){
       <div class="ob-foot"><button class="cta" ${ob.region.size?'':'disabled'} onclick="obNext()">맞춤 홈 만들기</button>
         <button class="cta ghost" onclick="obPrev()">이전</button></div>`;
   } else {
+    const detNames=[...ob.detail].map(k=>k.split('::')[1]);
     el.innerHTML=`<div class="done"><div class="mk">${I.check}</div>
       <h2>맞춤 홈이 준비됐어요</h2><p>선택하신 관심 정보로 첫 화면부터 개인화 추천을 노출합니다.</p>
       <div class="summ">
         <div class="row"><span class="lb">관심 진료과</span><span class="vl">${[...ob.dept].join(', ')||'-'}</span></div>
-        <div class="row"><span class="lb">관심 시술</span><span class="vl">${[...ob.detail].join(', ')||'-'}</span></div>
+        <div class="row"><span class="lb">관심 시술</span><span class="vl">${detNames.join(', ')||'-'}</span></div>
         <div class="row"><span class="lb">관심 지역</span><span class="vl">${[...ob.region].join(', ')||'-'}</span></div>
       </div>
       <div class="ob-foot" style="padding-top:22px"><button class="cta" onclick="goMain()">개인화된 홈 보기 →</button>
@@ -753,9 +836,10 @@ function obRender(){
   el.scrollTop=0;
 }
 function obPick(k,v){const s=ob[k]; s.has(v)?s.delete(v):s.add(v); obRender();}
+function obPickKey(k){ob.detail.has(k)?ob.detail.delete(k):ob.detail.add(k); obRender();}
 function obNext(){ob.step++; obRender();}
 function obPrev(){ob.step--; obRender();}
-function obReset(){ob={step:0,dept:new Set(),detail:new Set(),region:new Set()}; obRender();}
+function obReset(){obSort='ganada'; ob={step:0,dept:new Set(),detail:new Set(),region:new Set()}; obRender();}
 function goMain(){switchView('main');}
 
 /* ---------- RATIONALE ---------- */
