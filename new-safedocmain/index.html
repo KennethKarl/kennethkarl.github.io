@@ -525,6 +525,9 @@
   .rg-max{font-size:11px;font-weight:700;color:#fff;background:var(--blue);border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:middle;}
   .rg-help{font-size:12.5px;color:var(--muted);margin:0 0 12px;} .rg-help b{color:var(--blue);}
   .rp.dis{opacity:.4;cursor:not-allowed;}
+  .locbody .pick:disabled{opacity:.4;cursor:not-allowed;}
+  .locres .r:disabled{opacity:.45;cursor:not-allowed;}
+  .subscreen .ttl .rg-max{margin-left:6px;}
   .rg-apply{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:14.5px;border-radius:12px;padding:14px;cursor:pointer;margin-top:14px;box-shadow:0 12px 24px -10px rgba(31,99,255,.6);}
   /* diff 설명 태그 */
   .df-tag{font-size:10px;font-weight:800;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle;white-space:nowrap;}
@@ -950,7 +953,8 @@ function deptGrid(showRank){
     <button class="dept" onclick="deptClick('${d.n}')"><i>${I[d.ic]}</i><span>${d.n}</span>${showRank&&d.rk?`<span class="rk">▲${d.rk}</span>`:''}</button>`).join('')+`</div>`;
 }
 /* 개선 메인 — 관심 지역 최대 3곳 선택 */
-let mainRegions=['강남'];
+let mainRegions=['강남·압구정'];
+let mainGeoArea='', mainSearchOn=false, mainRegQuery='';
 function mainRegionLabel(){ return mainRegions.length<=1 ? (mainRegions[0]||'지역') : `${mainRegions[0]} 외 ${mainRegions.length-1}`; }
 function topbar(){
   return `<div class="appbar">
@@ -959,29 +963,73 @@ function topbar(){
     <div class="bell">${I.bell}</div>
   </div>`;
 }
-function mainRegionBody(){
-  const full=mainRegions.length>=3;
-  return `<p class="rg-help">선택한 지역의 병원·특가를 먼저 보여드려요. <b>${mainRegions.length}/3</b> 선택됨</p>
-    <div class="rp-list">${plRegions.map(r=>{const on=mainRegions.includes(r); const dis=!on&&full;
-      return `<button class="rp ${on?'on':''}${dis?' dis':''}" ${dis?'disabled':''} onclick="toggleMainRegion('${r}')"><span class="rp-ic">${I.pin}</span><span class="rp-nm">${r}</span>${on?`<span class="rp-chk">${I.check}</span>`:''}</button>`;
-    }).join('')}</div>
-    <button class="rg-apply" onclick="closeMainRegion()">${mainRegions.length}곳 적용</button>`;
+/* 개선 메인 지역 선택 = 가입 온보딩 STEP3 지역 화면(현재위치+인기 상권+검색) 재현, mainRegions(최대3) */
+function mainGeoHTML(){
+  if(mainGeoArea) return `<span class="geoic on">${I.pin}</span><span class="geotx"><b>현재 위치 · ${mainGeoArea}</b><small>탭하여 다시 감지</small></span><span class="geochk">${I.check}</span>`;
+  return `<span class="geoic">${I.pin}</span><span class="geotx"><b>현재 위치로 설정</b><small>내 주변 병원을 먼저 볼게요</small></span><span class="geoar">›</span>`;
 }
-function openMainRegion(){
-  const o=ovl();
-  o.innerHTML=`<div class="backdrop" onclick="closeMainRegion()"></div>
-    <div class="sheet"><div class="sheet-h"><h3>관심 지역 <span class="rg-max">최대 3곳</span></h3>
-      <button class="x" onclick="closeMainRegion()" aria-label="닫기">${I.x}</button></div>
-      <div class="sheet-b" id="mrBody">${mainRegionBody()}</div></div>`;
+function mainSelStrip(){
+  if(!mainRegions.length) return `<div class="selstrip empty" id="mainRegStrip">아직 선택한 지역이 없어요</div>`;
+  return `<div class="selstrip" id="mainRegStrip">${mainRegions.map(r=>`<span class="s">${I.pin}${r}<button aria-label="${r} 삭제" onclick="mainToggleRegion('${r}')">×</button></span>`).join('')}</div>`;
+}
+function mainRegResults(q){
+  q=(q||'').trim(); const nq=q.replace(/[·\s]/g,'');
+  let list=q?obSearchIndex.filter(e=>e.l.replace(/[·\s]/g,'').includes(nq)||e.t.replace(/[·\s]/g,'').includes(nq)):obSearchIndex.slice(0,7);
+  if(!list.length) return `<div class="locempty">'${q}' 검색 결과가 없어요.<br>다른 지역명이나 지하철역을 입력해 보세요.</div>`;
+  const full=mainRegions.length>=3;
+  return list.slice(0,40).map(e=>{const on=mainRegions.includes(e.l);const dis=!on&&full;
+    return `<button class="r" data-region="${e.l}" aria-pressed="${on}" ${dis?'disabled':''} onclick="mainToggleRegion('${e.l}')"><span class="ric">${e.k==='역'?I.subway:I.pin}</span><span class="rl">${e.l}</span><span class="rk">${e.t}</span><span class="rchk">${on?I.check:''}</span></button>`;
+  }).join('');
+}
+function renderMainRegion(){
+  const o=ovl(); const full=mainRegions.length>=3;
+  let body;
+  if(mainSearchOn){
+    body=`<button class="locback" onclick="mainCloseRegSearch()">${I.back}인기 상권으로</button>
+      <div class="locsearchbox">${I.search}<input id="mainRegInput" placeholder="동네·지하철역·지역 검색" value="${mainRegQuery.replace(/"/g,'&quot;')}" oninput="mainRegSearch(this.value)" autocomplete="off"></div>
+      ${mainSelStrip()}
+      <div class="locres" id="mainRegResults">${mainRegResults(mainRegQuery)}</div>`;
+  } else {
+    body=`<button class="geo" id="mainGeo" onclick="mainDetectLoc()">${mainGeoHTML()}</button>
+      ${mainSelStrip()}
+      <div class="loclbl">인기 상권 <span>병원 밀집순</span></div>
+      <div class="selgrid">${obPopularAreas.map(r=>{const on=mainRegions.includes(r);const dis=!on&&full;
+        return `<button class="pick" data-region="${r}" aria-pressed="${on}" ${dis?'disabled':''} onclick="mainToggleRegion('${r}')"><span class="ic">${I.pin}</span>${r}</button>`;}).join('')}</div>
+      <button class="locsearchbtn" onclick="mainOpenRegSearch()">${I.search}<span>찾는 지역이 없나요? 지역·지하철역 검색</span><span class="ar">›</span></button>`;
+  }
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="mainRegionApply()" aria-label="닫기">${I.back}</button>
+      <div class="ttl">관심 지역 <span class="rg-max">최대 3곳</span></div></div>
+    <div class="sub-body"><div class="locbody">
+      <p class="rg-help">어느 지역에서 진료·시술받고 싶으세요? <b id="mainRegCnt">${mainRegions.length}/3</b> 선택됨</p>
+      ${body}
+    </div></div>
+    <div class="ob-foot"><button class="cta" id="mainRegFoot" onclick="mainRegionApply()">${mainRegions.length}곳 적용</button></div>
+  </div>`;
   o.hidden=false;
 }
-function toggleMainRegion(r){
+function mainToggleRegion(r){
   const i=mainRegions.indexOf(r);
   if(i>=0){ if(mainRegions.length>1) mainRegions.splice(i,1); }
   else if(mainRegions.length<3){ mainRegions.push(r); }
-  const b=document.getElementById('mrBody'); if(b) b.innerHTML=mainRegionBody();
+  const o=ovl();
+  o.querySelectorAll('[data-region]').forEach(b=>{const on=mainRegions.includes(b.dataset.region); b.setAttribute('aria-pressed',on); if(!on&&mainRegions.length>=3) b.setAttribute('disabled',''); else b.removeAttribute('disabled');});
+  const res=document.getElementById('mainRegResults'); if(res) res.innerHTML=mainRegResults(mainRegQuery);
+  const strip=document.getElementById('mainRegStrip'); if(strip) strip.outerHTML=mainSelStrip();
+  const cnt=document.getElementById('mainRegCnt'); if(cnt) cnt.textContent=`${mainRegions.length}/3`;
+  const foot=document.getElementById('mainRegFoot'); if(foot) foot.textContent=`${mainRegions.length}곳 적용`;
 }
-function closeMainRegion(){ const o=ovl(); o.hidden=true; o.innerHTML=''; renderMain(); }
+function mainDetectLoc(){
+  const g=document.getElementById('mainGeo'); if(!g) return;
+  g.innerHTML=`<span class="geoic">${I.pin}</span><span class="geotx"><b>위치 확인 중…</b><small>네이버 지오코딩으로 상권 매칭</small></span>`;
+  setTimeout(()=>{ mainGeoArea='강남·압구정'; if(!mainRegions.includes(mainGeoArea)&&mainRegions.length<3) mainRegions.unshift(mainGeoArea); renderMainRegion(); },700);
+}
+function mainOpenRegSearch(){ mainSearchOn=true; renderMainRegion(); mainRegFocus(); }
+function mainCloseRegSearch(){ mainSearchOn=false; renderMainRegion(); }
+function mainRegSearch(q){ mainRegQuery=q; const r=document.getElementById('mainRegResults'); if(r) r.innerHTML=mainRegResults(q); }
+function mainRegFocus(){ const i=document.getElementById('mainRegInput'); if(i){i.focus(); const v=i.value; i.value=''; i.value=v;} }
+function openMainRegion(){ mainSearchOn=false; mainRegQuery=''; renderMainRegion(); }
+function mainRegionApply(){ mainSearchOn=false; mainRegQuery=''; const o=ovl(); o.hidden=true; o.innerHTML=''; renderMain(); }
 function persoRail(){
   return perso.map(p=>`<div class="pcard">
     <div class="ph">${p.disc?`<span class="disc">${p.disc}</span>`:''}</div>
