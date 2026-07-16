@@ -498,6 +498,25 @@
   .rp .rp-nm{font-size:14.5px;font-weight:800;color:var(--ink);}
   .rp .rp-cnt{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:600;}
   .rp.on .rp-cnt{margin-left:auto;} .rp .rp-chk{color:var(--blue);margin-left:8px;} .rp .rp-chk svg{width:18px;height:18px;}
+  /* ── 실제 safedoc.io 시술 카드(90%+ 재현) — 토큰: Pretendard, #1B59FA, 병원명 #808B96, 정가 #A7B0B9, 경계 #EBEBEB, 뱃지 #06A42D/#E7F7EC ── */
+  .sd-card{display:flex;gap:12px;padding:16px 0 18px;border-bottom:1px solid #EBEBEB;letter-spacing:-.02em;}
+  .sd-thumb{width:100px;height:100px;border-radius:8px;flex:none;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#DDE6F5,#EEF2FA);}
+  .sd-ad{position:absolute;left:5px;top:5px;background:rgba(14,23,38,.72);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;letter-spacing:.04em;}
+  .sd-body{flex:1;min-width:0;}
+  .sd-badge{display:inline-block;background:#E7F7EC;color:#06A42D;font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;margin-bottom:5px;letter-spacing:-.02em;}
+  .sd-hos{font-size:12px;font-weight:400;color:#808B96;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sd-title{font-size:15.5px;font-weight:600;color:#000;margin:2px 0 4px;line-height:1.32;}
+  .sd-rate{display:flex;align-items:center;gap:3px;font-size:13.5px;font-weight:600;color:#000;}
+  .sd-rate svg{width:13px;height:13px;color:#1B1B1F;}
+  .sd-rate .sd-cnt{color:#5A5F65;font-weight:500;font-size:12.5px;margin-left:1px;}
+  .sd-was{font-size:12px;color:#A7B0B9;margin-top:7px;} .sd-was s{color:#A7B0B9;}
+  .sd-price{margin-top:2px;font-size:18px;font-weight:700;color:#000;font-variant-numeric:tabular-nums;}
+  .sd-pct{color:#1B59FA;font-weight:700;font-size:16px;margin-right:6px;}
+  .sd-cpn{margin-top:9px;border:1px solid #DCE6FF;background:#F4F7FF;border-radius:8px;padding:8px;text-align:center;font-size:12px;font-weight:700;color:#1550E0;}
+  .sd-nav .tab{color:#3d4148;font-size:11px;font-weight:500;letter-spacing:-.02em;}
+  .sd-nav .tab svg{width:23px;height:23px;stroke-width:1.7;}
+  .sd-nav .sd-call{display:inline-flex;} .sd-nav .sd-call svg{color:#3d4148;}
   .pl-filters.hos{border-bottom:1px solid var(--line);}
   .pl-hlist{padding:2px 16px 8px;}
   .hcard{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);}
@@ -576,11 +595,12 @@
           <div class="notch"></div>
           <div class="scroll" id="plScroll"></div>
           <div class="ovl" id="plOvl" hidden></div>
-          <nav class="tabbar">
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
-            <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>검색</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>예약</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>마이</div>
+          <nav class="tabbar sd-nav">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.6 3.5 9 3l1.6 4-1.9 1.4a12 12 0 0 0 5 5L15 11.4 19 13l-.5 2.4a2 2 0 0 1-2.2 1.6A14 14 0 0 1 5 5.7a2 2 0 0 1 1.6-2.2Z"/></svg>전화상담</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div>
           </nav>
         </div>
       </div>
@@ -692,7 +712,10 @@ const I = {
   cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 7v10M7 12h10"/><rect x="4" y="4" width="16" height="16" rx="5"/></svg>',
   subway:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="14" rx="4"/><path d="M6 11h12M8.5 21l1.7-3M15.5 21l-1.7-3"/><circle cx="9.3" cy="13.7" r="1"/><circle cx="14.7" cy="13.7" r="1"/></svg>',
   globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.6 3 14.4 0 18M12 3c-3 3.6-3 14.4 0 18"/></svg>',
-  noresult:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l4 4v6"/><path d="M13 3v5h5"/><path d="M18 17.5 21 20.5"/><circle cx="14" cy="15" r="3.5"/><path d="M6 12H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1"/></svg>'
+  noresult:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l4 4v6"/><path d="M13 3v5h5"/><path d="M18 17.5 21 20.5"/><circle cx="14" cy="15" r="3.5"/><path d="M6 12H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18l-5.8 3 1.1-6.5L2.6 9.9l6.5-.9L12 2.6Z"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6.6 3.5 9 3l1.6 4-1.9 1.4a12 12 0 0 0 5 5L15 11.4 19 13l-.5 2.4a2 2 0 0 1-2.2 1.6A14 14 0 0 1 5 5.7a2 2 0 0 1 1.6-2.2Z"/></svg>',
+  gift:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>'
 };
 
 /* ---------- data ---------- */
@@ -977,13 +1000,16 @@ function procCard(d){
   const p=won(d.price), w=won(d.was);
   const pct = w>0?Math.round((1-p/w)*100)+'%':'';
   const cp = d.coupon ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
-  return `<div class="scard${d.ad?' ad':''}"><div class="sth">${d.ad?'<span class="adbadge">AD</span>':''}</div>
-    <div class="sm">
-      <div class="hos">${d.region} · ${d.hos}</div>
-      <div class="snm">${d.nm}</div>
-      <div class="rt"><b>★ ${d.rate}</b> (${d.rv}) · VAT 포함</div>
-      <div class="pr">${w>0?`<s>${d.was}</s><div class="now"><span class="pct">${pct}</span>${d.price}</div>`:`<div class="now">${d.price}</div>`}</div>
-      ${cp?`<div class="cpn">쿠폰 적용 시 ${cp}</div>`:''}
+  return `<div class="sd-card">
+    <div class="sd-thumb">${d.ad?'<span class="sd-ad">AD</span>':''}</div>
+    <div class="sd-body">
+      ${d.coupon?`<span class="sd-badge">고유가 지원금 사용가능</span>`:''}
+      <div class="sd-hos">${d.hos} · ${d.region}</div>
+      <div class="sd-title">${d.nm}</div>
+      <div class="sd-rate">${I.star}<b>${d.rate}</b> <span class="sd-cnt">(${d.rv})</span></div>
+      ${w>0?`<div class="sd-was"><s>${d.was}</s> · VAT 포함</div>`:''}
+      <div class="sd-price">${pct?`<span class="sd-pct">${pct}</span>`:''}${d.price}</div>
+      ${cp?`<div class="sd-cpn">쿠폰 적용 시 ${cp}</div>`:''}
     </div></div>`;
 }
 function hCard(h){
