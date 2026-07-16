@@ -495,6 +495,16 @@
       </div>
       <div>
         <p class="caption" id="mainCap"></p>
+        <div class="obspec" id="searchSpec" hidden>
+          <div class="spec-h">검색 화면 — 지역·관심 진료과 맞춤 추천</div>
+          <div class="spec">
+            <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>신규 영역 위치</b><p>기존 <b>‘최근 검색어’</b>와 <b>‘지금 많이 찾는 검색어’</b> 사이에 맞춤 추천 영역을 새로 넣었습니다.</p></div></div>
+            <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>지역·관심 진료과 개인화</b><p>고객의 <b>관심 지역(강남·강남역)</b>과 가입 온보딩에서 고른 <b>관심 진료과</b>를 기반으로 추천을 구성합니다.</p></div></div>
+            <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>진료과 탭 구성</b><p>피부과·안과·치과 등 <b>진료과 탭</b>으로 전환하면, 탭마다 해당 지역에서 인기 있는 <b>세부 시술</b>이 칩으로 노출됩니다.</p></div></div>
+            <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>검색어를 입력하기 전에도 <em>맞춤 시술을 즉시 제안</em>해 탐색 시간을 줄이고 예약 전환을 유도합니다.</p></div></div>
+          </div>
+          <p class="spec-src">검색어 입력 전(zero-query) 개인화 · 관심 지역/진료과 연동</p>
+        </div>
       </div>
     </div>
   </section>
@@ -669,7 +679,9 @@ const deptDeals = {
   '비만/체형':[{nm:'지방분해주사 4cc',hos:'강남 라인클리닉',price:'99,000원',was:'180,000원'}]
 };
 function ovl(){return document.getElementById('mainOvl');}
-function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';}
+function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';
+  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap');
+  if(sp) sp.hidden=true; if(mc) mc.style.display='';}
 function openSearch(kw){
   const o=ovl(); pTab=0;
   o.innerHTML=`<div class="searchscreen">
@@ -685,6 +697,8 @@ function openSearch(kw){
       <div class="poprank">${popularSearches.map((s,i)=>`<button class="pr" onclick="closeOvl()"><span class="rk">${i+1}</span><span class="kw">${s}</span>${i<3?'<span class="up">▲ 인기</span>':''}</button>`).join('')}</div>
     </div></div>`;
   o.hidden=false;
+  const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap');
+  if(sp) sp.hidden=false; if(mc) mc.style.display='none';
   const inp=o.querySelector('input'); if(inp) inp.focus();
 }
 function openAllProcedures(){
