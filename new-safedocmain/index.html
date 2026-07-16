@@ -250,6 +250,14 @@
   .ss-body .lbl{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:800;color:#3a475d;margin:8px 0 11px;}
   .ss-body .lbl button{border:0;background:none;color:var(--faint);font-size:11.5px;font-family:inherit;cursor:pointer;}
   .recentchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+  .ss-body .lbl .lbl-sub{font-weight:600;color:var(--faint);font-size:11px;}
+  .ptabs{display:flex;gap:7px;overflow-x:auto;margin:0 0 11px;scrollbar-width:none;}
+  .ptabs::-webkit-scrollbar{height:0}
+  .ptabs .pt{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:.14s;white-space:nowrap;}
+  .ptabs .pt.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .pbody{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;background:linear-gradient(180deg,#F3F7FF,#fff);border:1px solid var(--blue-100);border-radius:14px;padding:14px;}
+  .pchip{border:1px solid var(--blue-100);background:#fff;border-radius:999px;padding:8px 13px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--blue-700);cursor:pointer;transition:.14s;}
+  .pchip:hover{border-color:var(--blue);background:var(--blue-50);}
   .rc-chip{display:inline-flex;align-items:center;gap:7px;background:#F1F4F9;border-radius:999px;padding:8px 11px 8px 14px;font-size:12.5px;font-weight:600;color:#33425c;}
   .rc-chip button{border:0;background:none;color:var(--faint);cursor:pointer;font-size:15px;line-height:1;padding:0;}
   .poprank{display:flex;flex-direction:column;}
@@ -631,6 +639,15 @@ function recentCards(){
 /* ---------- search & popups ---------- */
 const recentSearches = ['강남 보톡스','스마일라식','종합검진','임플란트'];
 const popularSearches = ['보톡스','라식·라섹','임플란트','리프팅','눈성형','스킨부스터','치아미백','모발이식'];
+/* 검색 화면 — 고객 지역·관심 진료과 맞춤 추천(탭) */
+const persoSearch = [
+  {dept:'피부과', items:['보톡스 이마','물광주사','리쥬란 힐러','슈링크 리프팅','스킨부스터','제모']},
+  {dept:'안과', items:['스마일라식','라섹','투데이라섹','렌즈삽입술','드림렌즈']},
+  {dept:'치과', items:['임플란트','치아미백','투명교정','라미네이트','충치치료']}
+];
+let pTab=0;
+function persoBody(i){return persoSearch[i].items.map(x=>`<button class="pchip" onclick="openSearch('${x}')">${x}</button>`).join('');}
+function setPTab(i){pTab=i; const b=document.getElementById('pbody'); if(b) b.innerHTML=persoBody(i); document.querySelectorAll('.ptabs .pt').forEach((el,idx)=>el.classList.toggle('on',idx===i));}
 const allProc = [
   ['피부과',['보톡스','필러','리프팅','물광·스킨부스터','여드름·흉터','제모']],
   ['성형외과',['눈성형','코성형','안면윤곽','지방이식','실리프팅']],
@@ -654,13 +671,16 @@ const deptDeals = {
 function ovl(){return document.getElementById('mainOvl');}
 function closeOvl(){if(typeof clearFair==='function')clearFair(); const o=ovl(); o.hidden=true; o.innerHTML='';}
 function openSearch(kw){
-  const o=ovl();
+  const o=ovl(); pTab=0;
   o.innerHTML=`<div class="searchscreen">
     <div class="ss-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button>
       <div class="box">${I.search}<input placeholder="어떤 시술을 찾으세요?" value="${kw?kw.replace(/"/g,'&quot;'):''}"></div></div>
     <div class="ss-body">
       <div class="lbl">최근 검색어 <button onclick="this.closest('.ss-body').querySelector('.recentchips').innerHTML='<span style=&quot;color:var(--faint);font-size:12.5px&quot;>최근 검색어가 없어요</span>'">전체삭제</button></div>
       <div class="recentchips">${recentSearches.map(s=>`<span class="rc-chip">${s}<button aria-label="삭제" onclick="this.closest('.rc-chip').remove()">×</button></span>`).join('')}</div>
+      <div class="lbl"><span>재원님 <span style="color:var(--blue)">맞춤 추천</span></span><span class="lbl-sub">강남·강남역 · 관심 진료과 기반</span></div>
+      <div class="ptabs">${persoSearch.map((p,i)=>`<button class="pt${i===pTab?' on':''}" onclick="setPTab(${i})">${p.dept}</button>`).join('')}</div>
+      <div class="pbody" id="pbody">${persoBody(pTab)}</div>
       <div class="lbl"><span>지금 <span style="color:var(--blue)">많이 찾는</span> 검색어</span></div>
       <div class="poprank">${popularSearches.map((s,i)=>`<button class="pr" onclick="closeOvl()"><span class="rk">${i+1}</span><span class="kw">${s}</span>${i<3?'<span class="up">▲ 인기</span>':''}</button>`).join('')}</div>
     </div></div>`;
