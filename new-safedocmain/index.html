@@ -573,6 +573,23 @@
   .rv-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:13px;resize:none;outline:none;color:var(--ink);}
   .rv-sel{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 12px;font-family:inherit;font-size:13.5px;color:var(--ink);background:#fff;outline:none;}
   #rvSpec .sc-b s{color:var(--faint);}
+  /* ── 광고·특가 인벤토리 ── */
+  .ad-fair{display:flex;align-items:center;gap:10px;border-radius:16px;padding:16px 18px;margin:14px 0 6px;color:#fff;cursor:pointer;
+    background:linear-gradient(120deg,#12143A,#2A3AA0);position:relative;overflow:hidden;}
+  .ad-fair-tag{font-size:11px;font-weight:700;opacity:.9;}
+  .ad-fair-t{font-size:18px;font-weight:800;margin:5px 0 3px;letter-spacing:-.02em;}
+  .ad-fair-s{font-size:11.5px;opacity:.9;}
+  .ad-fair-l{flex:1;min-width:0;}
+  .ad-fair-go{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:11px;font-weight:700;padding:6px 11px;white-space:nowrap;}
+  .ad-rank{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;}
+  .ad-rank-col{display:flex;flex-direction:column;}
+  .ad-rk{display:flex;align-items:center;gap:9px;padding:9px 2px;border:0;background:none;font-family:inherit;cursor:pointer;text-align:left;width:100%;}
+  .ad-rk-n{width:15px;font-weight:800;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums;flex:none;}
+  .ad-rk-n.hot{color:var(--blue);}
+  .ad-rk-nm{font-size:13px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+  .ad-bd{font-size:8.5px;font-weight:800;border-radius:4px;padding:1px 4px;flex:none;} .ad-bd.best{background:#FFE9D6;color:#E8590C;} .ad-bd.new{background:var(--blue-50);color:var(--blue-700);}
+  .ad-tr{font-size:9px;font-weight:800;flex:none;} .ad-tr.up{color:#E23B40;} .ad-tr.down{color:var(--blue);} .ad-tr.same{color:var(--faint);}
+  .ad-spon-note{font-size:11.5px;color:var(--muted);background:var(--blue-50);border-radius:10px;padding:10px 13px;margin:2px 0 8px;} .ad-spon-note b{color:var(--blue-700);}
   .rg-apply{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:14.5px;border-radius:12px;padding:14px;cursor:pointer;margin-top:14px;box-shadow:0 12px 24px -10px rgba(31,99,255,.6);}
   /* diff 설명 태그 */
   .df-tag{font-size:10px;font-weight:800;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle;white-space:nowrap;}
@@ -615,6 +632,7 @@
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
     <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
     <button role="tab" aria-selected="false" data-view="reserve">예약플로우</button>
+    <button role="tab" aria-selected="false" data-view="ad">광고·특가</button>
   </div>
 
   <!-- ============ MAIN ============ -->
@@ -724,6 +742,27 @@
           </ol>
         </div>
         <p class="spec-src">기준: welfaremall.stage.safedoc.kr/reservation · 프로토타입</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ============ 광고·특가 영역 ============ -->
+  <section class="view" id="v-ad">
+    <div class="stage">
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="scroll" id="adScroll"></div>
+      </div></div>
+      <div><div class="obspec" id="adSpec">
+        <div class="spec-h">미활용 영역 → 개인화 광고·특가 인벤토리</div>
+        <p class="caption" style="text-align:left;margin:0 0 16px"><b>여신티켓</b> 등 경쟁 앱은 상단·사이드 영역을 <b>‘실시간 인기 시술 + 특가전’</b> 인벤토리로 활용하지만, 현재 세이프닥은 이 영역을 <b>꿀팁·공지·QR 등 저활동 콘텐츠</b>로 흘려보내고 있습니다. → <b>이 영역을 개인화 광고·특가 인벤토리로 전환</b>합니다.</p>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>특가전 노출</b><p>‘이달의 제휴 특가 · 인기 시술 특가전’을 <b>전면 배치</b>해 최저가 혜택으로 유입·탐색을 유도합니다.</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>실시간 인기 시술 랭킹</b><p>검색·예약 로그 기반 <b>실시간 Top 10</b>(순위 추이·BEST/NEW)으로 트렌드 탐색을 촉진합니다. (여신티켓 형)</p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>개인화 + 스폰서(광고비 지불) 노출</b><p>고객의 <b>관심 진료과·지역에 매칭되는</b> 병원/시술 중 <b>광고비를 지불한 제휴 병원</b>을 <span class="df-tag mod">AD</span>로 <b>상단 우선 노출</b>합니다. 개인화 매칭이므로 광고여도 관련성이 높습니다.</p></div></div>
+          <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>미활용 영역을 <em>광고 매출 인벤토리</em>로 전환하는 동시에, 개인화 매칭으로 <em>예약 전환</em>도 함께 끌어올립니다.</p></div></div>
+        </div>
+        <p class="spec-src">참고: 여신티켓(스샷1) 실시간 인기 시술·특가전 영역 · 프로토타입</p>
       </div></div>
     </div>
   </section>
@@ -1548,6 +1587,34 @@ function rvAddTarget(){ if(rvTargets.length<5){const n=rvTargets.length; rvTarge
 function rvSaveExtra(){ rvSaved=true; renderReserve(); }
 function rvReset(){ rvStep='form'; rvTime=''; rvAgree=false; rvNote=''; rvExtra=''; rvSaved=false; rvTargets=[{n:'최재원',rel:'본인',tel:'010-2713-5533',birth:'1983.11.25',sex:'♂'}]; renderReserve(); }
 
+/* ---------- 광고·특가 인벤토리 (여신티켓 형) ---------- */
+const adHotRank=[
+  {n:'스마일라식',d:'up',badge:'BEST'},{n:'임플란트',d:'same'},{n:'보톡스',d:'up',badge:'BEST'},{n:'치아교정',d:'down'},{n:'건강검진',d:'new'},
+  {n:'제모',d:'up'},{n:'지방이식',d:'same'},{n:'라식/라섹',d:'down'},{n:'필러',d:'up'},{n:'모발이식',d:'same'}
+];
+const adSponsored=[
+  {ad:true, nm:'보톡스 이마 100U', hos:'강남 SW피부과', dept:'피부과', region:'강남', station:'강남역', price:'9,900원', was:'39,000원', rate:'9.8', rv:'1,284', coupon:true},
+  {ad:true, nm:'물광주사 3cc', hos:'압구정 라비앙', dept:'피부과', region:'압구정', station:'압구정로데오역', price:'59,000원', was:'120,000원', rate:'9.6', rv:'860', coupon:true},
+  {nm:'스마일라식', hos:'강남밝은눈안과', dept:'안과', region:'강남', station:'강남역', price:'1,490,000원', was:'1,900,000원', rate:'9.7', rv:'2,010', coupon:true}
+];
+function adRankItem(r,i){
+  const tr=r.d==='up'?'<span class="ad-tr up">▲</span>':r.d==='down'?'<span class="ad-tr down">▼</span>':r.d==='new'?'':'<span class="ad-tr same">－</span>';
+  const bd=r.badge?`<span class="ad-bd ${r.badge==='NEW'?'new':'best'}">${r.badge}</span>`:'';
+  return `<button class="ad-rk" onclick="runSearch('${r.n}')"><span class="ad-rk-n${i<3?' hot':''}">${i+1}</span><span class="ad-rk-nm">${r.n}</span>${bd}${tr}</button>`;
+}
+function renderAd(){
+  document.getElementById('adScroll').innerHTML=`${topbar()}
+    <div class="pad">
+      <div class="ad-fair" onclick="switchView('proclist')"><div class="ad-fair-l"><div class="ad-fair-tag">이달의 제휴 특가</div><div class="ad-fair-t">7월 인기 시술 특가전</div><div class="ad-fair-s">바쁜 직장인·대학생을 위한 최저가 혜택</div></div><span class="ad-fair-go">전체보기 ›</span></div>
+      <div class="sec"><div class="sec-h"><h3>실시간 <b>인기 시술</b><span class="tag hot">LIVE</span></h3><span class="more">${nowStamp().replace(' 기준','')} 기준</span></div>
+        <div class="ad-rank"><div class="ad-rank-col">${adHotRank.slice(0,5).map((r,i)=>adRankItem(r,i)).join('')}</div><div class="ad-rank-col">${adHotRank.slice(5,10).map((r,i)=>adRankItem(r,i+5)).join('')}</div></div></div>
+      <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">스폰서 포함</span></h3></div>
+        <div class="ad-spon-note"><b>AD</b>는 광고비를 지불한 제휴 병원으로, 관심 진료과·지역에 매칭될 때 상단 우선 노출됩니다.</div>
+        <div class="pl-list">${adSponsored.map(procCard).join('')}</div></div>
+      <div style="height:16px"></div>
+    </div>`;
+}
+
 /* ---------- view switching ---------- */
 function switchView(v){
   document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected', b.dataset.view===v));
@@ -1556,6 +1623,7 @@ function switchView(v){
   if(v==='signup'){ sg=0; sgRender(); }
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; plRegion='강남'; closeRegionPicker(); renderProcList(); }
   if(v==='reserve'){ rvReset(); }
+  if(v==='ad'){ renderAd(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
@@ -1569,6 +1637,7 @@ document.addEventListener('keydown',e=>{
 renderMain();
 renderProcList();
 renderReserve();
+renderAd();
 obRender();
 sgRender();
 </script>
