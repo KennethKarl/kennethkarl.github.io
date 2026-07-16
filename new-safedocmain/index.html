@@ -426,6 +426,31 @@
   .locres .r[aria-pressed="true"] .ric{background:var(--blue);color:#fff;}
   .locres .r[aria-pressed="true"] .rl{color:var(--blue-700);}
   .locempty{font-size:12.5px;color:var(--muted);padding:20px 4px;text-align:center;line-height:1.6;}
+
+  /* ---- 시술 리스트 탭 ---- */
+  .pl-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:40px 16px 11px;
+    background:#fff;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);}
+  .pl-region{display:inline-flex;align-items:center;gap:3px;border:0;background:none;font-family:inherit;cursor:pointer;
+    font-size:15px;font-weight:800;color:var(--ink);padding:0;}
+  .pl-region svg{width:16px;height:16px;color:var(--blue);}
+  .pl-region .plchev svg{width:14px;height:14px;color:var(--faint);}
+  .pl-sort{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-family:inherit;
+    font-size:12.5px;font-weight:700;color:#33425c;cursor:pointer;} .pl-sort span{color:var(--faint);}
+  .pl-cats{display:flex;gap:7px;overflow-x:auto;padding:12px 16px 4px;background:#fff;scrollbar-width:none;}
+  .pl-cats::-webkit-scrollbar{height:0}
+  .plc{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-family:inherit;
+    font-size:12.5px;font-weight:600;color:#33425c;cursor:pointer;white-space:nowrap;transition:.14s;}
+  .plc.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .pl-filters{display:flex;gap:7px;overflow-x:auto;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none;}
+  .pl-filters::-webkit-scrollbar{height:0}
+  .plf{flex:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;color:#33425c;background:#fff;white-space:nowrap;}
+  .pl-cnt{padding:13px 16px 2px;font-size:12px;color:var(--muted);} .pl-cnt b{color:var(--ink);}
+  .pl-cnt .pl-adnote{color:var(--blue);font-weight:700;}
+  .pl-list{padding:0 16px 8px;}
+  .scard .sth{position:relative;}
+  .scard.ad .sth{outline:2px solid var(--blue);outline-offset:-2px;}
+  .adbadge{position:absolute;left:5px;top:5px;background:rgba(14,23,38,.74);color:#fff;font-size:9px;font-weight:800;
+    padding:2px 6px;border-radius:6px;letter-spacing:.04em;}
 </style>
 </head>
 <body>
@@ -438,6 +463,7 @@
 
   <div class="seg" role="tablist" aria-label="데모 화면 전환">
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
+    <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
     <button role="tab" aria-selected="false" data-view="signup">회원가입</button>
     <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
     <button role="tab" aria-selected="false" data-view="rat">개선 포인트 · 근거</button>
@@ -462,6 +488,25 @@
       <div>
         <p class="caption" id="mainCap"></p>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ 시술 리스트 ============ -->
+  <section class="view" id="v-proclist">
+    <div class="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="scroll" id="plScroll"></div>
+          <nav class="tabbar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
+            <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>검색</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>예약</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>마이</div>
+          </nav>
+        </div>
+      </div>
+      <div><p class="caption"><b>시술 리스트</b>는 <b>지역 선필터 + 인기순</b>을 기본으로, 매출 상위 병원 <b>AD 2건</b>을 상단에 방어 노출합니다. 카드마다 <b>쿠폰 적용가</b>와 <b>VAT 포함</b> 여부를 함께 보여 예약 전 가격을 투명하게 전달합니다.<br><br>2026-07-06 회의 반영 · 시술 정렬(지역 선필터+인기순) · AD 상위 방어 · 쿠폰 적용가 노출</p></div>
     </div>
   </section>
 
@@ -762,6 +807,50 @@ function renderMain(){
   document.getElementById('mainScroll').scrollTop=0;
 }
 
+/* ---------- 시술 리스트 ---------- */
+const procList=[
+  {ad:true, nm:'보톡스 이마 100U', hos:'강남 SW피부과', dept:'피부과', region:'강남·강남역', price:'9,900원', was:'39,000원', rate:'9.8', rv:'1,284', coupon:true},
+  {ad:true, nm:'스마일라식', hos:'강남밝은눈안과', dept:'안과', region:'강남·강남역', price:'1,490,000원', was:'1,900,000원', rate:'9.7', rv:'2,010', coupon:true},
+  {nm:'물광주사 3cc', hos:'압구정 라비앙', dept:'피부과', region:'압구정', price:'59,000원', was:'120,000원', rate:'9.6', rv:'860', coupon:true},
+  {nm:'리쥬란 힐러 2cc', hos:'청담 온의원', dept:'피부과', region:'압구정', price:'149,000원', was:'220,000원', rate:'9.5', rv:'512', coupon:true},
+  {nm:'자연유착 눈매교정', hos:'강남 라인성형외과', dept:'성형외과', region:'강남·강남역', price:'990,000원', was:'1,400,000원', rate:'9.6', rv:'742', coupon:false},
+  {nm:'국산 임플란트 1개', hos:'선릉 굿타임치과', dept:'치과', region:'선릉·삼성', price:'590,000원', was:'900,000원', rate:'9.4', rv:'331', coupon:true},
+  {nm:'리프팅 슈링크 300샷', hos:'신사 더페이스의원', dept:'피부과', region:'압구정', price:'190,000원', was:'350,000원', rate:'9.5', rv:'604', coupon:true},
+  {nm:'치아미백 3회', hos:'역삼 화이트치과', dept:'치과', region:'강남·강남역', price:'149,000원', was:'250,000원', rate:'9.2', rv:'188', coupon:true},
+  {nm:'종합 건강검진', hos:'강남 세이프메디컬', dept:'건강검진', region:'강남·강남역', price:'199,000원', was:'350,000원', rate:'9.3', rv:'97', coupon:false},
+  {nm:'비절개 모발이식 2,000모', hos:'강남 모아름의원', dept:'두피/탈모', region:'강남·강남역', price:'2,900,000원', was:'3,900,000원', rate:'9.4', rv:'145', coupon:false}
+];
+const plCats=['전체','피부과','안과','치과','성형외과','건강검진','두피/탈모'];
+let plCat='전체';
+function procCard(d){
+  const p=won(d.price), w=won(d.was);
+  const pct = w>0?Math.round((1-p/w)*100)+'%':'';
+  const cp = d.coupon ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
+  return `<div class="scard${d.ad?' ad':''}"><div class="sth">${d.ad?'<span class="adbadge">AD</span>':''}</div>
+    <div class="sm">
+      <div class="hos">${d.region} · ${d.hos}</div>
+      <div class="snm">${d.nm}</div>
+      <div class="rt"><b>★ ${d.rate}</b> (${d.rv}) · VAT 포함</div>
+      <div class="pr">${w>0?`<s>${d.was}</s><div class="now"><span class="pct">${pct}</span>${d.price}</div>`:`<div class="now">${d.price}</div>`}</div>
+      ${cp?`<div class="cpn">쿠폰 적용 시 ${cp}</div>`:''}
+    </div></div>`;
+}
+function plItems(){ return plCat==='전체'?procList:procList.filter(d=>d.dept===plCat); }
+function renderProcList(){
+  const items=plItems();
+  document.getElementById('plScroll').innerHTML=`
+    <div class="pl-top">
+      <button class="pl-region">${I.pin}<b>강남·강남역</b><span class="plchev">${I.chev}</span></button>
+      <button class="pl-sort">인기순 <span>▾</span></button>
+    </div>
+    <div class="pl-cats">${plCats.map(c=>`<button class="plc${c===plCat?' on':''}" onclick="plSetCat('${c}')">${c}</button>`).join('')}</div>
+    <div class="pl-filters">${['쿠폰 추가할인','당일할인','특가전','오늘 예약가능'].map(f=>`<span class="plf">${f}</span>`).join('')}</div>
+    <div class="pl-cnt">시술 <b>${items.length}</b>건 · 강남·강남역 · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
+    <div class="pl-list">${items.map(procCard).join('')}</div>
+    <div style="height:20px"></div>`;
+}
+function plSetCat(c){ plCat=c; renderProcList(); document.getElementById('plScroll').scrollTop=0; }
+
 /* ---------- ONBOARDING (safedoc.io/menu 전체 카테고리) ---------- */
 // 진료과 17종 + 세부 시술 — 출처: api.safedoc.io/department/list (safedoc.io/menu 동일)
 // 배열 순서 = 앱 노출 순서(=검색·이용 기반 '많이 찾는 순' 프록시)
@@ -974,6 +1063,7 @@ function switchView(v){
   document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
   document.getElementById('v-'+v).classList.add('active');
   if(v==='signup'){ sg=0; sgRender(); }
+  if(v==='proclist'){ plCat='전체'; renderProcList(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
@@ -985,6 +1075,7 @@ document.addEventListener('keydown',e=>{
 
 /* init */
 renderMain();
+renderProcList();
 obRender();
 sgRender();
 </script>
