@@ -468,6 +468,44 @@
   .scard.ad .sth{outline:2px solid var(--blue);outline-offset:-2px;}
   .adbadge{position:absolute;left:5px;top:5px;background:rgba(14,23,38,.74);color:#fff;font-size:9px;font-weight:800;
     padding:2px 6px;border-radius:6px;letter-spacing:.04em;}
+  /* 시술리스트 상단 검색 헤더 */
+  .pl-sbar{padding:38px 16px 8px;background:#fff;position:sticky;top:0;z-index:12;}
+  .pl-sbar .box{display:flex;align-items:center;gap:9px;border:1.6px solid var(--blue);border-radius:12px;padding:11px 13px;box-shadow:0 8px 20px -12px rgba(31,99,255,.4);}
+  .pl-sbar .box svg{width:18px;height:18px;color:var(--blue);flex:none;}
+  .pl-sbar .box input{border:0;background:none;font-family:inherit;font-size:14px;width:100%;outline:none;color:var(--ink);}
+  .pl-eg{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:6px 16px 10px;background:#fff;scrollbar-width:none;border-bottom:1px solid var(--line);}
+  .pl-eg::-webkit-scrollbar{height:0}
+  .pl-eg>span{font-size:11px;font-weight:700;color:var(--faint);flex:none;}
+  .pl-eg button{flex:none;border:1px solid var(--blue-100);background:var(--blue-50);color:var(--blue-700);border-radius:999px;padding:6px 11px;font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .pl-eg button.clr{border-color:var(--line);background:#fff;color:var(--muted);}
+  .pl-rel{padding:11px 16px 0;font-size:13px;color:var(--muted);} .pl-rel b{color:var(--ink);font-weight:700;}
+  .pl-ad{margin:12px 16px;border-radius:12px;padding:14px 16px;background:linear-gradient(100deg,#1B3A9E,#2E5BD0);color:#fff;position:relative;overflow:hidden;}
+  .pl-ad-t{font-size:14.5px;font-weight:800;letter-spacing:-.01em;} .pl-ad-s{font-size:11px;opacity:.85;margin-top:3px;}
+  .pl-ad-tag{position:absolute;right:10px;bottom:10px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);font-size:9px;font-weight:800;border-radius:5px;padding:1px 5px;}
+  .pl-tabs2{display:flex;gap:20px;padding:6px 16px 0;background:#fff;border-bottom:1px solid var(--line);}
+  .plt2{border:0;background:none;font-family:inherit;font-size:15px;font-weight:800;color:var(--faint);padding:12px 2px;cursor:pointer;border-bottom:2.5px solid transparent;}
+  .plt2.on{color:var(--ink);border-bottom-color:var(--ink);} .plt2 b{color:inherit;font-variant-numeric:tabular-nums;}
+  .pl-top2{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 16px 11px;background:#fff;border-bottom:1px solid var(--line);}
+  .pl-filters.hos{border-bottom:1px solid var(--line);}
+  .pl-hlist{padding:2px 16px 8px;}
+  .hcard{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);}
+  .hcard:last-child{border-bottom:0;}
+  .hcard .hth{width:48px;height:48px;border-radius:12px;flex:none;background:linear-gradient(135deg,#E7EDFA,#F5F8FE);display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--blue-700);}
+  .hcard .hm{flex:1;min-width:0;} .hcard .hnm{font-size:14.5px;font-weight:800;color:var(--ink);}
+  .hcard .hsub{font-size:11.5px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .hcard .hrt{font-size:11.5px;color:var(--muted);margin-top:4px;} .hcard .hrt b{color:#FFB020;}
+  .hcard .htag{color:var(--blue-700);font-weight:700;background:var(--blue-50);border-radius:5px;padding:1px 6px;}
+  .hcard .hbtn{border:1px solid var(--blue);background:#fff;color:var(--blue);font-family:inherit;font-weight:800;font-size:12.5px;border-radius:9px;padding:9px 15px;cursor:pointer;flex:none;}
+  .pl-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:46px 24px;}
+  .pl-empty-ic{width:70px;height:70px;border-radius:50%;background:#F1F4F9;display:grid;place-items:center;color:var(--faint);margin-bottom:16px;}
+  .pl-empty-ic svg{width:34px;height:34px;}
+  .pl-empty p{font-size:14px;color:var(--muted);font-weight:600;margin:0 0 16px;}
+  .pl-req{border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:13.5px;border-radius:10px;padding:12px 20px;cursor:pointer;}
+  .pl-empty-hint{margin-top:18px;font-size:12px;color:var(--faint);line-height:1.6;max-width:255px;} .pl-empty-hint b{color:var(--blue);}
+  /* 우측 설명 — 직접 해보기 */
+  .spec-try{margin-top:16px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:13px 15px;}
+  .spec-try .try-h{font-size:12.5px;font-weight:800;color:var(--blue-700);margin-bottom:8px;}
+  .spec-try ol{margin:0;padding-left:18px;} .spec-try li{font-size:12.5px;color:#38465e;line-height:1.7;} .spec-try li b{color:var(--ink);}
 </style>
 </head>
 <body>
@@ -533,7 +571,23 @@
           </nav>
         </div>
       </div>
-      <div><p class="caption"><b>시술 리스트</b>는 <b>지역 선필터 + 인기순</b>을 기본으로, 매출 상위 병원 <b>AD 2건</b>을 상단에 방어 노출합니다. 카드마다 <b>쿠폰 적용가</b>와 <b>VAT 포함</b> 여부를 함께 보여 예약 전 가격을 투명하게 전달합니다.<br><br>2026-07-06 회의 반영 · 시술 정렬(지역 선필터+인기순) · AD 상위 방어 · 쿠폰 적용가 노출</p></div>
+      <div class="obspec">
+        <div class="spec-h">시술 리스트 — 검색·지역 기반 개편</div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>상단 검색 영역 추가</b><p>기존 리스트는 그대로 두고, 상단에 <b>검색창 · 연관 검색어 · AD 배너 · [시술 / 병원] 탭</b>을 붙였습니다. (검색 결과 화면과 동일한 구조)</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>지역 기반 노출</b><p>사용자가 선택한 <b>관심 지역(강남·강남역)</b>을 기준으로 시술·병원 리스트를 노출합니다. 검색 시 입력한 지역으로 문맥이 바뀝니다.</p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>시술 0건 → 병원 탭 자동 전환</b><p>지역명을 입력했을 때 <b>시술 리스트에 노출할 내용이 없으면</b>, 자동으로 <em>병원 탭</em>을 기본으로 보여줍니다. (‘검색 결과가 없어요 → 희망 시술 요청’ + 해당 지역 병원 노출)</p></div></div>
+        </div>
+        <div class="spec-try">
+          <div class="try-h">▶ 직접 해보기</div>
+          <ol>
+            <li><b>‘이갈이/코골이’</b> · <b>‘임플란트’</b> 검색 → 시술 탭에 결과 노출</li>
+            <li><b>‘서면’</b> 입력 → 시술 0건 → <b>병원 탭 자동 전환</b>, 서면 병원 노출</li>
+            <li>검색창에 직접 입력하거나, 상단 <b>예시 칩</b>을 눌러 실행</li>
+          </ol>
+        </div>
+        <p class="spec-src">2026-07-06 회의 반영 · 지역 기반 리스트 · 결과 없음 시 병원 폴백</p>
+      </div>
     </div>
   </section>
 
@@ -623,7 +677,8 @@ const I = {
   ent:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7.5 9.5a4.5 4.5 0 1 1 9 0c0 2.3-2 3.2-2 5.3A2.8 2.8 0 0 1 9 15"/><path d="M9.8 9.6a2.2 2.2 0 0 1 4.2.4"/></svg>',
   cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 7v10M7 12h10"/><rect x="4" y="4" width="16" height="16" rx="5"/></svg>',
   subway:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="14" rx="4"/><path d="M6 11h12M8.5 21l1.7-3M15.5 21l-1.7-3"/><circle cx="9.3" cy="13.7" r="1"/><circle cx="14.7" cy="13.7" r="1"/></svg>',
-  globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.6 3 14.4 0 18M12 3c-3 3.6-3 14.4 0 18"/></svg>'
+  globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.6 3 14.4 0 18M12 3c-3 3.6-3 14.4 0 18"/></svg>',
+  noresult:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l4 4v6"/><path d="M13 3v5h5"/><path d="M18 17.5 21 20.5"/><circle cx="14" cy="15" r="3.5"/><path d="M6 12H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1"/></svg>'
 };
 
 /* ---------- data ---------- */
@@ -870,8 +925,27 @@ const procList=[
   {nm:'종합 건강검진', hos:'강남 세이프메디컬', dept:'건강검진', region:'강남·강남역', price:'199,000원', was:'350,000원', rate:'9.3', rv:'97', coupon:false},
   {nm:'비절개 모발이식 2,000모', hos:'강남 모아름의원', dept:'두피/탈모', region:'강남·강남역', price:'2,900,000원', was:'3,900,000원', rate:'9.4', rv:'145', coupon:false}
 ];
+// 이갈이/코골이 등 검색 예시용 시술 추가
+procList.push(
+  {nm:'나이트가드 (이갈이 장치)', hos:'성누가병원', dept:'치과', region:'강남·강남역', price:'200,000원', was:'250,000원', rate:'9.2', rv:'5', coupon:false},
+  {nm:'코골이 장치', hos:'스카이치과', dept:'치과', region:'강남·역삼역', price:'350,000원', was:'450,000원', rate:'9.5', rv:'14', coupon:false},
+  {nm:'이갈이 장치 하드', hos:'스카이치과', dept:'치과', region:'강남·역삼역', price:'500,000원', was:'700,000원', rate:'9.5', rv:'14', coupon:false}
+);
+// 병원 리스트 (강남권 + 서면) — 지역 기반 노출 & 시술 0건 시 병원 폴백 데모용
+const hosList=[
+  {nm:'성누가병원', dept:'치과·내과·한방과', region:'강남·강남역', line:'강남역', rate:'9.2', rv:'5', tag:'제휴'},
+  {nm:'스카이치과', dept:'치과', region:'강남·역삼역', line:'역삼역', rate:'9.5', rv:'14', tag:'제휴'},
+  {nm:'강남서울밝은안과', dept:'안과', region:'강남·강남역', line:'강남역', rate:'9.3', rv:'35', tag:'제휴'},
+  {nm:'선릉 굿타임치과', dept:'치과', region:'선릉·삼성', line:'선릉역', rate:'9.4', rv:'331'},
+  {nm:'압구정 라비앙의원', dept:'피부과', region:'압구정', line:'압구정로데오역', rate:'9.6', rv:'860', tag:'제휴'},
+  {nm:'역삼 화이트치과', dept:'치과', region:'강남·역삼역', line:'역삼역', rate:'9.2', rv:'188'},
+  {nm:'강남 세이프메디컬', dept:'건강검진', region:'강남·강남역', line:'강남역', rate:'9.3', rv:'97'},
+  {nm:'서면 SW피부과', dept:'피부과', region:'부산 서면', line:'서면역', rate:'9.1', rv:'42', tag:'제휴'},
+  {nm:'서면 굿모닝치과', dept:'치과', region:'부산 서면', line:'서면역', rate:'9.0', rv:'27'},
+  {nm:'서면 밝은미소안과', dept:'안과', region:'부산 서면', line:'서면역', rate:'9.2', rv:'53'}
+];
 const plCats=['전체','피부과','안과','치과','성형외과','건강검진','두피/탈모'];
-let plCat='전체';
+let plCat='전체', plTab='시술', plQuery='';
 function procCard(d){
   const p=won(d.price), w=won(d.was);
   const pct = w>0?Math.round((1-p/w)*100)+'%':'';
@@ -885,21 +959,69 @@ function procCard(d){
       ${cp?`<div class="cpn">쿠폰 적용 시 ${cp}</div>`:''}
     </div></div>`;
 }
-function plItems(){ return plCat==='전체'?procList:procList.filter(d=>d.dept===plCat); }
+function hCard(h){
+  return `<div class="hcard"><div class="hth">${h.nm.replace(/\s.*/,'').slice(0,2)}</div>
+    <div class="hm"><div class="hnm">${h.nm}</div>
+      <div class="hsub">${h.dept} · ${h.region} · ${h.line}</div>
+      <div class="hrt"><b>★ ${h.rate}</b> (${h.rv})${h.tag?` · <span class="htag">${h.tag}</span>`:''}</div>
+    </div><button class="hbtn">예약</button></div>`;
+}
+const plNorm=s=>String(s).replace(/[·\s]/g,'');
+function plTokens(q){return q.trim().split(/[\s·\/,]+/).filter(Boolean).map(plNorm);}
+function plMatch(fields,q){const t=plTokens(q); if(!t.length) return true; return t.some(tk=>fields.some(f=>plNorm(f).includes(tk)));}
+const plDefRegion=['강남','압구정','선릉','역삼'];
+function plProcAll(){ const q=plQuery.trim(); return q?procList.filter(d=>plMatch([d.nm,d.dept,d.region,d.hos],q)):procList; }
+function plProcShown(){ let l=plProcAll(); if(plCat!=='전체') l=l.filter(d=>d.dept===plCat); return l; }
+function plHosAll(){ const q=plQuery.trim(); return q?hosList.filter(h=>plMatch([h.nm,h.dept,h.region,h.line],q)):hosList.filter(h=>plDefRegion.some(t=>h.region.includes(t))); }
+function plRegionLabel(){ const q=plQuery.trim(); if(!q) return '강남·강남역'; const hit=hosList.find(h=>plNorm(h.region).includes(plNorm(q))||plNorm(h.line).includes(plNorm(q))); return hit?hit.region:'강남·강남역'; }
 function renderProcList(){
-  const items=plItems();
   document.getElementById('plScroll').innerHTML=`
-    <div class="pl-top">
-      <button class="pl-region">${I.pin}<b>강남·강남역</b><span class="plchev">${I.chev}</span></button>
-      <button class="pl-sort">인기순 <span>▾</span></button>
+    <div class="pl-sbar"><div class="box">${I.search}<input id="plInput" placeholder="시술명, 병원명, 지역을 검색해보세요" value="${plQuery.replace(/"/g,'&quot;')}" oninput="plSearch(this.value)" autocomplete="off"></div></div>
+    <div class="pl-eg"><span>예시</span>
+      <button onclick="plTry('이갈이/코골이')">이갈이/코골이</button>
+      <button onclick="plTry('임플란트')">임플란트</button>
+      <button onclick="plTry('서면')">서면 · 결과없음</button>
+      ${plQuery?`<button class="clr" onclick="plTry('')">초기화</button>`:''}
     </div>
+    <div id="plDyn">${renderPlDyn()}</div>`;
+}
+function renderPlDyn(){
+  const nP=plProcAll().length, nH=plHosAll().length;
+  return `${plQuery.trim()?`<div class="pl-rel">연관 <b>${plQuery.trim()}</b></div>`:''}
+    <div class="pl-ad"><div class="pl-ad-t">덴티움 → 오스템 임플란트 업그레이드</div><div class="pl-ad-s">*뼈 이식 등 추가 시술은 별도 금액 발생</div><span class="pl-ad-tag">AD</span></div>
+    <div class="pl-tabs2">
+      <button class="plt2 ${plTab==='시술'?'on':''}" onclick="plSetTab('시술')">시술 <b>${nP}</b></button>
+      <button class="plt2 ${plTab==='병원'?'on':''}" onclick="plSetTab('병원')">병원 <b>${nH}</b></button>
+    </div>
+    ${plTab==='시술'?renderPlProcTab():renderPlHosTab()}`;
+}
+function renderPlProcTab(){
+  if(plProcAll().length===0){
+    return `<div class="pl-empty"><div class="pl-empty-ic">${I.noresult}</div>
+      <p>시술 검색 결과가 없어요</p>
+      <button class="pl-req">희망 시술 요청하기</button>
+      <div class="pl-empty-hint">‘${plQuery.trim()}’ 지역/시술은 아직 등록 전이에요.<br>위 <b>병원 탭</b>에서 해당 지역 병원을 확인해 보세요.</div></div>`;
+  }
+  const items=plProcShown();
+  return `<div class="pl-top2"><button class="pl-region">${I.pin}<b>${plRegionLabel()}</b><span class="plchev">${I.chev}</span></button><button class="pl-sort">인기순 <span>▾</span></button></div>
     <div class="pl-cats">${plCats.map(c=>`<button class="plc${c===plCat?' on':''}" onclick="plSetCat('${c}')">${c}</button>`).join('')}</div>
     <div class="pl-filters">${['쿠폰 추가할인','당일할인','특가전','오늘 예약가능'].map(f=>`<span class="plf">${f}</span>`).join('')}</div>
-    <div class="pl-cnt">시술 <b>${items.length}</b>건 · 강남·강남역 · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
-    <div class="pl-list">${items.map(procCard).join('')}</div>
-    <div style="height:20px"></div>`;
+    <div class="pl-cnt">시술 <b>${items.length}</b>건 · ${plRegionLabel()} · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
+    <div class="pl-list">${items.map(procCard).join('')}</div><div style="height:20px"></div>`;
 }
-function plSetCat(c){ plCat=c; renderProcList(); document.getElementById('plScroll').scrollTop=0; }
+function renderPlHosTab(){
+  const hos=plHosAll();
+  if(!hos.length) return `<div class="pl-filters hos"><span class="plf">지역 ▾</span><span class="plf">진료과 ▾</span><span class="plf">쿠폰 추가할인</span></div>
+    <div class="pl-empty"><div class="pl-empty-ic">${I.noresult}</div><p>검색 결과가 없어요</p><button class="pl-req">희망 병원 요청하기</button></div>`;
+  return `<div class="pl-filters hos"><span class="plf">지역 ▾</span><span class="plf">진료과 ▾</span><span class="plf">쿠폰 추가할인</span></div>
+    <div class="pl-cnt">병원 <b>${hos.length}</b>곳 · ${plRegionLabel()}</div>
+    <div class="pl-hlist">${hos.map(hCard).join('')}</div><div style="height:20px"></div>`;
+}
+function plUpdate(){ document.getElementById('plDyn').innerHTML=renderPlDyn(); }
+function plSearch(q){ plQuery=q; plCat='전체'; plTab = q.trim()==='' ? '시술' : (plProcAll().length===0 ? '병원' : '시술'); plUpdate(); }
+function plTry(q){ plQuery=q; plCat='전체'; plTab = q.trim()==='' ? '시술' : (plProcAll().length===0 ? '병원' : '시술'); renderProcList(); const i=document.getElementById('plInput'); if(i){i.value=q;} }
+function plSetTab(t){ plTab=t; plUpdate(); }
+function plSetCat(c){ plCat=c; plUpdate(); }
 
 /* ---------- ONBOARDING (safedoc.io/menu 전체 카테고리) ---------- */
 // 진료과 17종 + 세부 시술 — 출처: api.safedoc.io/department/list (safedoc.io/menu 동일)
@@ -1113,7 +1235,7 @@ function switchView(v){
   document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
   document.getElementById('v-'+v).classList.add('active');
   if(v==='signup'){ sg=0; sgRender(); }
-  if(v==='proclist'){ plCat='전체'; renderProcList(); }
+  if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; renderProcList(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
