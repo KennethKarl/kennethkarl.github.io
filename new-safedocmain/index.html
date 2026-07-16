@@ -548,15 +548,15 @@
   </header>
 
   <div class="seg" role="tablist" aria-label="데모 화면 전환">
-    <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
-    <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
+    <button role="tab" aria-selected="true" data-view="rat">개선 포인트</button>
     <button role="tab" aria-selected="false" data-view="signup">회원가입</button>
     <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
-    <button role="tab" aria-selected="false" data-view="rat">개선 포인트 · 근거</button>
+    <button role="tab" aria-selected="false" data-view="main">개선 메인</button>
+    <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
   </div>
 
   <!-- ============ MAIN ============ -->
-  <section class="view active" id="v-main">
+  <section class="view" id="v-main">
     <div class="stage">
       <div class="phone">
         <div class="screen">
@@ -667,7 +667,7 @@
   </section>
 
   <!-- ============ RATIONALE ============ -->
-  <section class="view" id="v-rat">
+  <section class="view active" id="v-rat">
     <div class="rat">
       <p class="lead">화면의 모든 변경은 <b>실제 사용 데이터</b>(Amplitude 활동 순위)와 <b>취소 사유 분석</b>에 근거합니다. 각 개선의 근거와 출처입니다.</p>
       <div class="cards" id="ratCards"></div>
