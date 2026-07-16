@@ -258,6 +258,15 @@
   .pbody{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;background:linear-gradient(180deg,#F3F7FF,#fff);border:1px solid var(--blue-100);border-radius:14px;padding:14px;}
   .pchip{border:1px solid var(--blue-100);background:#fff;border-radius:999px;padding:8px 13px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--blue-700);cursor:pointer;transition:.14s;}
   .pchip:hover{border-color:var(--blue);background:var(--blue-50);}
+  .hotchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;}
+  .hotchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:600;color:#33425c;cursor:pointer;transition:.14s;white-space:nowrap;}
+  .hotchip:hover{border-color:var(--blue);color:var(--blue);}
+  .trend{display:grid;grid-template-columns:1fr 1fr;column-gap:20px;}
+  .trend-col{display:flex;flex-direction:column;}
+  .trend .tr{display:flex;align-items:center;gap:12px;padding:9px 2px;border:0;background:none;font-family:inherit;cursor:pointer;text-align:left;width:100%;}
+  .trend .tr .rk{width:15px;font-weight:800;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink);flex:none;}
+  .trend .tr .kw{font-size:13.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .trend .tr:hover .kw{color:var(--blue);}
   .rc-chip{display:inline-flex;align-items:center;gap:7px;background:#F1F4F9;border-radius:999px;padding:8px 11px 8px 14px;font-size:12.5px;font-weight:600;color:#33425c;}
   .rc-chip button{border:0;background:none;color:var(--faint);cursor:pointer;font-size:15px;line-height:1;padding:0;}
   .poprank{display:flex;flex-direction:column;}
@@ -648,7 +657,9 @@ function recentCards(){
 
 /* ---------- search & popups ---------- */
 const recentSearches = ['강남 보톡스','스마일라식','종합검진','임플란트'];
-const popularSearches = ['보톡스','라식·라섹','임플란트','리프팅','눈성형','스킨부스터','치아미백','모발이식'];
+const hotProcedures = ['라식/라섹','임플란트','충치치료','보톡스','제모','치아교정','예방접종','눈성형','모발이식'];
+const trendKeywords = ['이갈이/코골이','안구건조증 IPL','보톡스/턱관절/양악','지방이식','다이어트','지방분해/바디라인','상담/검사','부분교정','보톡스','리프팅레이저'];
+function nowStamp(){const d=new Date();const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())} 기준`;}
 /* 검색 화면 — 고객 지역·관심 진료과 맞춤 추천(탭) */
 const persoSearch = [
   {dept:'피부과', items:['보톡스 이마','물광주사','리쥬란 힐러','슈링크 리프팅','스킨부스터','제모']},
@@ -693,8 +704,13 @@ function openSearch(kw){
       <div class="lbl"><span>재원님 <span style="color:var(--blue)">맞춤 추천</span></span><span class="lbl-sub">강남·강남역 · 관심 진료과 기반</span></div>
       <div class="ptabs">${persoSearch.map((p,i)=>`<button class="pt${i===pTab?' on':''}" onclick="setPTab(${i})">${p.dept}</button>`).join('')}</div>
       <div class="pbody" id="pbody">${persoBody(pTab)}</div>
-      <div class="lbl"><span>지금 <span style="color:var(--blue)">많이 찾는</span> 검색어</span></div>
-      <div class="poprank">${popularSearches.map((s,i)=>`<button class="pr" onclick="closeOvl()"><span class="rk">${i+1}</span><span class="kw">${s}</span>${i<3?'<span class="up">▲ 인기</span>':''}</button>`).join('')}</div>
+      <div class="lbl"><span>지금 <span style="color:var(--blue)">많이 찾는</span> 시술</span></div>
+      <div class="hotchips">${hotProcedures.map(s=>`<button class="hotchip" onclick="openSearch('${s}')">${s}</button>`).join('')}</div>
+      <div class="lbl"><span><span style="color:var(--blue)">인기</span> 검색어 트렌드</span><span class="lbl-sub">${nowStamp()}</span></div>
+      <div class="trend">
+        <div class="trend-col">${trendKeywords.slice(0,5).map((s,i)=>`<button class="tr" onclick="openSearch('${s}')"><span class="rk">${i+1}</span><span class="kw">${s}</span></button>`).join('')}</div>
+        <div class="trend-col">${trendKeywords.slice(5,10).map((s,i)=>`<button class="tr" onclick="openSearch('${s}')"><span class="rk">${i+6}</span><span class="kw">${s}</span></button>`).join('')}</div>
+      </div>
     </div></div>`;
   o.hidden=false;
   const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap');
