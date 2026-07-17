@@ -217,6 +217,15 @@
   .rc .n{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.06em;}
   .rc h4{margin:8px 0 4px;font-size:16px;font-weight:800;letter-spacing:-.01em;}
   .rc .chg{font-size:13px;color:#38465e;margin:0 0 14px;}
+  .rc-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:2px;}
+  .rc-tab{font-size:10.5px;font-weight:800;letter-spacing:.02em;color:var(--blue-700);
+    background:var(--blue-50);border-radius:999px;padding:3px 10px;white-space:nowrap;}
+  .rc .pts{margin:8px 0 13px;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;}
+  .rc .pts li{position:relative;padding-left:16px;font-size:13px;color:#38465e;line-height:1.5;}
+  .rc .pts li::before{content:"";position:absolute;left:2px;top:7px;width:5px;height:5px;
+    border-radius:2px;background:var(--blue);}
+  .rc .pts li b{color:var(--ink);font-weight:800;}
+  .rc .pts li s{color:var(--faint);font-weight:500;}
   .rc .ev{display:flex;flex-wrap:wrap;gap:8px;}
   .metric{display:flex;flex-direction:column;background:var(--blue-50);border-radius:10px;
     padding:8px 11px;min-width:92px;}
@@ -843,7 +852,7 @@
   <!-- ============ RATIONALE ============ -->
   <section class="view" id="v-rat">
     <div class="rat">
-      <p class="lead">화면의 모든 변경은 <b>실제 사용 데이터</b>(Amplitude 활동 순위)와 <b>취소 사유 분석</b>에 근거합니다. 각 개선의 근거와 출처입니다.</p>
+      <p class="lead"><b>회원가입 · 가입 온보딩 · 개선 메인 · 시술리스트 · 예약플로우 · 광고·특가</b> — 각 탭에 적용된 개선을 한눈에 요약했습니다. 모든 변경은 <b>실제 사용 데이터</b>(Amplitude 활동 순위)·<b>취소 사유 분석</b>·2026-07-06 회의에 근거합니다.</p>
       <div class="cards" id="ratCards"></div>
       <div class="legend">
         <span><i class="dot" style="background:var(--blue)"></i>Amplitude 활동 데이터 (상대 순위)</span>
@@ -1510,22 +1519,55 @@ function obDetectLoc(){
 
 /* ---------- RATIONALE ---------- */
 const rat=[
-  {n:'01',t:'검색바를 최상단으로',chg:'하단에 묻혀 있던 검색을 진료과 위 최상단으로. 탐색형 유저가 즉시 진입.',
-    ev:[['2위','메인 활동 순위'],['상위','검색 진입']],src:'활동 상위 · 회의 5번 검색 개선'},
-  {n:'02',t:'진료과 아이콘 인기순 간소화',chg:'가장 많이 쓰는 진료과를 인기순으로 정렬하고 개수를 줄여 첫 화면에서 바로 탐색.',
-    ev:[['1위','메인 활동 순위']],src:'활동 1위 · 아이디어 「메인 간소화」'},
-  {n:'03',t:'개인화 추천 영역 신설',chg:'성별·연령·최근 본 시술·온보딩 관심정보 기반 맞춤 추천을 상단에 배치.',
-    ev:[['상위','시술상세 조회'],['핵심','예약 전환 KPI']],src:'아이디어 「온보딩 정보 획득」 · 회의 개인화'},
-  {n:'04',t:'저활동 위젯 축소·제거',chg:'클릭이 거의 없는 인기·주변 병원, 메인 리뷰를 하단 이동 또는 제거해 밀도를 낮춤.',
-    ev:[['최하위','인기병원 클릭'],['최하위','주변병원'],['최하위','메인리뷰']],src:'활동 하위권 · 아이디어 「메인 간소화」'},
-  {n:'05',t:'예약 취소 전 "변경" 분기',chg:'취소 사유의 대부분이 일정·정보 변경. 취소 직전 변경 옵션을 먼저 노출해 이탈 방어.',
-    ev:[['대다수','취소사유=일정/정보 변경','warn']],src:'회의 7번 예약 취소 방어 · 취소사유 분석'},
-  {n:'06',t:'지역 재정비 + 0건 대안',chg:'광역 통합·병원 0개 지역 제외. 결과 0건일 때 “병원 많은 지역” 추천 버튼 제공.',
-    ev:[['하위','지역 필터 활동']],src:'회의 6번 지역 분류 재정비'}
+  {tab:'① 회원가입',t:'간편가입 + 본인·소속 인증',
+    pts:[
+      '카카오·네이버·<b>구글 간편 로그인</b>으로 시작(직장인·대학생 전용가 자격).',
+      '<b>PASS 본인인증</b>(통신사·SMS)으로 안전한 진료 예약 기반 확보.',
+      '<b>소속(회사) 이메일 인증</b>으로 복지 혜택가 자격 확인.',
+      '가입 완료 직후 <b>관심정보 온보딩</b>으로 자연스럽게 연결.'],
+    src:'회원가입 실제 플로우 스크린샷 walkthrough(12단계)'},
+  {tab:'② 가입 온보딩',t:'관심정보 수집으로 첫 홈부터 개인화',
+    pts:[
+      '진료과 <b>17종 전체</b> 노출(<b>safedoc.io/menu</b> 동기화, 기존 데모 7종 → 전체).',
+      '신규 유저 기준 <b>가나다순</b> 1차 정렬 → 로그 쌓이면 <b>‘많이 찾는 순’ 자동 재정렬</b>.',
+      '<b>진료과 → 세부 시술 → 관심 지역</b> 순 3스텝 수집(세부 시술은 /menu와 동일).'],
+    ev:[['핵심','예약 전환 KPI'],['상위','시술상세 조회']],
+    src:'api.safedoc.io/department/list · 아이디어 「온보딩 정보 획득」'},
+  {tab:'③ 개선 메인',t:'검색·개인화 상단, 저활동 위젯 축소',
+    pts:[
+      '<b>관심 지역 선택(최대 3곳)</b> 신설 → 추천·특가를 지역 우선 노출.',
+      '<b>검색바 최상단 고정</b>(실제는 배너에 밀려 하단에 묻힘) — 탐색형 유저 즉시 진입.',
+      '<b>개인화 추천 영역 신설</b> + 진료과 <b>인기순 정렬·개수 축소</b>.',
+      '인기·주변 병원, 메인 리뷰 등 <b>저활동 위젯 축소·제거</b>로 밀도 개선.'],
+    ev:[['1위','진료과 활동'],['2위','검색 활동'],['최하위','인기·주변·리뷰','warn']],
+    src:'welfaremall.stage 대비 · 활동순위 · 아이디어 「메인 간소화」'},
+  {tab:'④ 시술리스트',t:'검색·지역 기반 리스트 개편',
+    pts:[
+      '상단에 <b>검색창·연관 검색어·AD 배너·[시술/병원] 탭</b> 추가(검색 결과와 동일 구조).',
+      '<b>지역 선택 → 즉시 재조회</b>(AD 2건 방어 후 인기순 정렬).',
+      '시술 <b>0건이면 병원 탭 자동 전환</b> + 희망 시술 요청 유도.',
+      '지역별 <b>시술·병원 수 자동 표시</b>, 카드에 <b>병원·지역·지하철역</b> 표기.'],
+    src:'2026-07-06 회의 · 지역 재조회 · 결과없음 병원 폴백'},
+  {tab:'⑤ 예약플로우',t:'선(先)신청 · 후(後)상세입력',
+    pts:[
+      '<b>내원 희망 일시 + 약관 동의</b>만으로 즉시 신청(대상·전달사항·상담시술 <s>제거</s>).',
+      '완료 <s>팝업</s> 대신 <b>접수 페이지 전환</b>으로 신청 접수 안내.',
+      '접수 직후 <b>상세정보 후속 수집 → DB 업데이트</b>(‘나중에 입력’ 허용).'],
+    ev:[['대다수','취소사유=일정/정보 변경','warn']],
+    src:'회의 7번 예약 취소 방어 · 취소사유 분석'},
+  {tab:'⑥ 광고·특가',t:'미활용 사이드바 → 개인화 인벤토리',
+    pts:[
+      '데스크톱 <b>좌측 사이드바</b>(꿀팁·공지·QR 저활동)를 <b>광고·특가 인벤토리</b>로 전환.',
+      '<b>이달의 제휴 특가전</b> 전면 배치 + <b>실시간 인기 시술 Top 10</b>(여신티켓 형).',
+      '관심 진료과·지역 <b>개인화 매칭 + 스폰서(AD) 우선 노출</b>로 광고 매출·전환 동시 확보.'],
+    src:'여신티켓 참고 · 미활용 인벤토리 수익화 · AS-IS/TO-BE 토글'}
 ];
 document.getElementById('ratCards').innerHTML = rat.map(r=>`
-  <div class="rc"><div class="n">${r.n}</div><h4>${r.t}</h4><p class="chg">${r.chg}</p>
-    <div class="ev">${r.ev.map(e=>`<div class="metric ${e[2]||''}"><span class="v">${e[0]}</span><span class="l">${e[1]}</span></div>`).join('')}</div>
+  <div class="rc">
+    <div class="rc-top"><span class="rc-tab">${r.tab}</span></div>
+    <h4>${r.t}</h4>
+    <ul class="pts">${r.pts.map(p=>`<li>${p}</li>`).join('')}</ul>
+    ${r.ev?`<div class="ev">${r.ev.map(e=>`<div class="metric ${e[2]||''}"><span class="v">${e[0]}</span><span class="l">${e[1]}</span></div>`).join('')}</div>`:''}
     <div class="src"><b>근거·출처</b> · ${r.src}</div></div>`).join('');
 
 /* ---------- SIGNUP FLOW (screenshot walkthrough) ---------- */
