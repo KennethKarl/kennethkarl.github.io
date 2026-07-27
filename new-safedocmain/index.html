@@ -169,8 +169,8 @@
   .tab svg{width:24px;height:24px;}
   .tab.on{color:#111;font-weight:700;}
 
-  /* ---- AS-IS vs TO-BE 비교 (왼쪽: 현행+설명 / 오른쪽: 개선) ---- */
-  .stage.cmp{display:grid;grid-template-columns:minmax(0,1fr) 390px;grid-template-areas:"asis tobe" "expl tobe";column-gap:34px;row-gap:26px;align-items:start;justify-content:center;max-width:1080px;margin:0 auto;}
+  /* ---- AS-IS vs TO-BE 비교 (AS-IS · TO-BE · 설명 3열) ---- */
+  .stage.cmp{display:grid;grid-template-columns:390px 390px minmax(300px,1fr);grid-template-areas:"asis tobe expl";column-gap:30px;row-gap:24px;align-items:start;width:min(1320px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
   .cmp-col.asis{grid-area:asis;}
   .cmp-col.tobe{grid-area:tobe;}
   .cmp-col{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;}
@@ -186,7 +186,7 @@
   .asis-scroll::-webkit-scrollbar{width:0}
   .asis-scroll img{display:block;width:100%;height:auto;}
   .cmp-explain{grid-area:expl;max-width:none;margin:0;align-self:start;}
-  @media(max-width:900px){.stage.cmp{grid-template-columns:1fr;grid-template-areas:"asis" "tobe" "expl";justify-items:center;}.cmp-explain{max-width:520px;}}
+  @media(max-width:1160px){.stage.cmp{grid-template-columns:1fr;grid-template-areas:"asis" "tobe" "expl";justify-items:center;width:min(560px,95vw);left:auto;transform:none;margin:0 auto;}.cmp-explain{max-width:520px;}}
 
   .caption{max-width:390px;margin:12px auto 0;text-align:center;font-size:12.5px;color:var(--muted);}
   .caption b{color:var(--ink);}
