@@ -169,9 +169,10 @@
   .tab svg{width:24px;height:24px;}
   .tab.on{color:#111;font-weight:700;}
 
-  /* ---- AS-IS vs TO-BE 비교 (왼쪽 현행 / 오른쪽 개선) ---- */
-  .stage.cmp{grid-template-columns:none;display:block;}
-  .cmp-phones{display:flex;gap:26px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+  /* ---- AS-IS vs TO-BE 비교 (왼쪽: 현행+설명 / 오른쪽: 개선) ---- */
+  .stage.cmp{display:grid;grid-template-columns:minmax(0,1fr) 390px;grid-template-areas:"asis tobe" "expl tobe";column-gap:34px;row-gap:26px;align-items:start;justify-content:center;max-width:1080px;margin:0 auto;}
+  .cmp-col.asis{grid-area:asis;}
+  .cmp-col.tobe{grid-area:tobe;}
   .cmp-col{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;}
   .cmp-lbl{display:inline-flex;align-items:baseline;gap:5px;font-size:12.5px;font-weight:800;
     padding:6px 15px;border-radius:999px;white-space:nowrap;}
@@ -184,8 +185,8 @@
   .asis-scroll{overflow-y:auto;overflow-anchor:none;flex:1;scrollbar-width:thin;background:#fff;padding-top:16px;}
   .asis-scroll::-webkit-scrollbar{width:0}
   .asis-scroll img{display:block;width:100%;height:auto;}
-  .cmp-explain{max-width:900px;margin:36px auto 0;}
-  @media(max-width:900px){.cmp-phones{gap:16px;}}
+  .cmp-explain{grid-area:expl;max-width:none;margin:0;align-self:start;}
+  @media(max-width:900px){.stage.cmp{grid-template-columns:1fr;grid-template-areas:"asis" "tobe" "expl";justify-items:center;}.cmp-explain{max-width:520px;}}
 
   .caption{max-width:390px;margin:12px auto 0;text-align:center;font-size:12.5px;color:var(--muted);}
   .caption b{color:var(--ink);}
@@ -314,8 +315,10 @@
   .sheet-b{padding:16px 18px 26px;overflow-y:auto;}
   .sheet-note{background:var(--coral-50);color:#E23B40;font-size:12px;font-weight:700;border-radius:10px;padding:10px 13px;margin-bottom:14px;}
   .allgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-  .allcat{border:1px solid var(--line);border-radius:12px;padding:12px 13px;}
-  .allcat .ct{font-size:13px;font-weight:800;margin-bottom:9px;color:var(--ink);}
+  .allcat{border:1px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;}
+  .allcat:hover,.allcat:focus-visible{border-color:var(--blue);background:var(--blue-50);outline:none;}
+  .allcat .ct{font-size:13px;font-weight:800;margin-bottom:9px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;}
+  .allcat .ct-ar{color:var(--blue);font-weight:700;}
   .allcat .it{display:flex;flex-wrap:wrap;gap:6px;}
   .allcat .it span{font-size:11.5px;background:var(--blue-50);color:var(--blue-700);border-radius:6px;padding:3px 8px;font-weight:600;}
   .deal-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
@@ -699,10 +702,9 @@
   <!-- ============ MAIN ============ -->
   <section class="view active" id="v-main">
     <div class="stage cmp">
-      <div class="cmp-phones">
-      <figure class="cmp-col"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 메인</small></figcaption>
+      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 메인</small></figcaption>
       <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/main.jpg" alt="현행 welfaremall 메인" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
-      <figure class="cmp-col"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
+      <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone">
         <div class="screen">
           <div class="notch"></div>
@@ -717,7 +719,6 @@
           </nav>
         </div>
       </div></figure>
-      </div>
       <div class="cmp-explain">
         <p class="caption" id="mainCap"></p>
         <div class="obspec" id="diffSpec">
@@ -748,10 +749,9 @@
   <!-- ============ 시술 리스트 ============ -->
   <section class="view" id="v-proclist">
     <div class="stage cmp">
-      <div class="cmp-phones">
-      <figure class="cmp-col"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 리스트</small></figcaption>
+      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 리스트</small></figcaption>
       <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/list.jpg" alt="현행 welfaremall 시술 리스트" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
-      <figure class="cmp-col"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
+      <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone">
         <div class="screen">
           <div class="notch"></div>
@@ -766,7 +766,6 @@
           </nav>
         </div>
       </div></figure>
-      </div>
       <div class="cmp-explain">
       <div class="obspec">
         <div class="spec-h">시술 리스트 — 검색·지역 기반 개편</div>
@@ -795,15 +794,13 @@
   <!-- ============ 예약 플로우 ============ -->
   <section class="view" id="v-reserve">
     <div class="stage cmp">
-      <div class="cmp-phones">
-      <figure class="cmp-col"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 상세→예약</small></figcaption>
+      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 상세→예약</small></figcaption>
       <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/detail.jpg" alt="현행 welfaremall 시술 상세(예약 진입)" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
-      <figure class="cmp-col"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
+      <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone"><div class="screen">
         <div class="notch"></div>
         <div class="scroll" id="rvScroll"></div>
       </div></div></figure>
-      </div>
       <div class="cmp-explain"><div class="obspec" id="rvSpec">
         <div class="spec-h">예약 플로우 개선 — 선(先)신청 · 후(後)상세입력</div>
         <div class="spec">
@@ -1056,7 +1053,7 @@ function openAllProcedures(){
     <div class="sheet"><div class="sheet-h"><h3>전체 시술</h3>
       <button class="x" onclick="closeOvl()" aria-label="닫기">${I.x}</button></div>
       <div class="sheet-b"><div class="allgrid">
-        ${allProc.map(([c,items])=>`<div class="allcat"><div class="ct">${c}</div><div class="it">${items.map(x=>`<span>${x}</span>`).join('')}</div></div>`).join('')}
+        ${allProc.map(([c,items])=>`<div class="allcat" role="button" tabindex="0" onclick="deptClick('${c}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();deptClick('${c}')}"><div class="ct">${c} <span class="ct-ar">›</span></div><div class="it">${items.map(x=>`<span>${x}</span>`).join('')}</div></div>`).join('')}
       </div></div></div>`;
   o.hidden=false;
 }
