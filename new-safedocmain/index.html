@@ -164,10 +164,28 @@
   /* bottom tab */
   .tabbar{display:flex;background:#fff;border-top:1px solid var(--line);
     padding:8px 6px calc(8px + env(safe-area-inset-bottom));}
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-    font-size:10.5px;font-weight:600;color:var(--faint);}
-  .tab svg{width:22px;height:22px;}
-  .tab.on{color:var(--blue);}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+    font-size:11px;font-weight:600;color:#1a1a1a;letter-spacing:-.02em;}
+  .tab svg{width:24px;height:24px;}
+  .tab.on{color:#111;font-weight:700;}
+
+  /* ---- AS-IS vs TO-BE 비교 (왼쪽 현행 / 오른쪽 개선) ---- */
+  .stage.cmp{grid-template-columns:none;display:block;}
+  .cmp-phones{display:flex;gap:26px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+  .cmp-col{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;}
+  .cmp-lbl{display:inline-flex;align-items:baseline;gap:5px;font-size:12.5px;font-weight:800;
+    padding:6px 15px;border-radius:999px;white-space:nowrap;}
+  .cmp-lbl small{font-weight:600;font-size:11px;opacity:.82;}
+  .cmp-lbl.asis{background:#EAEEF4;color:#5A6A82;}
+  .cmp-lbl.tobe{background:var(--blue);color:#fff;box-shadow:0 6px 16px -8px rgba(31,99,255,.7);}
+  .phone.asis{position:relative;}
+  .phone.asis::after{content:"현행 화면 캡처 · 스크롤 가능";position:absolute;left:50%;bottom:-24px;
+    transform:translateX(-50%);font-size:10.5px;color:var(--faint);white-space:nowrap;}
+  .asis-scroll{overflow-y:auto;overflow-anchor:none;flex:1;scrollbar-width:thin;background:#fff;padding-top:16px;}
+  .asis-scroll::-webkit-scrollbar{width:0}
+  .asis-scroll img{display:block;width:100%;height:auto;}
+  .cmp-explain{max-width:900px;margin:36px auto 0;}
+  @media(max-width:900px){.cmp-phones{gap:16px;}}
 
   .caption{max-width:390px;margin:12px auto 0;text-align:center;font-size:12.5px;color:var(--muted);}
   .caption b{color:var(--ink);}
@@ -525,8 +543,8 @@
   .sd-price{margin-top:2px;font-size:18px;font-weight:700;color:#000;font-variant-numeric:tabular-nums;}
   .sd-pct{color:#1B59FA;font-weight:700;font-size:16px;margin-right:6px;}
   .sd-cpn{margin-top:9px;border:1px solid #DCE6FF;background:#F4F7FF;border-radius:8px;padding:8px;text-align:center;font-size:12px;font-weight:700;color:#1550E0;}
-  .sd-nav .tab{color:#3d4148;font-size:11px;font-weight:500;letter-spacing:-.02em;}
-  .sd-nav .tab svg{width:23px;height:23px;stroke-width:1.7;}
+  .sd-nav .tab{color:#1a1a1a;font-size:11px;font-weight:600;letter-spacing:-.02em;}
+  .sd-nav .tab svg{width:24px;height:24px;stroke-width:1.8;}
   .sd-nav .sd-call{display:inline-flex;} .sd-nav .sd-call svg{color:#3d4148;}
   /* 개선 메인 관심 지역(최대 3곳) */
   .appbar .loc{border:0;background:none;font-family:inherit;cursor:pointer;padding:0;}
@@ -680,21 +698,27 @@
 
   <!-- ============ MAIN ============ -->
   <section class="view active" id="v-main">
-    <div class="stage">
+    <div class="stage cmp">
+      <div class="cmp-phones">
+      <figure class="cmp-col"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 메인</small></figcaption>
+      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/main.jpg" alt="현행 welfaremall 메인" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
+      <figure class="cmp-col"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone">
         <div class="screen">
           <div class="notch"></div>
           <div class="scroll" id="mainScroll"><!-- injected --></div>
           <div class="ovl" id="mainOvl" hidden></div>
           <nav class="tabbar">
-            <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>검색</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>예약</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>마이</div>
+            <div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div>
           </nav>
         </div>
+      </div></figure>
       </div>
-      <div>
+      <div class="cmp-explain">
         <p class="caption" id="mainCap"></p>
         <div class="obspec" id="diffSpec">
           <div class="spec-h">실제 메인(welfaremall.stage) 대비 변경점</div>
@@ -723,21 +747,27 @@
 
   <!-- ============ 시술 리스트 ============ -->
   <section class="view" id="v-proclist">
-    <div class="stage">
+    <div class="stage cmp">
+      <div class="cmp-phones">
+      <figure class="cmp-col"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 리스트</small></figcaption>
+      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/list.jpg" alt="현행 welfaremall 시술 리스트" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
+      <figure class="cmp-col"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone">
         <div class="screen">
           <div class="notch"></div>
           <div class="scroll" id="plScroll"></div>
           <div class="ovl" id="plOvl" hidden></div>
           <nav class="tabbar sd-nav">
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>홈</div>
+            <div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div>
             <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.6 3.5 9 3l1.6 4-1.9 1.4a12 12 0 0 0 5 5L15 11.4 19 13l-.5 2.4a2 2 0 0 1-2.2 1.6A14 14 0 0 1 5 5.7a2 2 0 0 1 1.6-2.2Z"/></svg>전화상담</div>
-            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div>
             <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div>
           </nav>
         </div>
+      </div></figure>
       </div>
+      <div class="cmp-explain">
       <div class="obspec">
         <div class="spec-h">시술 리스트 — 검색·지역 기반 개편</div>
         <div class="spec">
@@ -758,17 +788,23 @@
         </div>
         <p class="spec-src">2026-07-06 회의 반영 · 지역 선택 재조회 · 결과 없음 시 병원 폴백</p>
       </div>
+      </div>
     </div>
   </section>
 
   <!-- ============ 예약 플로우 ============ -->
   <section class="view" id="v-reserve">
-    <div class="stage">
+    <div class="stage cmp">
+      <div class="cmp-phones">
+      <figure class="cmp-col"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 상세→예약</small></figcaption>
+      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/detail.jpg" alt="현행 welfaremall 시술 상세(예약 진입)" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
+      <figure class="cmp-col"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone"><div class="screen">
         <div class="notch"></div>
         <div class="scroll" id="rvScroll"></div>
-      </div></div>
-      <div><div class="obspec" id="rvSpec">
+      </div></div></figure>
+      </div>
+      <div class="cmp-explain"><div class="obspec" id="rvSpec">
         <div class="spec-h">예약 플로우 개선 — 선(先)신청 · 후(後)상세입력</div>
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>예약 신청 마찰 최소화</b><p>기존 예약 화면에서 <b>진료 대상 · 병원 전달사항 · 추가 상담 희망 시술</b>을 <b>제거</b>하고, <b>내원 희망 일시 + 약관 동의</b>만으로 <b>‘예약 신청하기’ 즉시 신청</b>되도록 간소화했습니다.</p></div></div>
@@ -1721,6 +1757,7 @@ function switchView(v){
   document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected', b.dataset.view===v));
   document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
   document.getElementById('v-'+v).classList.add('active');
+  document.querySelectorAll('#v-'+v+' .asis-scroll').forEach(e=>e.scrollTop=0);
   if(v==='signup'){ sg=0; sgRender(); }
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; plRegion='강남'; closeRegionPicker(); renderProcList(); }
   if(v==='reserve'){ rvReset(); }
@@ -1741,6 +1778,12 @@ renderReserve();
 renderAd();
 obRender();
 sgRender();
+/* AS-IS 현행 화면 캡처는 항상 상단부터 보이도록 고정 (지연로딩·스크롤 앵커 방지) */
+function resetAsisScroll(){ document.querySelectorAll('.asis-scroll').forEach(e=>e.scrollTop=0); }
+resetAsisScroll();
+requestAnimationFrame(resetAsisScroll);
+window.addEventListener('load', ()=>{ resetAsisScroll(); setTimeout(resetAsisScroll, 300); });
+document.querySelectorAll('.asis-scroll img').forEach(img=>img.addEventListener('load', ()=>{ img.closest('.asis-scroll').scrollTop=0; }));
 </script>
 
 </body>
