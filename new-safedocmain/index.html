@@ -159,6 +159,23 @@
     padding:8px 13px;font-size:12.5px;font-weight:600;color:#33425c;white-space:nowrap;}
   .chip b{color:var(--blue);}
 
+  /* 신규 입점 병원 grid */
+  .newhos{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .nhcard{cursor:pointer;}
+  .nh-th{height:98px;border-radius:14px;padding:11px 12px;color:#fff;display:flex;flex-direction:column;
+    justify-content:flex-end;gap:2px;position:relative;overflow:hidden;text-shadow:0 1px 5px rgba(0,0,0,.35);}
+  .nh-th small{font-size:9.5px;opacity:.92;font-weight:700;}
+  .nh-th b{font-size:15px;font-weight:800;letter-spacing:-.02em;}
+  .nh-th em{font-size:10.5px;font-style:normal;opacity:.9;margin-top:1px;}
+  .nh-badge{position:absolute;right:8px;top:8px;background:var(--coral);color:#fff;font-size:9.5px;
+    font-weight:800;border-radius:6px;padding:3px 6px;text-shadow:none;}
+  .nh-nm{margin-top:8px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .nh-rv{font-size:11.5px;color:var(--muted);font-weight:600;}
+  .nh-rv b{color:#FFB020;}
+  .nh-more{margin-top:13px;width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;
+    padding:13px;font-family:inherit;font-size:13.5px;font-weight:700;color:#33425c;cursor:pointer;}
+  .nh-more:hover{border-color:var(--blue);color:var(--blue);}
+
   /* review list */
   .rev{display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
   .rev:last-child{border-bottom:0;}
@@ -970,10 +987,19 @@ const persoAll = [
   {nm:'제모 레이저 5회',hos:'강남 클리어 · 강남역',price:'79,000원',was:'150,000원',disc:'47%',star:'★4.7',cnt:'(690)',q:'제모'},
   {nm:'스마일라식',hos:'강남밝은눈안과 · 강남역',price:'1,490,000원',was:'',disc:'',star:'★4.9',cnt:'(2,010)',q:'스마일라식'}
 ];
+/* 시술페이지(병원) 링크 — 리뷰/신규 병원 클릭 시 이동. 실제 구현은 병원별 고유 URL 매핑 */
+const HOSP_URL='https://welfaremall.stage.safedoc.kr/hospital/490280038222830/514019066647784';
 const reviews = [
-  {nm:'강남 라인성형외과 · 눈매교정',st:'<span class="star">★ 4.9</span> · 후기 2,310 · 재방문율 상위'},
-  {nm:'압구정 SW피부과 · 리프팅',st:'<span class="star">★ 4.9</span> · 후기 1,742 · 이달의 인기'},
-  {nm:'선릉 굿타임치과 · 임플란트',st:'<span class="star">★ 4.8</span> · 후기 980 · 정찰가 공개'}
+  {nm:'강남 라인성형외과 · 눈매교정',st:'<span class="star">★ 4.9</span> · 후기 2,310 · 재방문율 상위',url:HOSP_URL},
+  {nm:'압구정 SW피부과 · 리프팅',st:'<span class="star">★ 4.9</span> · 후기 1,742 · 이달의 인기',url:HOSP_URL},
+  {nm:'선릉 굿타임치과 · 임플란트',st:'<span class="star">★ 4.8</span> · 후기 980 · 정찰가 공개',url:HOSP_URL}
+];
+/* 신규 입점 병원 (AS-IS 동일 섹션 재현) */
+const newHos=[
+  {nm:'강남서연성형외과',tag:'눈성형·리프팅 전문',loc:'서울 · 신사역',g:'linear-gradient(150deg,#2B3A67,#54709E)'},
+  {nm:'강남다움의원',tag:'리프팅·스킨부스터·다이어트',loc:'서울 · 강남역',g:'linear-gradient(150deg,#6E5E86,#B79CC6)'},
+  {nm:'온리원치과',tag:'원데이 임플란트',loc:'경기 화성 · 향남읍',g:'linear-gradient(150deg,#37624F,#6BA98C)',badge:'일요일 진료'},
+  {nm:'수영하임치과',tag:'',loc:'부산 · 수영역',g:'linear-gradient(150deg,#123A5E,#2E6FA0)',rv:'<b>★ 10.0</b> (1)'}
 ];
 const recent = [
   {nm:'오스템 BA 임플란트',hos:'원데이치과',cap:'하루만에 끝나는<br>원데이 임플란트',badge:'원데이치과',g:'linear-gradient(150deg,#12275F,#2E5BD0)'},
@@ -1246,6 +1272,14 @@ function mainRegSearch(q){ mainRegQuery=q; const r=document.getElementById('main
 function mainRegFocus(){ const i=document.getElementById('mainRegInput'); if(i){i.focus(); const v=i.value; i.value=''; i.value=v;} }
 function openMainRegion(){ mainSearchOn=false; mainRegQuery=''; renderMainRegion(); }
 function mainRegionApply(){ mainSearchOn=false; mainRegQuery=''; const o=ovl(); o.hidden=true; o.innerHTML=''; renderMain(); }
+/* 병원 시술페이지로 이동 (새 탭) — 리뷰/신규 병원 클릭 공통 */
+function openHospital(u){ window.open(u||HOSP_URL,'_blank','noopener'); }
+function newHosGrid(){
+  return newHos.map(h=>`<div class="nhcard" role="button" tabindex="0" onclick="openHospital()" onkeydown="if(event.key==='Enter'){openHospital()}">
+    <div class="nh-th" style="background:${h.g}">${h.badge?`<span class="nh-badge">${h.badge}</span>`:''}${h.tag?`<small>${h.tag}</small>`:''}<b>${h.nm}</b><em>${h.loc}</em></div>
+    <div class="nh-nm">${h.nm}${h.rv?`<span class="nh-rv">${h.rv}</span>`:''}</div>
+  </div>`).join('');
+}
 function persoRail(){
   return perso.map(p=>`<div class="pcard">
     <div class="ph">${p.disc?`<span class="disc">${p.disc}</span>`:''}</div>
@@ -1302,7 +1336,10 @@ function renderTOBE(){
         <div class="chip" onclick="runSearch('치아미백')"><b>#</b>치아미백</div><div class="chip" onclick="runSearch('모발이식')"><b>#</b>모발이식</div>
       </div></div>
     <div class="sec"><div class="sec-h"><h3>후기 좋은 <b>시술</b><span class="tag">후기 많은 순</span></h3></div>
-      ${reviews.map(r=>`<div class="rev"><div class="th"></div><div class="m"><div class="nm">${r.nm}</div><div class="st">${r.st}</div></div><div class="go">예약</div></div>`).join('')}</div>
+      ${reviews.map(r=>`<div class="rev" role="button" tabindex="0" style="cursor:pointer" onclick="openHospital('${r.url}')" onkeydown="if(event.key==='Enter'){openHospital('${r.url}')}"><div class="th"></div><div class="m"><div class="nm">${r.nm}</div><div class="st">${r.st}</div></div><div class="go">예약</div></div>`).join('')}</div>
+    <div class="sec"><div class="sec-h"><h3>신규 <b>입점 병원</b></h3></div>
+      <div class="newhos">${newHosGrid()}</div>
+      <button class="nh-more" onclick="openHospital()">더 보기</button></div>
     <div style="height:20px"></div>
   </div>`;
 }
