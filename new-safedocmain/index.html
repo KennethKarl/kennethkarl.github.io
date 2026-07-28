@@ -644,6 +644,18 @@
   .rv-notes{margin:0;padding-left:18px;} .rv-notes li{font-size:11.5px;color:var(--muted);line-height:1.7;}
   .rv-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:13px;resize:none;outline:none;color:var(--ink);}
   .rv-sel{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 12px;font-family:inherit;font-size:13.5px;color:var(--ink);background:#fff;outline:none;}
+  /* AS-IS 현행 예약 폼 전용 */
+  #rvAsisScroll{background:#F4F6FA;letter-spacing:-.02em;}
+  .rv-vat{font-size:11px;font-weight:500;color:var(--muted);margin-left:2px;}
+  .rv-row{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;background:#fff;border-top:8px solid #EDF0F5;font-size:14px;font-weight:700;color:#111;} .rv-row span{color:var(--faint);font-size:16px;}
+  .rv-ta-cnt{text-align:right;font-size:11px;color:var(--faint);margin-top:5px;}
+  .rv-cpn{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:10px;padding:13px 14px;} .rv-cpn-v{font-size:15px;font-weight:800;color:#111;} .rv-cpn-r{display:flex;align-items:center;gap:9px;} .rv-cpn-max{font-size:10.5px;font-weight:800;color:var(--blue-700);background:var(--blue-50);border-radius:6px;padding:3px 7px;} .rv-cpn-ch{font-size:12.5px;font-weight:700;color:#33425c;}
+  .rv-cpn-note{text-align:right;font-size:11.5px;color:var(--muted);margin-top:7px;}
+  .rv-pay{display:flex;justify-content:space-between;font-size:13px;color:#38465e;padding:6px 0;} .rv-pay span:last-child{font-weight:700;color:#111;font-variant-numeric:tabular-nums;}
+  .rv-pay.red span:last-child{color:#E23B40;} .rv-pay.sub{font-size:11.5px;color:var(--muted);padding:3px 0;} .rv-pay.sub span:last-child{color:var(--muted);font-weight:600;}
+  .rv-pay.total{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:14px;font-weight:800;color:#111;} .rv-pay.total span:last-child{font-size:16px;color:#111;}
+  .rv-pay-note{margin:9px 0 0;font-size:11px;color:var(--faint);line-height:1.5;}
+  .rv-agree-tx{padding:2px 16px 14px;background:#fff;font-size:12px;color:#48566e;line-height:1.6;}
   #rvSpec .sc-b s{color:var(--faint);}
   /* ── 광고·특가 인벤토리 ── */
   .ad-fair{display:flex;align-items:center;gap:10px;border-radius:16px;padding:16px 18px;margin:14px 0 6px;color:#fff;cursor:pointer;
@@ -850,7 +862,7 @@
   <section class="view" id="v-reserve">
     <div class="stage cmp">
       <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 상세→예약</small></figcaption>
-      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/detail.jpg" alt="현행 welfaremall 시술 상세(예약 진입)" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
+      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="scroll" id="rvAsisScroll"></div></div></div></figure>
       <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone"><div class="screen">
         <div class="notch"></div>
@@ -887,7 +899,7 @@
         <p class="caption" style="text-align:left;margin:0 0 16px">데스크톱 웹 <b>좌측 사이드바 영역</b>(스샷2)이 현재 <b>세이프닥 꿀팁·공지사항·QR</b> 등 저활동 콘텐츠로 비어 있습니다. <b>여신티켓</b>이 같은 자리를 ‘실시간 인기 시술 + 특가전’ 인벤토리로 쓰는 것처럼, <b>이 사이드바를 개인화 광고·특가 인벤토리로 전환</b>합니다. (상단 <b>AS-IS/TO-BE</b> 토글로 비교)</p>
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>특가전 노출</b><p>‘이달의 제휴 특가 · 인기 시술 특가전’을 <b>전면 배치</b>해 최저가 혜택으로 유입·탐색을 유도합니다.</p></div></div>
-          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>실시간 인기 시술 랭킹</b><p>검색·예약 로그 기반 <b>실시간 Top 10</b>(순위 추이·BEST/NEW)으로 트렌드 탐색을 촉진합니다. (여신티켓 형)</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>실시간 인기 시술 랭킹</b><p>검색·예약 로그 기반 <b>실시간 Top 10</b>(순위 추이·BEST/NEW)으로 트렌드 탐색을 촉진합니다.</p></div></div>
           <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>개인화 + 스폰서(광고비 지불) 노출</b><p>고객의 <b>관심 진료과·지역에 매칭되는</b> 병원/시술 중 <b>광고비를 지불한 제휴 병원</b>을 <span class="df-tag mod">AD</span>로 <b>상단 우선 노출</b>합니다. 개인화 매칭이므로 광고여도 관련성이 높습니다.</p></div></div>
           <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>미활용 영역을 <em>광고 매출 인벤토리</em>로 전환하는 동시에, 개인화 매칭으로 <em>예약 전환</em>도 함께 끌어올립니다.</p></div></div>
         </div>
@@ -1775,7 +1787,7 @@ const rat=[
   {tab:'⑥ 광고·특가',t:'미활용 사이드바 → 개인화 인벤토리',
     pts:[
       '데스크톱 <b>좌측 사이드바</b>(꿀팁·공지·QR 저활동)를 <b>광고·특가 인벤토리</b>로 전환.',
-      '<b>이달의 제휴 특가전</b> 전면 배치 + <b>실시간 인기 시술 Top 10</b>(여신티켓 형).',
+      '<b>이달의 제휴 특가전</b> 전면 배치 + <b>실시간 인기 시술 Top 10</b>.',
       '관심 진료과·지역 <b>개인화 매칭 + 스폰서(AD) 우선 노출</b>로 광고 매출·전환 동시 확보.'],
     src:'여신티켓 참고 · 미활용 인벤토리 수익화 · AS-IS/TO-BE 토글'}
 ];
@@ -1881,6 +1893,50 @@ function rvSubmit(){ if(!rvTime)return; rvStep='done'; rvSaved=false; renderRese
 function rvAddTarget(){ if(rvTargets.length<5){const n=rvTargets.length; rvTargets.push({n:'가족 '+n,rel:'가족',tel:'010-****-****',birth:'직접 입력',sex:'○'}); renderReserve();} }
 function rvSaveExtra(){ rvSaved=true; renderReserve(); }
 function rvReset(){ rvStep='form'; rvTime=''; rvAgree=false; rvNote=''; rvExtra=''; rvSaved=false; rvTargets=[{n:'최재원',rel:'본인',tel:'010-2713-5533',birth:'1983.11.25',sex:'♂'}]; renderReserve(); }
+/* AS-IS 현행 예약 화면(스샷1) — 모든 입력을 한 화면에 나열(정적 캡처 대체) */
+function renderReserveAsis(){
+  const el=document.getElementById('rvAsisScroll'); if(!el) return;
+  let days=''; for(let i=0;i<3;i++) days+='<span class="rv-e"></span>';
+  for(let d=1;d<=31;d++){const past=d<28,sel=d===28; days+=`<button class="rv-day${past?' past':''}${sel?' sel':''}" disabled>${d}</button>`;}
+  const tDis=['12:00','12:30','01:00','01:30','02:00'];
+  const tOpen=['02:30','03:00','03:30','04:00','04:30','05:00','05:30','06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30'];
+  el.innerHTML=`
+    <div class="rv-head"><button class="rv-back">${I.back}</button><span>(T) 세이프닥치과 동대문점</span></div>
+    <div class="rv-prog"><div class="rv-prog-th" style="background:linear-gradient(135deg,#E23B40,#F0787C)"></div><div><div class="rv-prog-nm">테스트</div><div class="rv-prog-pr">8,999,999원 <span class="rv-vat">VAT 포함</span></div></div></div>
+    <div class="rv-row">프로그램 설명 <span>⌄</span></div>
+    <div class="rv-benefit"><div class="rv-benefit-h">병원으로 직접 예약 시, 아래 혜택은 제공되지 않아요</div>
+      <ul><li>예약할 때마다 세이프닥 회원 전용 우대가 적용</li><li>의료 분쟁 발생 시, 전문 법률 상담 무료 지원</li><li>병원 이용 불편 시, 세이프닥이 신속 조율 지원</li></ul></div>
+    <div class="rv-sec"><div class="rv-sec-t">진료 대상 <small>진료 받는 분만 선택해주세요.</small></div>
+      <div class="rv-target"><div class="rv-target-h"><b>♂ 최재원</b> <span class="rv-badge">본인</span></div><div class="rv-target-d">연락처 010-2713-5533</div><div class="rv-target-d">생년월일 1983.11.25</div></div>
+      <button class="rv-addfam">+ 가족 · 지인 추가하기</button>
+      <ul class="rv-notes"><li>가족/지인도 동일한 우대가로 이용 가능합니다.</li><li>상담/예약 진행을 위해 이름, 전화번호를 정확하게 입력해주세요.</li><li>가족/지인은 최초 1회 등록하면 언제든지 예약 가능합니다.</li><li>가족/지인은 최대 5명까지 등록 가능합니다.</li></ul></div>
+    <div class="rv-sec"><div class="rv-sec-t">내원 희망 일시 선택</div>
+      <div class="rv-warn"><b>본 신청은 예약 확정이 아니에요</b><p>일정 조율 및 예약 확정은 병원에서 별도 안내 드려요. 예약 신청 후 병원의 연락을 기다려 주세요.</p></div>
+      <div class="rv-cal-h"><b>2026년 07월</b><span class="rv-cal-nav">‹　›</span></div>
+      <div class="rv-wd"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+      <div class="rv-cal">${days}</div>
+      <div class="rv-ampm">오후</div>
+      <div class="rv-times">${tDis.map(t=>`<button class="rv-time" disabled>${t}</button>`).join('')}${tOpen.map(t=>`<button class="rv-time">${t}</button>`).join('')}</div></div>
+    <div class="rv-sec"><div class="rv-sec-t">병원 전달사항 (선택)</div>
+      <textarea class="rv-ta" placeholder="병원에 전달하실 내용을 적어주세요. (0/200)"></textarea>
+      <div class="rv-ta-cnt">0/200</div></div>
+    <div class="rv-sec"><div class="rv-sec-t">추가 상담 희망 시술</div>
+      <select class="rv-sel"><option>추가로 상담을 원하는 시술을 선택해주세요</option></select></div>
+    <div class="rv-sec"><div class="rv-sec-t">쿠폰 할인 적용</div>
+      <div class="rv-cpn"><span class="rv-cpn-v">50,000원</span><span class="rv-cpn-r"><span class="rv-cpn-max">최대 적용중</span><span class="rv-cpn-ch">변경</span></span></div>
+      <div class="rv-cpn-note">사용 가능한 쿠폰 7장</div></div>
+    <div class="rv-sec"><div class="rv-sec-t">결제 금액</div>
+      <div class="rv-pay"><span>정상가</span><span>10,000,000원</span></div>
+      <div class="rv-pay red"><span>할인 금액</span><span>- 1,050,001원</span></div>
+      <div class="rv-pay sub"><span>ㄴ 세이프닥 우대 할인</span><span>1,000,001원</span></div>
+      <div class="rv-pay sub"><span>ㄴ 쿠폰 할인</span><span>50,000원</span></div>
+      <div class="rv-pay total"><span>총 결제 예상 금액 (VAT 포함)</span><span>8,949,999원</span></div>
+      <p class="rv-pay-note">실제 결제 금액은 내원 후 병원에서의 상담 및 진료 결과에 따라 변경될 수 있습니다.</p></div>
+    <div class="rv-row">약관 동의 <span>⌄</span></div>
+    <div class="rv-agree-tx">예약 서비스 이용을 위한 개인정보 수집 및 제3자 제공을 포함한 모든 규정을 확인하였으며 이에 동의합니다.</div>
+    <div class="rv-foot"><button class="rv-cta" disabled>예약 신청하기</button></div>`;
+  el.scrollTop=0;
+}
 
 /* ---------- 광고·특가 인벤토리 (여신티켓 형) ---------- */
 const adHotRank=[
@@ -1967,7 +2023,7 @@ function switchView(v){
   document.querySelectorAll('#v-'+v+' .asis-scroll').forEach(e=>e.scrollTop=0);
   if(v==='signup'){ sg=0; sgRender(); }
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; closeRegionPicker(); plAutoTab(); renderProcList(); }
-  if(v==='reserve'){ rvReset(); }
+  if(v==='reserve'){ rvReset(); renderReserveAsis(); }
   if(v==='ad'){ adMode='tobe'; document.getElementById('adAsis').className=''; document.getElementById('adTobe').className='on'; renderAd(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1982,6 +2038,7 @@ document.addEventListener('keydown',e=>{
 renderMain();
 renderProcList();
 renderReserve();
+renderReserveAsis();
 renderAd();
 obRender();
 sgRender();
