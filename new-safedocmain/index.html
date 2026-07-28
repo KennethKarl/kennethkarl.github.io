@@ -68,6 +68,11 @@
   .loc .chev{width:14px;height:14px;color:var(--faint);}
   .brand{font-weight:800;color:var(--blue);letter-spacing:-.02em;font-size:16px;}
   .bell{width:22px;height:22px;color:var(--ink);}
+  .appbar-right{display:flex;align-items:center;gap:13px;}
+  .appbar-search{border:0;background:none;cursor:pointer;padding:0;width:22px;height:22px;
+    color:var(--ink);display:grid;place-items:center;animation:fade .2s ease both;}
+  .appbar-search svg{width:22px;height:22px;}
+  .appbar-search[hidden]{display:none;}
 
   /* search */
   .search{margin:14px 0 6px;display:flex;align-items:center;gap:9px;background:#fff;
@@ -1155,7 +1160,10 @@ function topbar(){
   return `<div class="appbar">
     <button class="loc" onclick="openMainRegion()">${I.pin}<b>${mainRegionLabel()}</b><span class="chev">${I.chev}</span></button>
     <div class="brand">SafeDoc</div>
-    <div class="bell">${I.bell}</div>
+    <div class="appbar-right">
+      <button class="appbar-search" id="mainBarSearch" onclick="openSearch()" aria-label="시술 검색" hidden>${I.search}</button>
+      <div class="bell">${I.bell}</div>
+    </div>
   </div>`;
 }
 /* 개선 메인 지역 선택 = 가입 온보딩 STEP3 지역 화면(현재위치+인기 상권+검색) 재현, mainRegions(최대3) */
@@ -1262,7 +1270,18 @@ function renderMain(){
   document.getElementById('mainScroll').innerHTML = renderTOBE();
   document.getElementById('mainCap').innerHTML = cap;
   document.getElementById('mainScroll').scrollTop=0;
+  syncMainBarSearch();
 }
+/* 스크롤로 검색바가 앱바 뒤로 사라지면 앱바에 검색 아이콘 노출 (기능=검색바와 동일 openSearch) */
+function syncMainBarSearch(){
+  const sc=document.getElementById('mainScroll'); if(!sc) return;
+  const btn=document.getElementById('mainBarSearch');
+  const bar=sc.querySelector('.appbar'), s=sc.querySelector('.pad > .search');
+  if(!btn||!bar||!s) return;
+  btn.hidden = s.getBoundingClientRect().bottom > bar.getBoundingClientRect().bottom;
+}
+(function(){ const sc=document.getElementById('mainScroll');
+  if(sc) sc.addEventListener('scroll', syncMainBarSearch, {passive:true}); })();
 
 /* ---------- 시술 리스트 ---------- */
 const procList=[
