@@ -73,6 +73,9 @@
     color:var(--ink);display:grid;place-items:center;animation:fade .2s ease both;}
   .appbar-search svg{width:22px;height:22px;}
   .appbar-search[hidden]{display:none;}
+  .appbar-menu{border:0;background:none;cursor:pointer;padding:0;width:24px;height:24px;
+    color:var(--ink);display:grid;place-items:center;}
+  .appbar-menu svg{width:24px;height:24px;}
 
   /* search */
   .search{margin:14px 0 6px;display:flex;align-items:center;gap:9px;background:#fff;
@@ -1162,6 +1165,7 @@ function topbar(){
     <div class="brand">SafeDoc</div>
     <div class="appbar-right">
       <button class="appbar-search" id="mainBarSearch" onclick="openSearch()" aria-label="시술 검색" hidden>${I.search}</button>
+      <button class="appbar-menu" aria-label="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h16M4 15h16"/></svg></button>
     </div>
   </div>`;
 }
