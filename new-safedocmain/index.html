@@ -927,7 +927,7 @@
         <div class="spec-h">예약 수정 — 취소만 → 변경 + 취소</div>
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>AS-IS = 예약 취소만</b><p>현행 <b>마이 › 예약 내역</b>에서는 <b>예약 취소하기</b>만 제공됩니다. 일정이 바뀌면 <b>취소 후 재예약</b>해야 해 이탈이 발생합니다.</p></div></div>
-          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>TO-BE = 예약 변경하기 신설</b><p>기존 취소 기능은 그대로 두고, <b>‘예약 변경하기’</b>를 추가해 <b>내원 희망 일시(날짜·시간)를 취소 없이 바로 변경</b>합니다.</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>TO-BE = 예약 변경하기 신설</b><p>기존 취소 기능은 그대로 두고, <b>‘예약 변경하기’</b>를 추가해 <b>일시(날짜·시간)·진료 대상·병원 전달사항·추가 상담 희망 시술·쿠폰</b>을 <b>취소 없이 한 화면에서 수정</b>합니다.</p></div></div>
           <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>취소 사유 = 일정 변경 대응</b><p>취소 사유 대다수가 <b>일정 변경</b>인 점을 반영 — 취소 플로우에서도 <b>‘변경으로 처리’</b>를 제안해 불필요한 취소·재예약을 막습니다.</p></div></div>
           <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>일정 변경 이탈을 <em>예약 유지</em>로 전환 — 예약 취소율↓, 실내원 전환율↑.</p></div></div>
         </div>
@@ -1847,7 +1847,7 @@ const rat=[
   {tab:'⑦ 예약 수정',t:'예약 변경 기능 신설 (취소만 → 변경 + 취소)',
     pts:[
       '<b>AS-IS는 예약 취소하기만</b> 제공 — 일정이 바뀌면 취소 후 재예약해야 함.',
-      '<b>예약 변경하기 신설</b> — 내원 희망 일시(날짜·시간)를 <b>취소 없이 바로 변경</b>.',
+      '<b>예약 변경하기 신설</b> — <b>일시·진료 대상·병원 전달사항·추가 상담·쿠폰</b>을 취소 없이 바로 수정.',
       '취소 사유 대다수가 <b>일정 변경</b> → 취소 플로우에서도 <b>‘변경으로 처리’</b> 제안.'],
     ev:[['대다수','취소사유=일정 변경','warn']],
     src:'welfaremall.stage /profile/reservation · 취소사유 분석'}
@@ -2057,7 +2057,7 @@ function reCancelSheet(mode,i){
   o.hidden=false;
 }
 function resPickReason(btn){ btn.parentNode.querySelectorAll('.re-reason').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
-function reChangeBody(){
+function reDtPart(){
   let cells=''; for(let i=0;i<3;i++)cells+='<span class="rv-e"></span>';
   for(let d=1;d<=31;d++){const past=d<9,sel=d===reNewDate; cells+=`<button class="rv-day${past?' past':''}${sel?' sel':''}" ${past?'disabled':''} onclick="reSetNewDate(${d})">${d}</button>`;}
   const times=['오후 2:00','오후 2:30','오후 3:00','오후 3:30','오후 4:00','오후 4:30','오후 5:00','오후 5:30','오후 6:00','오후 6:30'];
@@ -2069,17 +2069,30 @@ function reChangeBody(){
     <div class="rv-ampm">시간 선택</div>
     <div class="rv-times">${times.map(t=>`<button class="rv-time${reNewTime===t?' sel':''}" onclick="reSetNewTime('${t}')">${t.replace('오후 ','오후 ')}</button>`).join('')}</div>`;
 }
+function reChangeForm(){
+  return `<div class="rv-sec" style="border-top:0"><div class="rv-sec-t">내원 희망 일시</div><div id="reDtPart">${reDtPart()}</div></div>
+    <div class="rv-sec"><div class="rv-sec-t">진료 대상 <small>진료 받는 분만 선택해주세요.</small></div>
+      <div class="rv-target"><div class="rv-target-h"><b>♂ 최재원</b> <span class="rv-badge">본인</span></div><div class="rv-target-d">연락처 010-2713-5533</div><div class="rv-target-d">생년월일 1983.11.25</div></div>
+      <button class="rv-addfam">+ 가족 · 지인 추가하기</button></div>
+    <div class="rv-sec"><div class="rv-sec-t">병원 전달사항 (선택)</div>
+      <textarea class="rv-ta" placeholder="병원에 전달하실 내용을 적어주세요. (0/200)"></textarea></div>
+    <div class="rv-sec"><div class="rv-sec-t">추가 상담 희망 시술</div>
+      <select class="rv-sel"><option>추가로 상담을 원하는 시술을 선택해주세요</option><option>스케일링</option><option>충치치료</option><option>치아미백</option><option>임플란트 추가 상담</option></select></div>
+    <div class="rv-sec"><div class="rv-sec-t">쿠폰 할인 적용</div>
+      <div class="rv-cpn"><span class="rv-cpn-v">50,000원</span><span class="rv-cpn-r"><span class="rv-cpn-max">최대 적용중</span><span class="rv-cpn-ch">변경</span></span></div>
+      <div class="rv-cpn-note">사용 가능한 쿠폰 7장</div></div>`;
+}
 function reOpenChange(i){
   reEditIdx=i; reNewDate=reList[i].d; reNewTime=reList[i].t;
   const o=document.getElementById('reOvl'); if(!o) return;
   o.innerHTML=`<div class="subscreen">
     <div class="sub-head"><button class="bk" onclick="reCloseOvl('tobe')" aria-label="뒤로">${I.back}</button><div class="ttl">예약 변경</div></div>
-    <div class="sub-body"><div class="rv-sec" style="border-top:0" id="reChangeBody">${reChangeBody()}</div></div>
-    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">이 일시로 변경하기</button></div></div>`;
+    <div class="sub-body">${reChangeForm()}</div>
+    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">변경 완료하기</button></div></div>`;
   o.hidden=false;
 }
-function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reChangeBody'); if(b) b.innerHTML=reChangeBody(); }
-function reSetNewTime(t){ reNewTime=t; const b=document.getElementById('reChangeBody'); if(b) b.innerHTML=reChangeBody(); }
+function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
+function reSetNewTime(t){ reNewTime=t; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
 function reApplyChange(){ if(reEditIdx>=0){ reList[reEditIdx].d=reNewDate; reList[reEditIdx].t=reNewTime; reList[reEditIdx].changed=true; } reCloseOvl('tobe'); renderResEdit(); }
 function reReset(){ reList.forEach((r,i)=>{ r.d=reOrig[i].d; r.t=reOrig[i].t; r.changed=false; }); reEditIdx=-1; reCloseOvl('asis'); reCloseOvl('tobe'); renderResEdit(); renderResEditAsis(); }
 
