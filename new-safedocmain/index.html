@@ -557,6 +557,13 @@
   .rp-grp:not(:first-child){margin-top:16px;}
   .rp-grp span{font-size:11px;font-weight:600;color:var(--faint);}
   .rp-grp+.rp-list{margin-bottom:2px;}
+  /* 시술리스트 지역 선택 — 인기 상권 + 시술/병원 수 */
+  .selgrid.rg-cnt{gap:8px;}
+  .pick.pick-cnt{flex-direction:column;align-items:flex-start;gap:5px;padding:11px 13px;}
+  .pick.pick-cnt .pk-top{display:flex;align-items:center;gap:7px;}
+  .pick.pick-cnt .pk-top b{font-size:13.5px;font-weight:700;}
+  .pick.pick-cnt .pk-cnt{font-size:11px;color:var(--muted);font-weight:600;padding-left:27px;}
+  .pick.pick-cnt[aria-pressed="true"] .pk-cnt{color:var(--blue-700);}
   .rp{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;font-family:inherit;cursor:pointer;transition:.14s;width:100%;text-align:left;}
   .rp:hover{border-color:var(--blue);}
   .rp.on{border-color:var(--blue);background:var(--blue-50);}
@@ -1413,9 +1420,10 @@ const regionMap={'강남·압구정':'강남','압구정·신사':'압구정·�
 function mapToPlRegion(r){ return regionMap[r] || (plRegions.includes(r)?r:'강남'); }
 /* 사용자가 온보딩에서 고른 관심 지역을 리스트 지역으로 변환(중복 제거) */
 function myPlRegions(){ return [...new Set((typeof mainRegions!=='undefined'?mainRegions:[]).map(mapToPlRegion))]; }
-/* 시술리스트 초기 지역 = 관심 지역 1순위(대표) */
-function plInitRegion(){ const m=myPlRegions(); return m[0]||'강남'; }
-let plCat='전체', plTab='시술', plQuery='', plRegion=plInitRegion();
+/* 시술리스트 활성 지역(합집합) = 관심 지역 전체 */
+function plActiveRegions(){ const m=myPlRegions(); return m.length?m:['강남']; }
+function plRegionLabel(){ const a=plActiveRegions(); return a.length<=1?a[0]:`${a[0]} 외 ${a.length-1}`; }
+let plCat='전체', plTab='시술', plQuery='';
 function procCard(d){
   const p=won(d.price), w=won(d.was);
   const pct = w>0?Math.round((1-p/w)*100)+'%':'';
@@ -1442,11 +1450,10 @@ function hCard(h){
 const plNorm=s=>String(s).replace(/[·\s]/g,'');
 function plTokens(q){return q.trim().split(/[\s·\/,]+/).filter(Boolean).map(plNorm);}
 function plMatch(fields,q){const t=plTokens(q); if(!t.length) return true; return t.some(tk=>fields.some(f=>plNorm(f).includes(tk)));}
-// 지역(plRegion) + 검색어(plQuery) 교차 필터. 검색어는 시술명/진료과/병원명 매칭(지역은 선택형)
-function plProcAll(){ const q=plQuery.trim(); return procList.filter(d=> itemInRegion(d.region,plRegion) && (q?plMatch([d.nm,d.dept,d.hos],q):true) ); }
+// 활성 지역(합집합) + 검색어(plQuery) 교차 필터. 검색어는 시술명/진료과/병원명 매칭
+function plProcAll(){ const q=plQuery.trim(); const R=plActiveRegions(); return procList.filter(d=> R.some(pr=>itemInRegion(d.region,pr)) && (q?plMatch([d.nm,d.dept,d.hos],q):true) ); }
 function plProcShown(){ let l=plProcAll(); if(plCat!=='전체') l=l.filter(d=>d.dept===plCat); return l; }
-function plHosAll(){ const q=plQuery.trim(); return hosList.filter(h=> itemInRegion(h.region,plRegion) && (q?plMatch([h.nm,h.dept,h.line],q):true) ); }
-function plRegionLabel(){ return plRegion; }
+function plHosAll(){ const q=plQuery.trim(); const R=plActiveRegions(); return hosList.filter(h=> R.some(pr=>itemInRegion(h.region,pr)) && (q?plMatch([h.nm,h.dept,h.line],q):true) ); }
 function renderProcList(){
   document.getElementById('plScroll').innerHTML=`
     <div class="pl-sbar"><button class="box" onclick="plOpenSearch(plQuery)">${I.search}<span class="pl-sbtxt${plQuery?' has':''}">${plQuery||'시술명, 병원명, 지역을 검색해보세요'}</span></button></div>
@@ -1454,7 +1461,7 @@ function renderProcList(){
       <button onclick="plTry('이갈이/코골이')">이갈이/코골이</button>
       <button onclick="plTry('임플란트')">임플란트</button>
       <button onclick="plSetRegion('부산 서면')">지역→부산 서면</button>
-      ${(plQuery||plRegion!==plInitRegion())?`<button class="clr" onclick="plReset()">초기화</button>`:''}
+      ${(plQuery||plActiveRegions().length>1)?`<button class="clr" onclick="plReset()">초기화</button>`:''}
     </div>
     <div id="plDyn">${renderPlDyn()}</div>`;
 }
@@ -1462,7 +1469,7 @@ function renderPlDyn(){
   const nP=plProcAll().length, nH=plHosAll().length;
   return `${plQuery.trim()?`<div class="pl-rel">연관 <b>${plQuery.trim()}</b></div>`:''}
     <div class="pl-ad"><div class="pl-ad-t">덴티움 → 오스템 임플란트 업그레이드</div><div class="pl-ad-s">*뼈 이식 등 추가 시술은 별도 금액 발생</div><span class="pl-ad-tag">AD</span></div>
-    <div class="pl-top2"><button class="pl-region" onclick="openRegionPicker()">${I.pin}<b>${plRegion}</b><span class="plchev">${I.chev}</span></button><button class="pl-sort">인기순 <span>▾</span></button></div>
+    <div class="pl-top2"><button class="pl-region" onclick="openPlRegion()">${I.pin}<b>${plRegionLabel()}</b><span class="plchev">${I.chev}</span></button><button class="pl-sort">인기순 <span>▾</span></button></div>
     <div class="pl-tabs2">
       <button class="plt2 ${plTab==='시술'?'on':''}" onclick="plSetTab('시술')">시술 <b>${nP}</b></button>
       <button class="plt2 ${plTab==='병원'?'on':''}" onclick="plSetTab('병원')">병원 <b>${nH}</b></button>
@@ -1472,22 +1479,22 @@ function renderPlDyn(){
 function renderPlProcTab(){
   if(plProcAll().length===0){
     return `<div class="pl-empty"><div class="pl-empty-ic">${I.noresult}</div>
-      <p>${plRegion}${plQuery.trim()?` · ‘${plQuery.trim()}’`:''} 시술 결과가 없어요</p>
+      <p>${plRegionLabel()}${plQuery.trim()?` · ‘${plQuery.trim()}’`:''} 시술 결과가 없어요</p>
       <button class="pl-req">희망 시술 요청하기</button>
-      <div class="pl-empty-hint"><b>${plRegion}</b> 지역은 등록된 시술이 아직 없어요.<br>위 <b>병원 탭</b>에서 해당 지역 병원을 먼저 확인해 보세요.</div></div>`;
+      <div class="pl-empty-hint"><b>${plRegionLabel()}</b> 지역은 등록된 시술이 아직 없어요.<br>위 <b>병원 탭</b>에서 해당 지역 병원을 먼저 확인해 보세요.</div></div>`;
   }
   const items=plProcShown();
   return `<div class="pl-cats">${plCats.map(c=>`<button class="plc${c===plCat?' on':''}" onclick="plSetCat('${c}')">${c}</button>`).join('')}</div>
     <div class="pl-filters">${['쿠폰 추가할인','당일할인','특가전','오늘 예약가능'].map(f=>`<span class="plf">${f}</span>`).join('')}</div>
-    <div class="pl-cnt">시술 <b>${items.length}</b>건 · ${plRegion} · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
+    <div class="pl-cnt">시술 <b>${items.length}</b>건 · ${plRegionLabel()} · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
     <div class="pl-list">${items.map(procCard).join('')}</div><div style="height:20px"></div>`;
 }
 function renderPlHosTab(){
   const hos=plHosAll();
   if(!hos.length) return `<div class="pl-filters hos"><span class="plf">진료과 ▾</span><span class="plf">쿠폰 추가할인</span></div>
-    <div class="pl-empty"><div class="pl-empty-ic">${I.noresult}</div><p>${plRegion} 병원 결과가 없어요</p><button class="pl-req">희망 병원 요청하기</button></div>`;
+    <div class="pl-empty"><div class="pl-empty-ic">${I.noresult}</div><p>${plRegionLabel()} 병원 결과가 없어요</p><button class="pl-req">희망 병원 요청하기</button></div>`;
   return `<div class="pl-filters hos"><span class="plf">진료과 ▾</span><span class="plf">쿠폰 추가할인</span></div>
-    <div class="pl-cnt">병원 <b>${hos.length}</b>곳 · ${plRegion}</div>
+    <div class="pl-cnt">병원 <b>${hos.length}</b>곳 · ${plRegionLabel()}</div>
     <div class="pl-hlist">${hos.map(hCard).join('')}</div><div style="height:20px"></div>`;
 }
 function plUpdate(){ document.getElementById('plDyn').innerHTML=renderPlDyn(); }
@@ -1496,23 +1503,73 @@ function plSearch(q){ plQuery=q; plCat='전체'; plAutoTab(); plUpdate(); }
 function plTry(q){ plQuery=q; plCat='전체'; plAutoTab(); renderProcList(); const i=document.getElementById('plInput'); if(i){i.value=q;} }
 function plSetTab(t){ plTab=t; plUpdate(); }
 function plSetCat(c){ plCat=c; plUpdate(); }
-function plReset(){ plQuery=''; plRegion=plInitRegion(); plCat='전체'; plTab='시술'; plAutoTab(); renderProcList(); }
-/* 지역 선택 피커 (시술리스트 폰 오버레이) */
-function openRegionPicker(){
-  const o=document.getElementById('plOvl'); if(!o) return;
-  const mine=myPlRegions();
-  const rpBtn=r=>{
-    const np=procList.filter(d=>itemInRegion(d.region,r)).length, nh=hosList.filter(h=>itemInRegion(h.region,r)).length;
-    return `<button class="rp ${r===plRegion?'on':''}" onclick="plSetRegion('${r}')"><span class="rp-ic">${I.pin}</span><span class="rp-nm">${r}</span><span class="rp-cnt">시술 ${np} · 병원 ${nh}</span>${r===plRegion?`<span class="rp-chk">${I.check}</span>`:''}</button>`;
-  };
-  const mineHTML = mine.length?`<div class="rp-grp">내 관심 지역 <span>· 온보딩 선택</span></div><div class="rp-list">${mine.map(rpBtn).join('')}</div><div class="rp-grp">전체 지역</div>`:'';
-  o.innerHTML=`<div class="backdrop" onclick="closeRegionPicker()"></div>
-    <div class="sheet"><div class="sheet-h"><h3>지역 선택</h3><button class="x" onclick="closeRegionPicker()" aria-label="닫기">${I.x}</button></div>
-      <div class="sheet-b">${mineHTML}<div class="rp-list">${plRegions.filter(r=>!mine.includes(r)).map(rpBtn).join('')}</div></div></div>`;
+function plReset(){ plQuery=''; plCat='전체'; plTab='시술'; plAutoTab(); renderProcList(); }
+function closeRegionPicker(){ const o=document.getElementById('plOvl'); if(o){o.hidden=true; o.innerHTML='';} }
+/* 예시칩 '지역→부산 서면' : 관심 지역을 해당 1곳으로 빠르게 전환 */
+function plSetRegion(r){ mainRegions.length=0; mainRegions.push(r); plQuery=''; plCat='전체'; closeRegionPicker(); plAutoTab(); renderProcList(); }
+
+/* ===== 시술리스트 지역 선택 = 가입 온보딩 STEP3 화면 재사용(멀티·인기상권+시술/병원수·현재위치·검색) ===== */
+function plRegOvl(){ return document.getElementById('plOvl'); }
+function plRegCnt(r){ const pr=mapToPlRegion(r);
+  const np=procList.filter(d=>itemInRegion(d.region,pr)).length, nh=hosList.filter(h=>itemInRegion(h.region,pr)).length;
+  return `시술 ${np} · 병원 ${nh}`; }
+function plSelStrip(){
+  if(!mainRegions.length) return `<div class="selstrip empty" id="plRegStrip">아직 선택한 지역이 없어요</div>`;
+  return `<div class="selstrip" id="plRegStrip">${mainRegions.map(r=>`<span class="s">${I.pin}${r}<button aria-label="${r} 삭제" onclick="plRegToggle('${r}')">×</button></span>`).join('')}</div>`;
+}
+function plRegResults(q){
+  q=(q||'').trim(); const nq=q.replace(/[·\s]/g,'');
+  let list=q?obSearchIndex.filter(e=>e.l.replace(/[·\s]/g,'').includes(nq)||e.t.replace(/[·\s]/g,'').includes(nq)):obSearchIndex.slice(0,7);
+  if(!list.length) return `<div class="locempty">'${q}' 검색 결과가 없어요.<br>다른 지역명이나 지하철역을 입력해 보세요.</div>`;
+  const full=mainRegions.length>=3;
+  return list.slice(0,40).map(e=>{const on=mainRegions.includes(e.l);const dis=!on&&full;
+    return `<button class="r" data-region="${e.l}" aria-pressed="${on}" ${dis?'disabled':''} onclick="plRegToggle('${e.l}')"><span class="ric">${e.k==='역'?I.subway:I.pin}</span><span class="rl">${e.l}</span><span class="rk">${e.t}</span><span class="rchk">${on?I.check:''}</span></button>`;
+  }).join('');
+}
+function renderPlRegion(){
+  const o=plRegOvl(); if(!o) return; const full=mainRegions.length>=3;
+  let body;
+  if(mainSearchOn){
+    body=`<button class="locback" onclick="plRegCloseSearch()">${I.back}인기 상권으로</button>
+      <div class="locsearchbox">${I.search}<input id="plRegInput" placeholder="동네·지하철역·지역 검색" value="${mainRegQuery.replace(/"/g,'&quot;')}" oninput="plRegSearchInput(this.value)" autocomplete="off"></div>
+      ${plSelStrip()}
+      <div class="locres" id="plRegResults">${plRegResults(mainRegQuery)}</div>`;
+  } else {
+    body=`<button class="geo" id="plGeo" onclick="plRegDetectLoc()">${mainGeoHTML()}</button>
+      ${plSelStrip()}
+      <div class="loclbl">인기 상권 <span>병원 밀집순 · 시술/병원 수</span></div>
+      <div class="selgrid rg-cnt">${obPopularAreas.map(r=>{const on=mainRegions.includes(r);const dis=!on&&full;
+        return `<button class="pick pick-cnt" data-region="${r}" aria-pressed="${on}" ${dis?'disabled':''} onclick="plRegToggle('${r}')"><span class="pk-top"><span class="ic">${I.pin}</span><b>${r}</b></span><span class="pk-cnt">${plRegCnt(r)}</span></button>`;}).join('')}</div>
+      <button class="locsearchbtn" onclick="plRegOpenSearch()">${I.search}<span>찾는 지역이 없나요? 지역·지하철역 검색</span><span class="ar">›</span></button>`;
+  }
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="plRegionApply()" aria-label="닫기">${I.back}</button>
+      <div class="ttl">관심 지역 <span class="rg-max">최대 3곳</span></div></div>
+    <div class="sub-body"><div class="locbody">
+      <p class="rg-help">진료과 <b>${plCat}</b> · <b id="plRegCnt2">${mainRegions.length}/3</b> 선택 — 선택 지역의 <b>시술·병원을 함께</b> 노출합니다.</p>
+      ${body}
+    </div></div>
+    <div class="ob-foot"><button class="cta" id="plRegFoot" onclick="plRegionApply()">${mainRegions.length}곳 적용</button></div>
+  </div>`;
   o.hidden=false;
 }
-function closeRegionPicker(){ const o=document.getElementById('plOvl'); if(o){o.hidden=true; o.innerHTML='';} }
-function plSetRegion(r){ plRegion=r; plQuery=''; plCat='전체'; closeRegionPicker(); plAutoTab(); renderProcList(); }
+function plRegToggle(r){
+  const i=mainRegions.indexOf(r);
+  if(i>=0){ if(mainRegions.length>1) mainRegions.splice(i,1); }
+  else if(mainRegions.length<3){ mainRegions.push(r); }
+  renderPlRegion(); if(mainSearchOn) plRegFocus();
+}
+function plRegDetectLoc(){
+  const g=document.getElementById('plGeo'); if(!g) return;
+  g.innerHTML=`<span class="geoic">${I.pin}</span><span class="geotx"><b>위치 확인 중…</b><small>네이버 지오코딩으로 상권 매칭</small></span>`;
+  setTimeout(()=>{ mainGeoArea='강남·압구정'; if(!mainRegions.includes(mainGeoArea)&&mainRegions.length<3) mainRegions.unshift(mainGeoArea); renderPlRegion(); },700);
+}
+function plRegOpenSearch(){ mainSearchOn=true; renderPlRegion(); plRegFocus(); }
+function plRegCloseSearch(){ mainSearchOn=false; renderPlRegion(); }
+function plRegSearchInput(q){ mainRegQuery=q; const r=document.getElementById('plRegResults'); if(r) r.innerHTML=plRegResults(q); }
+function plRegFocus(){ const i=document.getElementById('plRegInput'); if(i){i.focus(); const v=i.value; i.value=''; i.value=v;} }
+function openPlRegion(){ mainSearchOn=false; mainRegQuery=''; renderPlRegion(); }
+function plRegionApply(){ mainSearchOn=false; mainRegQuery=''; const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} plAutoTab(); renderProcList(); }
 
 /* ---------- ONBOARDING (safedoc.io/menu 전체 카테고리) ---------- */
 // 진료과 17종 + 세부 시술 — 출처: api.safedoc.io/department/list (safedoc.io/menu 동일)
@@ -1875,7 +1932,7 @@ function switchView(v){
   document.getElementById('v-'+v).classList.add('active');
   document.querySelectorAll('#v-'+v+' .asis-scroll').forEach(e=>e.scrollTop=0);
   if(v==='signup'){ sg=0; sgRender(); }
-  if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; plRegion=plInitRegion(); closeRegionPicker(); plAutoTab(); renderProcList(); }
+  if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; closeRegionPicker(); plAutoTab(); renderProcList(); }
   if(v==='reserve'){ rvReset(); }
   if(v==='ad'){ adMode='tobe'; document.getElementById('adAsis').className=''; document.getElementById('adTobe').className='on'; renderAd(); }
   window.scrollTo({top:0,behavior:'smooth'});
