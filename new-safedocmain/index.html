@@ -656,6 +656,16 @@
   .rv-pay.total{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:14px;font-weight:800;color:#111;} .rv-pay.total span:last-child{font-size:16px;color:#111;}
   .rv-pay-note{margin:9px 0 0;font-size:11px;color:var(--faint);line-height:1.5;}
   .rv-agree-tx{padding:2px 16px 14px;background:#fff;font-size:12px;color:#48566e;line-height:1.6;}
+  /* 예약 수정 (취소만 / 변경+취소) */
+  .re-status{display:flex;align-items:center;gap:8px;padding:14px 16px;background:#fff;font-size:12.5px;font-weight:700;color:#38465e;} .re-badge{font-size:11px;font-weight:800;color:var(--blue-700);background:var(--blue-50);border-radius:6px;padding:3px 8px;}
+  .re-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:13px;border-bottom:1px solid var(--line);} .re-row:last-child{border-bottom:0;} .re-row span{color:var(--muted);} .re-row b{color:#111;text-align:right;}
+  .re-changed{margin-top:10px;font-size:12px;font-weight:700;color:#06A42D;background:#E7F7EC;border-radius:9px;padding:9px 11px;}
+  .re-onlynote{margin:12px 16px 0;font-size:12px;color:#9A6a6a;background:var(--coral-50);border-radius:10px;padding:10px 13px;} .re-onlynote b{color:#E23B40;}
+  .rv-cta.danger{background:#E23B40;} .rv-cta.ghost.danger{background:#fff;color:#E23B40;border:1px solid #F3B7B9;}
+  .re-nudge{width:100%;text-align:left;border:1px solid var(--blue-100);background:var(--blue-50);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:12.5px;color:var(--blue-700);cursor:pointer;margin-bottom:16px;line-height:1.5;} .re-nudge b{font-weight:800;}
+  .re-rlabel{font-size:12.5px;font-weight:800;color:#3a475d;margin:0 0 10px;}
+  .re-reasons{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;} .re-reason{border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 14px;font-family:inherit;font-size:13.5px;font-weight:600;color:#33425c;cursor:pointer;text-align:left;} .re-reason.on{border-color:var(--blue);background:var(--blue-50);color:var(--blue-700);}
+  .re-cur{font-size:12.5px;color:#48566e;background:#F1F4F9;border-radius:9px;padding:10px 13px;margin-bottom:14px;} .re-cur b{color:#111;}
   #rvSpec .sc-b s{color:var(--faint);}
   /* ── 광고·특가 인벤토리 ── */
   .ad-fair{display:flex;align-items:center;gap:10px;border-radius:16px;padding:16px 18px;margin:14px 0 6px;color:#fff;cursor:pointer;
@@ -761,6 +771,7 @@
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
     <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
     <button role="tab" aria-selected="false" data-view="reserve">예약플로우</button>
+    <button role="tab" aria-selected="false" data-view="resedit">예약 수정</button>
     <button role="tab" aria-selected="false" data-view="ad">광고·특가</button>
   </div>
 
@@ -885,6 +896,32 @@
           </ol>
         </div>
         <p class="spec-src">기준: welfaremall.stage.safedoc.kr/reservation · 프로토타입</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ============ 예약 수정 ============ -->
+  <section class="view" id="v-resedit">
+    <div class="stage cmp">
+      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 예약 관리</small></figcaption>
+      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="scroll" id="reAsisScroll"></div><div class="ovl" id="reAsisOvl" hidden></div></div></div></figure>
+      <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
+      <div class="phone"><div class="screen"><div class="notch"></div><div class="scroll" id="reScroll"></div><div class="ovl" id="reOvl" hidden></div></div></div></figure>
+      <div class="cmp-explain"><div class="rat-mount" data-rat="6"></div><div class="obspec">
+        <div class="spec-h">예약 수정 — 취소만 → 변경 + 취소</div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>AS-IS = 예약 취소만</b><p>현행 <b>마이 › 예약 내역</b>에서는 <b>예약 취소하기</b>만 제공됩니다. 일정이 바뀌면 <b>취소 후 재예약</b>해야 해 이탈이 발생합니다.</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>TO-BE = 예약 변경하기 신설</b><p>기존 취소 기능은 그대로 두고, <b>‘예약 변경하기’</b>를 추가해 <b>내원 희망 일시(날짜·시간)를 취소 없이 바로 변경</b>합니다.</p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>취소 사유 = 일정 변경 대응</b><p>취소 사유 대다수가 <b>일정 변경</b>인 점을 반영 — 취소 플로우에서도 <b>‘변경으로 처리’</b>를 제안해 불필요한 취소·재예약을 막습니다.</p></div></div>
+          <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>일정 변경 이탈을 <em>예약 유지</em>로 전환 — 예약 취소율↓, 실내원 전환율↑.</p></div></div>
+        </div>
+        <div class="spec-try"><div class="try-h">▶ 직접 해보기</div>
+          <ol>
+            <li>TO-BE <b>‘예약 변경하기’</b> → 새 날짜·시간 선택 → <b>변경하기</b> (내원 희망 일시 갱신)</li>
+            <li>AS-IS <b>‘예약 취소하기’</b> → 취소 사유(일정 변경)뿐 — 취소만 가능</li>
+            <li>TO-BE <b>‘예약 취소하기’</b> → <b>‘예약 변경으로 처리’</b> 제안 확인</li>
+          </ol></div>
+        <p class="spec-src">기준: welfaremall.stage.safedoc.kr/profile/reservation · 취소사유 분석 · 프로토타입</p>
       </div></div>
     </div>
   </section>
@@ -1789,7 +1826,14 @@ const rat=[
       '데스크톱 <b>좌측 사이드바</b>(꿀팁·공지·QR 저활동)를 <b>광고·특가 인벤토리</b>로 전환.',
       '<b>이달의 제휴 특가전</b> 전면 배치 + <b>실시간 인기 시술 Top 10</b>.',
       '관심 진료과·지역 <b>개인화 매칭 + 스폰서(AD) 우선 노출</b>로 광고 매출·전환 동시 확보.'],
-    src:'여신티켓 참고 · 미활용 인벤토리 수익화 · AS-IS/TO-BE 토글'}
+    src:'여신티켓 참고 · 미활용 인벤토리 수익화 · AS-IS/TO-BE 토글'},
+  {tab:'⑦ 예약 수정',t:'예약 변경 기능 신설 (취소만 → 변경 + 취소)',
+    pts:[
+      '<b>AS-IS는 예약 취소하기만</b> 제공 — 일정이 바뀌면 취소 후 재예약해야 함.',
+      '<b>예약 변경하기 신설</b> — 내원 희망 일시(날짜·시간)를 <b>취소 없이 바로 변경</b>.',
+      '취소 사유 대다수가 <b>일정 변경</b> → 취소 플로우에서도 <b>‘변경으로 처리’</b> 제안.'],
+    ev:[['대다수','취소사유=일정 변경','warn']],
+    src:'welfaremall.stage /profile/reservation · 취소사유 분석'}
 ];
 /* 개선 포인트 카드를 각 페이지 설명에 인라인 배치 */
 document.querySelectorAll('.rat-mount').forEach(m=>{
@@ -1949,6 +1993,74 @@ function renderReserveAsis(){
   el.scrollTop=0;
 }
 
+/* ---------- 예약 수정 (AS-IS 취소만 / TO-BE 변경+취소) ---------- */
+let reDate=16, reTime='05:00', reChanged=false, reNewDate=16, reNewTime='05:00';
+const reDowNames=['일','월','화','수','목','금','토'];
+function reDow(d){ return reDowNames[(3+d-1)%7]; }
+function rePad(d){ return String(d).padStart(2,'0'); }
+function reInfo(d,t,changed){
+  return `<div class="re-status"><span class="re-badge">예약 신청 접수</span> 병원 확정 대기중</div>
+    <div class="rv-prog"><div class="rv-prog-th" style="background:linear-gradient(135deg,#12275F,#2E5BD0)"></div><div><div class="rv-prog-nm">원데이치과 · 오스템 BA 임플란트</div><div class="rv-prog-pr">400,000원 <span class="rv-vat">VAT 포함</span></div></div></div>
+    <div class="rv-sec"><div class="rv-sec-t">예약 정보</div>
+      <div class="re-row"><span>병원</span><b>원데이치과</b></div>
+      <div class="re-row"><span>시술</span><b>오스템 BA 임플란트</b></div>
+      <div class="re-row"><span>내원 희망 일시</span><b>2026.07.${rePad(d)} (${reDow(d)}) 오후 ${t}</b></div>
+      <div class="re-row"><span>예약자</span><b>최재원 (본인) · 010-2713-5533</b></div>
+      ${changed?`<div class="re-changed">✓ 예약 일시가 변경되었어요</div>`:''}</div>`;
+}
+function renderResEditAsis(){
+  const el=document.getElementById('reAsisScroll'); if(!el) return;
+  el.innerHTML=`<div class="rv-head"><button class="rv-back">${I.back}</button><span>예약 상세</span></div>
+    ${reInfo(16,'05:00',false)}
+    <div class="re-onlynote">이 화면에서 할 수 있는 건 <b>예약 취소</b>뿐이에요.</div>
+    <div class="rv-foot"><button class="rv-cta danger" onclick="reCancelSheet('asis')">예약 취소하기</button></div>`;
+  el.scrollTop=0;
+}
+function renderResEdit(){
+  const el=document.getElementById('reScroll'); if(!el) return;
+  el.innerHTML=`<div class="rv-head"><button class="rv-back">${I.back}</button><span>예약 상세</span></div>
+    ${reInfo(reDate,reTime,reChanged)}
+    <div class="rv-foot"><button class="rv-cta" onclick="reOpenChange()">예약 변경하기</button><button class="rv-cta ghost danger" onclick="reCancelSheet('tobe')">예약 취소하기</button></div>`;
+  el.scrollTop=0;
+}
+function reCloseOvl(mode){ const o=document.getElementById(mode==='asis'?'reAsisOvl':'reOvl'); if(o){o.hidden=true; o.innerHTML='';} }
+function reCancelSheet(mode){
+  const o=document.getElementById(mode==='asis'?'reAsisOvl':'reOvl'); if(!o) return;
+  const nudge = mode==='tobe' ? `<button class="re-nudge" onclick="reCloseOvl('tobe');reOpenChange()"><b>일정이 바뀌었나요?</b> 취소 대신 <b>예약 변경하기</b>로 날짜만 바꿀 수 있어요 ›</button>` : '';
+  o.innerHTML=`<div class="backdrop" onclick="reCloseOvl('${mode}')"></div>
+    <div class="sheet"><div class="sheet-h"><h3>예약을 취소하시겠어요?</h3><button class="x" onclick="reCloseOvl('${mode}')" aria-label="닫기">${I.x}</button></div>
+      <div class="sheet-b">${nudge}
+        <div class="re-rlabel">취소 사유</div>
+        <div class="re-reasons">${['일정이 바뀌었어요','개인 사정','병원을 변경하고 싶어요','기타'].map((r,i)=>`<button class="re-reason${i===0?' on':''}" onclick="resPickReason(this)">${r}</button>`).join('')}</div>
+        <button class="rv-cta danger" onclick="reCloseOvl('${mode}')">예약 취소하기</button></div></div>`;
+  o.hidden=false;
+}
+function resPickReason(btn){ btn.parentNode.querySelectorAll('.re-reason').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+function reChangeBody(){
+  let cells=''; for(let i=0;i<3;i++)cells+='<span class="rv-e"></span>';
+  for(let d=1;d<=31;d++){const past=d<16,sel=d===reNewDate; cells+=`<button class="rv-day${past?' past':''}${sel?' sel':''}" ${past?'disabled':''} onclick="reSetNewDate(${d})">${d}</button>`;}
+  const dis=['12:00','12:30','01:00','01:30'], open=['02:00','02:30','03:00','03:30','04:00','04:30','05:00','05:30','06:00','06:30','07:00','07:30'];
+  return `<div class="re-cur">현재 예약: <b>2026.07.${rePad(reDate)} (${reDow(reDate)}) 오후 ${reTime}</b></div>
+    <div class="rv-cal-h"><b>2026년 07월</b><span class="rv-cal-nav">‹　›</span></div>
+    <div class="rv-wd"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="rv-cal">${cells}</div>
+    <div class="rv-ampm">오후</div>
+    <div class="rv-times">${dis.map(t=>`<button class="rv-time" disabled>${t}</button>`).join('')}${open.map(t=>`<button class="rv-time${reNewTime===t?' sel':''}" onclick="reSetNewTime('${t}')">${t}</button>`).join('')}</div>`;
+}
+function reOpenChange(){
+  reNewDate=reDate; reNewTime=reTime;
+  const o=document.getElementById('reOvl'); if(!o) return;
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="reCloseOvl('tobe')" aria-label="뒤로">${I.back}</button><div class="ttl">예약 변경</div></div>
+    <div class="sub-body"><div class="rv-sec" style="border-top:0" id="reChangeBody">${reChangeBody()}</div></div>
+    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">이 일시로 변경하기</button></div></div>`;
+  o.hidden=false;
+}
+function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reChangeBody'); if(b) b.innerHTML=reChangeBody(); }
+function reSetNewTime(t){ reNewTime=t; const b=document.getElementById('reChangeBody'); if(b) b.innerHTML=reChangeBody(); }
+function reApplyChange(){ reDate=reNewDate; reTime=reNewTime; reChanged=true; reCloseOvl('tobe'); renderResEdit(); }
+function reReset(){ reDate=16; reTime='05:00'; reChanged=false; reCloseOvl('asis'); reCloseOvl('tobe'); renderResEdit(); renderResEditAsis(); }
+
 /* ---------- 광고·특가 인벤토리 (여신티켓 형) ---------- */
 const adHotRank=[
   {n:'스마일라식',d:'up',badge:'BEST'},{n:'임플란트',d:'same'},{n:'보톡스',d:'up',badge:'BEST'},{n:'치아교정',d:'down'},{n:'건강검진',d:'new'},
@@ -2035,6 +2147,7 @@ function switchView(v){
   if(v==='signup'){ sg=0; sgRender(); }
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; closeRegionPicker(); plAutoTab(); renderProcList(); }
   if(v==='reserve'){ rvReset(); renderReserveAsis(); }
+  if(v==='resedit'){ reReset(); }
   if(v==='ad'){ adMode='tobe'; document.getElementById('adAsis').className=''; document.getElementById('adTobe').className='on'; renderAd(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -2050,6 +2163,8 @@ renderMain();
 renderProcList();
 renderReserve();
 renderReserveAsis();
+renderResEdit();
+renderResEditAsis();
 renderAd();
 obRender();
 sgRender();
