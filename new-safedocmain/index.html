@@ -170,7 +170,7 @@
   .tab.on{color:#111;font-weight:700;}
 
   /* ---- AS-IS vs TO-BE 비교 (AS-IS · TO-BE · 설명 3열) ---- */
-  .stage.cmp{display:grid;grid-template-columns:390px minmax(300px,1fr) 390px;grid-template-areas:"asis expl tobe";column-gap:30px;row-gap:24px;align-items:start;width:min(1320px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
+  .stage.cmp{display:grid;grid-template-columns:390px 390px minmax(300px,1fr);grid-template-areas:"asis tobe expl";column-gap:30px;row-gap:24px;align-items:start;width:min(1320px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
   .cmp-col.asis{grid-area:asis;}
   .cmp-col.tobe{grid-area:tobe;}
   .cmp-col{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;}
