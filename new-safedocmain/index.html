@@ -960,6 +960,16 @@ const perso = [
   {nm:'리쥬란 힐러 2cc',price:'149,000원',was:'220,000원',disc:'32%',rv:'★4.9 (512)'},
   {nm:'스마일라식',price:'1,490,000원',was:'',disc:'',rv:'★4.9 (2,010)'}
 ];
+/* 맞춤 추천 '더보기' 전체 목록 (관심 진료과·최근 본 시술 기반 개인화) */
+const persoAll = [
+  {nm:'보톡스 이마 100U',hos:'강남 SW피부과 · 강남역',price:'9,900원',was:'39,000원',disc:'74%',star:'★4.9',cnt:'(1,284)',q:'보톡스'},
+  {nm:'물광주사 3cc',hos:'압구정 라비앙 · 압구정로데오',price:'59,000원',was:'120,000원',disc:'50%',star:'★4.8',cnt:'(860)',q:'물광주사'},
+  {nm:'리쥬란 힐러 2cc',hos:'청담 온의원 · 압구정',price:'149,000원',was:'220,000원',disc:'32%',star:'★4.9',cnt:'(512)',q:'리쥬란'},
+  {nm:'스킨부스터 3회',hos:'신사 더스킨 · 신사역',price:'99,000원',was:'180,000원',disc:'45%',star:'★4.8',cnt:'(430)',q:'스킨부스터'},
+  {nm:'슈링크 유니버스 300샷',hos:'강남 라인클리닉 · 강남역',price:'129,000원',was:'250,000원',disc:'48%',star:'★4.9',cnt:'(1,020)',q:'슈링크'},
+  {nm:'제모 레이저 5회',hos:'강남 클리어 · 강남역',price:'79,000원',was:'150,000원',disc:'47%',star:'★4.7',cnt:'(690)',q:'제모'},
+  {nm:'스마일라식',hos:'강남밝은눈안과 · 강남역',price:'1,490,000원',was:'',disc:'',star:'★4.9',cnt:'(2,010)',q:'스마일라식'}
+];
 const reviews = [
   {nm:'강남 라인성형외과 · 눈매교정',st:'<span class="star">★ 4.9</span> · 후기 2,310 · 재방문율 상위'},
   {nm:'압구정 SW피부과 · 리프팅',st:'<span class="star">★ 4.9</span> · 후기 1,742 · 이달의 인기'},
@@ -1243,12 +1253,39 @@ function persoRail(){
       <div class="price">${p.price}${p.was?`<s>${p.was}</s>`:''}</div>
       <div class="rv">${p.rv}</div></div></div>`).join('');
 }
+/* 맞춤 추천 '더보기' → 전체 목록 서브스크린 (탭 시 해당 시술 검색) */
+function persoMoreList(){
+  return persoAll.map(p=>`<div class="scard" role="button" tabindex="0" style="cursor:pointer"
+    onclick="runSearch('${p.q}')" onkeydown="if(event.key==='Enter'){runSearch('${p.q}')}">
+    <div class="sth"></div><div class="sm">
+      <div class="hos">(T) 세이프닥 제휴 · ${p.hos}</div>
+      <div class="snm">${p.nm}</div>
+      <div class="rt"><b>${p.star}</b> ${p.cnt} · VAT 포함</div>
+      <div class="pr">${p.was?`<s>${p.was}</s><div class="now"><span class="pct">${p.disc}</span>${p.price}</div>`:`<div class="now">${p.price}</div>`}</div>
+    </div></div>`).join('');
+}
+function openPersoMore(){
+  clearFair();
+  const o=ovl();
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button>
+      <div class="ttl">재원님 맞춤 추천</div></div>
+    <div class="sub-body">
+      <div style="display:flex;align-items:center;gap:8px;padding:14px 16px;background:#fff;border-bottom:1px solid var(--line)">
+        <span style="width:26px;height:26px;border-radius:8px;background:var(--blue);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;flex:none">재</span>
+        <div><b style="font-size:13.5px">30대 · 피부과 관심</b> <small style="color:var(--muted);font-size:11.5px">· 최근 본 보톡스 기반 · ${mainRegionLabel()}</small></div>
+      </div>
+      <div class="dd-filters"><div class="ddf act">맞춤순 ▾</div><div class="ddf">지역 ▾</div><div class="ddf">쿠폰 추가할인</div><div class="ddf">당일할인</div></div>
+      <div class="slist">${persoMoreList()}</div>
+    </div></div>`;
+  o.hidden=false;
+}
 function renderTOBE(){
   return topbar()+`<div class="pad">
     <div class="search" role="button" tabindex="0" onclick="openSearch()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSearch();}">${I.search}<span>어떤 시술을 찾으세요?</span></div>
     <div class="sec"><div class="sec-h"><h3>진료과 <b>바로가기</b><span class="tag hot">활동 1위</span></h3></div>
       ${deptGrid(true)}</div>
-    <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">온보딩 관심정보</span></h3><span class="more">더보기</span></div>
+    <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">온보딩 관심정보</span></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openPersoMore()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPersoMore();}">더보기 ›</span></div>
       <div class="perso"><div class="who"><span class="av">재</span><div><b>30대 · 피부과 관심</b> <small>· 최근 본 보톡스 기반</small></div></div>
         <div class="rail">${persoRail()}</div></div></div>
     <div class="sec"><div class="sec-h"><h3>재원님이 <b>최근 본 시술</b></h3></div>
