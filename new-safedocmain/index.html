@@ -170,7 +170,7 @@
   .tab.on{color:#111;font-weight:700;}
 
   /* ---- AS-IS vs TO-BE 비교 (AS-IS · TO-BE · 설명 3열) ---- */
-  .stage.cmp{display:grid;grid-template-columns:390px 390px minmax(300px,1fr);grid-template-areas:"asis tobe expl";column-gap:30px;row-gap:24px;align-items:start;width:min(1320px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
+  .stage.cmp{display:grid;grid-template-columns:390px minmax(300px,1fr) 390px;grid-template-areas:"asis expl tobe";column-gap:30px;row-gap:24px;align-items:start;width:min(1320px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
   .cmp-col.asis{grid-area:asis;}
   .cmp-col.tobe{grid-area:tobe;}
   .cmp-col{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;}
@@ -254,6 +254,12 @@
   .metric.warn .v{color:#B54708;}
   .src{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);}
   .src b{color:var(--muted);font-weight:700;}
+
+  /* 개선 포인트 인라인 카드 (각 페이지 설명 내) */
+  .rc.rat-inline{margin-bottom:18px;background:linear-gradient(180deg,#F6F9FF,#fff);border-color:var(--blue-100);}
+  .rc.rat-inline .rc-top{align-items:baseline;gap:8px;}
+  .rc-tab.pt-lead{background:var(--blue);color:#fff;}
+  .rc-sub{font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:-.01em;}
 
   .legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;margin:26px auto 0;
     font-size:11.5px;color:var(--muted);}
@@ -690,7 +696,6 @@
   </header>
 
   <div class="seg" role="tablist" aria-label="데모 화면 전환">
-    <button role="tab" aria-selected="false" data-view="rat">개선 포인트</button>
     <button role="tab" aria-selected="false" data-view="signup">회원가입</button>
     <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
@@ -720,6 +725,7 @@
         </div>
       </div></figure>
       <div class="cmp-explain">
+        <div class="rat-mount" data-rat="2"></div>
         <p class="caption" id="mainCap"></p>
         <div class="obspec" id="diffSpec">
           <div class="spec-h">실제 메인(welfaremall.stage) 대비 변경점</div>
@@ -767,6 +773,7 @@
         </div>
       </div></figure>
       <div class="cmp-explain">
+      <div class="rat-mount" data-rat="3"></div>
       <div class="obspec">
         <div class="spec-h">시술 리스트 — 검색·지역 기반 개편</div>
         <div class="spec">
@@ -801,7 +808,7 @@
         <div class="notch"></div>
         <div class="scroll" id="rvScroll"></div>
       </div></div></figure>
-      <div class="cmp-explain"><div class="obspec" id="rvSpec">
+      <div class="cmp-explain"><div class="rat-mount" data-rat="4"></div><div class="obspec" id="rvSpec">
         <div class="spec-h">예약 플로우 개선 — 선(先)신청 · 후(後)상세입력</div>
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>예약 신청 마찰 최소화</b><p>기존 예약 화면에서 <b>진료 대상 · 병원 전달사항 · 추가 상담 희망 시술</b>을 <b>제거</b>하고, <b>내원 희망 일시 + 약관 동의</b>만으로 <b>‘예약 신청하기’ 즉시 신청</b>되도록 간소화했습니다.</p></div></div>
@@ -827,7 +834,7 @@
     <div class="ad-swap"><button id="adAsis" onclick="setAdMode('asis')">AS-IS 현재</button><button id="adTobe" class="on" onclick="setAdMode('tobe')">TO-BE 개선</button></div>
     <div class="stage ad-stage">
       <div class="webframe"><div class="web-side" id="adSide"></div><div class="web-app" id="adApp"></div></div>
-      <div><div class="obspec" id="adSpec">
+      <div><div class="rat-mount" data-rat="5"></div><div class="obspec" id="adSpec">
         <div class="spec-h">스샷2 좌측 사이드바 영역 → 개인화 광고·특가 인벤토리</div>
         <p class="caption" style="text-align:left;margin:0 0 16px">데스크톱 웹 <b>좌측 사이드바 영역</b>(스샷2)이 현재 <b>세이프닥 꿀팁·공지사항·QR</b> 등 저활동 콘텐츠로 비어 있습니다. <b>여신티켓</b>이 같은 자리를 ‘실시간 인기 시술 + 특가전’ 인벤토리로 쓰는 것처럼, <b>이 사이드바를 개인화 광고·특가 인벤토리로 전환</b>합니다. (상단 <b>AS-IS/TO-BE</b> 토글로 비교)</p>
         <div class="spec">
@@ -855,6 +862,7 @@
         <span class="sg-count" id="sgCount"></span>
       </div>
       <p class="caption" id="sgCap"></p>
+      <div class="rat-mount" data-rat="0" style="margin-top:20px"></div>
     </div>
   </section>
 
@@ -869,6 +877,7 @@
         </div>
       </div>
       <div class="obspec">
+        <div class="rat-mount" data-rat="1"></div>
         <p class="caption" style="text-align:left;margin:0 0 18px"><b>가입 온보딩에서 관심 정보를 수집</b>합니다. 진료과 → 세부 시술 → 관심 지역 순으로 받아 첫 홈부터 개인화된 추천을 노출합니다.</p>
         <div class="spec-h">카테고리 노출 &amp; 정렬 로직</div>
         <div class="spec">
@@ -882,18 +891,6 @@
     </div>
   </section>
 
-  <!-- ============ RATIONALE ============ -->
-  <section class="view" id="v-rat">
-    <div class="rat">
-      <p class="lead"><b>회원가입 · 가입 온보딩 · 개선 메인 · 시술리스트 · 예약플로우 · 광고·특가</b> — 각 탭에 적용된 개선을 한눈에 요약했습니다. 모든 변경은 <b>실제 사용 데이터</b>(Amplitude 활동 순위)·<b>취소 사유 분석</b>·2026-07-06 회의에 근거합니다.</p>
-      <div class="cards" id="ratCards"></div>
-      <div class="legend">
-        <span><i class="dot" style="background:var(--blue)"></i>Amplitude 활동 데이터 (상대 순위)</span>
-        <span><i class="dot" style="background:var(--warn)"></i>예약 취소 사유 분석</span>
-      </div>
-      <p class="foot">출처 · 2026-07-06 기능 개선 우선순위 회의 · 아이디어 「앱 메인 개선(간소화)」 「가입 온보딩 시 사용자 정보 획득」<br>본 화면은 프로토타입 데모이며 실제 서비스 데이터·가격과 다를 수 있습니다.</p>
-    </div>
-  </section>
 </div>
 
 <script>
@@ -1595,13 +1592,17 @@ const rat=[
       '관심 진료과·지역 <b>개인화 매칭 + 스폰서(AD) 우선 노출</b>로 광고 매출·전환 동시 확보.'],
     src:'여신티켓 참고 · 미활용 인벤토리 수익화 · AS-IS/TO-BE 토글'}
 ];
-document.getElementById('ratCards').innerHTML = rat.map(r=>`
-  <div class="rc">
-    <div class="rc-top"><span class="rc-tab">${r.tab}</span></div>
+/* 개선 포인트 카드를 각 페이지 설명에 인라인 배치 */
+document.querySelectorAll('.rat-mount').forEach(m=>{
+  const r=rat[+m.dataset.rat]; if(!r) return;
+  m.innerHTML=`
+  <div class="rc rat-inline">
+    <div class="rc-top"><span class="rc-tab pt-lead">개선 포인트</span><span class="rc-sub">${r.tab}</span></div>
     <h4>${r.t}</h4>
     <ul class="pts">${r.pts.map(p=>`<li>${p}</li>`).join('')}</ul>
     ${r.ev?`<div class="ev">${r.ev.map(e=>`<div class="metric ${e[2]||''}"><span class="v">${e[0]}</span><span class="l">${e[1]}</span></div>`).join('')}</div>`:''}
-    <div class="src"><b>근거·출처</b> · ${r.src}</div></div>`).join('');
+    <div class="src"><b>근거·출처</b> · ${r.src}</div></div>`;
+});
 
 /* ---------- SIGNUP FLOW (screenshot walkthrough) ---------- */
 const sgSteps=[
