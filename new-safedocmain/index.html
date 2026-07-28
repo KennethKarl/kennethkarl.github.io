@@ -1867,6 +1867,18 @@ function renderReserve(){
         <div class="rv-warn"><b>본 신청은 예약 확정이 아니에요</b><p>일정 조율 및 예약 확정은 병원에서 별도 안내 드려요. 예약 신청 후 병원의 연락을 기다려 주세요.</p></div>
         ${rvCalendar()}<div class="rv-ampm">오후</div>${rvTimeGrid()}</div>
       <div class="rv-moved">진료 대상 · 병원 전달사항 · 추가 상담은 <b>신청 접수 후</b> 입력합니다</div>
+      <div class="rv-sec"><div class="rv-sec-t">쿠폰 할인 적용</div>
+        <div class="rv-cpn"><span class="rv-cpn-v">50,000원</span><span class="rv-cpn-r"><span class="rv-cpn-max">최대 적용중</span><span class="rv-cpn-ch">변경</span></span></div>
+        <div class="rv-cpn-note">사용 가능한 쿠폰 7장</div></div>
+      <div class="rv-sec"><div class="rv-sec-t">결제 금액</div>
+        <div class="rv-pay"><span>정상가</span><span>600,000원</span></div>
+        <div class="rv-pay red"><span>할인 금액</span><span>- 200,000원</span></div>
+        <div class="rv-pay sub"><span>ㄴ 세이프닥 우대 할인</span><span>150,000원</span></div>
+        <div class="rv-pay sub"><span>ㄴ 쿠폰 할인</span><span>50,000원</span></div>
+        <div class="rv-pay total"><span>총 결제 예상 금액 (VAT 포함)</span><span>400,000원</span></div>
+        <p class="rv-pay-note">실제 결제 금액은 내원 후 병원에서의 상담 및 진료 결과에 따라 변경될 수 있습니다.</p></div>
+      <div class="rv-row">약관 동의 <span>⌄</span></div>
+      <div class="rv-agree-tx">예약 서비스 이용을 위한 개인정보 수집 및 제3자 제공을 포함한 모든 규정을 확인하였으며 이에 동의합니다.</div>
       <div class="rv-foot"><button class="rv-cta" ${rvTime?'':'disabled'} onclick="rvSubmit()">예약 신청하기</button></div>`;
   } else {
     el.innerHTML=`<div class="rv-head"><button class="rv-back">${I.back}</button><span>예약 신청 접수</span></div>
