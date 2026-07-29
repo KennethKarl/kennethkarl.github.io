@@ -87,7 +87,7 @@
   .sec{margin:20px 0 6px;}
   .sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px;}
   .sec-h h3{font-size:16.5px;margin:0;font-weight:800;letter-spacing:-.02em;}
-  .sec-h h3 b{color:var(--blue);}
+  .sec-h h3 b{color:inherit;}
   .sec-h .more{font-size:12.5px;color:var(--faint);font-weight:600;}
   .tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;
     padding:3px 7px;border-radius:6px;background:var(--blue-50);color:var(--blue-700);
@@ -100,10 +100,10 @@
   .dept{border:0;background:transparent;font-family:inherit;cursor:pointer;
     display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px 0;}
   .dept i{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;
-    background:var(--blue-50);transition:.18s;}
-  .dept i svg{width:26px;height:26px;color:var(--blue-700);}
-  .dept:hover i{background:var(--blue-100);transform:translateY(-2px);}
-  .dept span{font-size:11.5px;font-weight:600;color:#2b3a52;}
+    background:transparent;transition:.18s;}
+  .dept i svg{width:30px;height:30px;color:var(--blue);stroke-width:1.9;}
+  .dept:hover i{background:var(--blue-50);transform:translateY(-2px);}
+  .dept span{font-size:12px;font-weight:700;color:#111;}
   .dept .rk{font-size:9.5px;color:var(--coral);font-weight:800;}
 
   /* personalization */
@@ -731,7 +731,7 @@
   .wa-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid #F0F2F6;} .wa-logo{font-weight:900;color:var(--blue);font-size:15px;letter-spacing:.02em;} .wa-hic svg{width:18px;height:18px;color:var(--ink);}
   .wa-promo{display:flex;gap:4px;padding:11px 10px;overflow:hidden;} .wa-p{flex:1;text-align:center;font-size:9.5px;font-weight:600;color:#33425c;} .wa-pic{display:block;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#E9EBEE,#F3F4F6);margin:0 auto 5px;}
   .wa-banner{margin:2px 12px 0;border-radius:12px;padding:14px;color:#fff;background:linear-gradient(120deg,#1B2A6B,#3A4FC0);} .wa-banner small{font-size:9.5px;opacity:.85;} .wa-banner b{display:block;font-size:16px;font-weight:800;margin:5px 0 3px;letter-spacing:-.02em;} .wa-banner span{font-size:10px;opacity:.9;}
-  .wa-depts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 4px;padding:14px 8px 6px;} .wa-d{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#2b3a52;} .wa-d i{width:40px;height:40px;border-radius:12px;background:var(--blue-50);display:grid;place-items:center;} .wa-d i svg{width:21px;height:21px;color:var(--blue-700);}
+  .wa-depts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 4px;padding:14px 8px 6px;} .wa-d{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#2b3a52;} .wa-d i{width:40px;height:40px;border-radius:12px;background:transparent;display:grid;place-items:center;} .wa-d i svg{width:23px;height:23px;color:var(--blue);stroke-width:1.9;}
   .wa-sec{font-size:13px;font-weight:800;color:var(--ink);padding:12px 14px 8px;}
   .wa-cards{display:flex;gap:9px;padding:0 14px 16px;overflow:hidden;} .wa-c{flex:0 0 96px;} .wa-c-th{height:96px;border-radius:10px;} .wa-c-nm{font-size:11.5px;font-weight:700;margin:6px 0 2px;line-height:1.3;} .wa-c-hos{font-size:10px;color:var(--muted);} .wa-c-pr{font-size:13px;font-weight:800;margin-top:2px;} .wa-c-pr s{color:var(--faint);font-weight:500;font-size:9.5px;}
   /* 광고·특가 TO-BE 웹앱 = 개선 메인 적용 */
