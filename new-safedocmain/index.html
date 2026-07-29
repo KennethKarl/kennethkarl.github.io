@@ -410,7 +410,13 @@
   .fdeal .bn .go{font-size:12.5px;font-weight:700;opacity:.95;}
 
   /* ---- signup flow (screenshot walkthrough) ---- */
-  .sg{max-width:540px;margin:0 auto;}
+  .sg{display:grid;grid-template-columns:minmax(0,440px) minmax(300px,420px);gap:40px;align-items:start;
+    justify-content:center;width:min(1000px,95vw);margin:0 auto;}
+  .sg-main{min-width:0;}
+  .sg-side{position:sticky;top:24px;}
+  .sg-side .rat-mount .rc{margin-bottom:0;}
+  @media(max-width:900px){.sg{grid-template-columns:1fr;gap:24px;max-width:540px;}
+    .sg-side{position:static;}}
   .sg-frame{display:block;width:100%;border:1px solid #dfe5f0;padding:0;background:#fff;cursor:pointer;
     position:relative;border-radius:22px;overflow:hidden;box-shadow:var(--shadow);}
   .sg-frame img{display:block;width:100%;height:auto;animation:fade .3s ease both;}
@@ -965,18 +971,22 @@
   <!-- ============ SIGNUP FLOW ============ -->
   <section class="view" id="v-signup">
     <div class="sg">
-      <button class="sg-frame" id="sgFrame" onclick="sgNext()" aria-label="다음 단계로">
-        <img id="sgImg" src="signup/01.jpg" alt="회원가입 단계" decoding="async">
-        <span class="sg-tap" id="sgTap">다음 →</span>
-      </button>
-      <p class="sg-act" id="sgAct"></p>
-      <div class="sg-ctl">
-        <button class="sg-nav" id="sgPrev" onclick="sgPrev(event)">← 이전</button>
-        <div class="sg-dots" id="sgDots"></div>
-        <span class="sg-count" id="sgCount"></span>
+      <div class="sg-main">
+        <button class="sg-frame" id="sgFrame" onclick="sgNext()" aria-label="다음 단계로">
+          <img id="sgImg" src="signup/01.jpg" alt="회원가입 단계" decoding="async">
+          <span class="sg-tap" id="sgTap">다음 →</span>
+        </button>
+        <p class="sg-act" id="sgAct"></p>
+        <div class="sg-ctl">
+          <button class="sg-nav" id="sgPrev" onclick="sgPrev(event)">← 이전</button>
+          <div class="sg-dots" id="sgDots"></div>
+          <span class="sg-count" id="sgCount"></span>
+        </div>
+        <p class="caption" id="sgCap"></p>
       </div>
-      <p class="caption" id="sgCap"></p>
-      <div class="rat-mount" data-rat="0" style="margin-top:20px"></div>
+      <div class="sg-side">
+        <div class="rat-mount" data-rat="0"></div>
+      </div>
     </div>
   </section>
 
