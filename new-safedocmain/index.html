@@ -1040,7 +1040,7 @@
           <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>현재 위치로 설정</b><p><b>‘현재 위치로 설정’</b>으로 내 주변 병원을 먼저 볼 수 있습니다. (위치 권한 기반 자동 설정)</p></div></div>
           <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>인기 상권 · 병원 밀집순</b><p>강남·압구정, 서초·교대, 잠실·송파, 건대·성수, 홍대·신촌, 분당·판교, 부산 서면, 대구 동성로 등 <b>인기 상권을 병원 밀집순</b>으로 정렬해 노출합니다.</p></div></div>
           <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>지역·지하철역 직접 검색</b><p>목록에 원하는 지역이 없으면 <b>지역·지하철역 검색</b>으로 직접 찾아 추가할 수 있습니다.</p></div></div>
-          <div class="sc"><div class="sc-n">05</div><div class="sc-b"><b>선택 방식 비교 (A·하이브리드 / B·검색 우선)</b><p>상단 토글로 <em>A·하이브리드</em>(인기 상권 + 검색)와 <em>B·검색 우선</em> 두 가지 지역 선택 방식을 미리 비교할 수 있습니다.</p></div></div>
+          <div class="sc"><div class="sc-n">05</div><div class="sc-b"><b>선택 방식 = 하이브리드(A) 확정</b><p>지역 선택 방식은 <em>A·하이브리드</em>(인기 상권 + 검색)로 <b>확정</b>했습니다. 현재 위치·인기 상권을 먼저 노출하고, 목록에 없으면 지역·지하철역 검색으로 보완합니다.</p></div></div>
         </div>
         <p class="spec-src">관심 지역 = 홈·시술 리스트 지역 우선 노출 기준 · 프로토타입</p>
       </div>
@@ -1778,11 +1778,7 @@ function obRender(){
         <button class="locsearchbtn" onclick="obOpenSearch()">${I.search}<span>찾는 지역이 없나요? 지역·지하철역 검색</span><span class="ar">›</span></button>
         <button class="pick wide" data-region="전국·어디든" aria-pressed="${ob.region.has('전국·어디든')}" onclick="obToggleRegion('전국·어디든')"><span class="ic">${I.globe}</span>전국·어디든 상관없어요</button>`;
     }
-    el.innerHTML=`<div class="ob-h"><div class="k">STEP 3 / 3</div><h2>관심 지역을<br>선택해 주세요</h2><p>어느 지역에서 진료·시술받고 싶으세요? (복수 선택)</p>
-      <div class="obsort" role="group" aria-label="지역 선택 방식">
-        <button class="${obLoc==='A'?'on':''}" onclick="obSetLoc('A')">A · 하이브리드</button>
-        <button class="${obLoc==='B'?'on':''}" onclick="obSetLoc('B')">B · 검색 우선</button>
-      </div></div>
+    el.innerHTML=`<div class="ob-h"><div class="k">STEP 3 / 3</div><h2>관심 지역을<br>선택해 주세요</h2><p>어느 지역에서 진료·시술받고 싶으세요? (복수 선택)</p></div>
       <div class="locbody">${body}</div>
       <div class="ob-foot" id="obStep3Foot">${step3FootHTML()}</div>`;
   } else {
