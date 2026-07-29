@@ -1841,7 +1841,7 @@ function obDetectLoc(){
   const g=document.getElementById('obGeo'); if(!g) return;
   g.classList.add('loading');
   g.innerHTML=`<span class="geoic">${I.pin}</span><span class="geotx"><b>위치 확인 중…</b><small>네이버 지오코딩으로 상권 매칭</small></span>`;
-  setTimeout(()=>{ obGeoArea='강남·강남역'; ob.region.add(obGeoArea); obRender(); }, 700);
+  setTimeout(()=>{ obGeoArea='강남'; ob.region.add(obGeoArea); obRender(); }, 700);
 }
 
 /* ---------- RATIONALE ---------- */
