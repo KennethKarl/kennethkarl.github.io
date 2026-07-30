@@ -229,7 +229,7 @@
   .tab.on{color:#111;font-weight:700;}
 
   /* ---- AS-IS vs TO-BE 비교 (AS-IS · TO-BE · 설명 3열) ---- */
-  .stage.cmp{display:grid;grid-template-columns:390px 390px minmax(300px,1fr);grid-template-areas:"asis tobe expl";column-gap:30px;row-gap:24px;align-items:start;width:min(1320px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
+  .stage.cmp{display:grid;grid-template-columns:390px minmax(300px,1fr);grid-template-areas:"tobe expl";column-gap:44px;row-gap:24px;align-items:start;width:min(940px,95vw);position:relative;left:50%;transform:translateX(-50%);margin:0;}
   .cmp-col.asis{grid-area:asis;}
   .cmp-col.tobe{grid-area:tobe;}
   .cmp-col{margin:0;display:flex;flex-direction:column;align-items:center;gap:11px;}
@@ -245,7 +245,7 @@
   .asis-scroll::-webkit-scrollbar{width:0}
   .asis-scroll img{display:block;width:100%;height:auto;}
   .cmp-explain{grid-area:expl;max-width:none;margin:0;align-self:start;}
-  @media(max-width:1160px){.stage.cmp{grid-template-columns:1fr;grid-template-areas:"asis" "tobe" "expl";justify-items:center;width:min(560px,95vw);left:auto;transform:none;margin:0 auto;}.cmp-explain{max-width:520px;}}
+  @media(max-width:1160px){.stage.cmp{grid-template-columns:1fr;grid-template-areas:"tobe" "expl";justify-items:center;width:min(560px,95vw);left:auto;transform:none;margin:0 auto;}.cmp-explain{max-width:520px;}}
 
   .caption{max-width:390px;margin:12px auto 0;text-align:center;font-size:12.5px;color:var(--muted);}
   .caption b{color:var(--ink);}
@@ -834,8 +834,6 @@
   <!-- ============ MAIN ============ -->
   <section class="view active" id="v-main">
     <div class="stage cmp">
-      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 메인</small></figcaption>
-      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/main.jpg" alt="현행 welfaremall 메인" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
       <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone">
         <div class="screen">
@@ -883,8 +881,6 @@
   <!-- ============ 시술 리스트 ============ -->
   <section class="view" id="v-proclist">
     <div class="stage cmp">
-      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 리스트</small></figcaption>
-      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="asis-scroll"><img src="asis/list.jpg" alt="현행 welfaremall 시술 리스트" loading="lazy"></div><nav class="tabbar"><div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div><div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div></nav></div></div></figure>
       <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone">
         <div class="screen">
@@ -929,8 +925,6 @@
   <!-- ============ 예약 플로우 ============ -->
   <section class="view" id="v-reserve">
     <div class="stage cmp">
-      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 시술 상세→예약</small></figcaption>
-      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="scroll" id="rvAsisScroll"></div></div></div></figure>
       <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone"><div class="screen">
         <div class="notch"></div>
@@ -960,8 +954,6 @@
   <!-- ============ 예약 수정 ============ -->
   <section class="view" id="v-resedit">
     <div class="stage cmp">
-      <figure class="cmp-col asis"><figcaption class="cmp-lbl asis">AS-IS <small>· 현행 예약 관리</small></figcaption>
-      <div class="phone asis"><div class="screen"><div class="notch"></div><div class="scroll" id="reAsisScroll"></div><div class="ovl" id="reAsisOvl" hidden></div></div></div></figure>
       <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">TO-BE <small>· 개선안</small></figcaption>
       <div class="phone"><div class="screen"><div class="notch"></div><div class="scroll" id="reScroll"></div><div class="ovl" id="reOvl" hidden></div></div></div></figure>
       <div class="cmp-explain"><div class="rat-mount" data-rat="6"></div><div class="obspec">
@@ -985,12 +977,11 @@
 
   <!-- ============ 광고·특가 영역 ============ -->
   <section class="view" id="v-ad">
-    <div class="ad-swap"><button id="adAsis" onclick="setAdMode('asis')">AS-IS 현재</button><button id="adTobe" class="on" onclick="setAdMode('tobe')">TO-BE 개선</button></div>
     <div class="stage ad-stage">
       <div class="webframe"><div class="web-side" id="adSide"></div><div class="web-app" id="adApp"></div></div>
       <div><div class="rat-mount" data-rat="5"></div><div class="obspec" id="adSpec">
         <div class="spec-h">스샷2 좌측 사이드바 영역 → 개인화 광고·특가 인벤토리</div>
-        <p class="caption" style="text-align:left;margin:0 0 16px">데스크톱 웹 <b>좌측 사이드바 영역</b>(스샷2)이 현재 <b>세이프닥 꿀팁·공지사항·QR</b> 등 저활동 콘텐츠로 비어 있습니다. <b>여신티켓</b>이 같은 자리를 ‘실시간 인기 시술 + 특가전’ 인벤토리로 쓰는 것처럼, <b>이 사이드바를 개인화 광고·특가 인벤토리로 전환</b>합니다. (상단 <b>AS-IS/TO-BE</b> 토글로 비교)</p>
+        <p class="caption" style="text-align:left;margin:0 0 16px">데스크톱 웹 <b>좌측 사이드바 영역</b>(스샷2)이 현재 <b>세이프닥 꿀팁·공지사항·QR</b> 등 저활동 콘텐츠로 비어 있습니다. <b>여신티켓</b>이 같은 자리를 ‘실시간 인기 시술 + 특가전’ 인벤토리로 쓰는 것처럼, <b>이 사이드바를 개인화 광고·특가 인벤토리로 전환</b>합니다.</p>
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>특가전 노출</b><p>‘이달의 제휴 특가 · 인기 시술 특가전’을 <b>전면 배치</b>해 최저가 혜택으로 유입·탐색을 유도합니다.</p></div></div>
           <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>실시간 인기 시술 랭킹</b><p>검색·예약 로그 기반 <b>실시간 Top 10</b>(순위 추이·BEST/NEW)으로 트렌드 탐색을 촉진합니다.</p></div></div>
@@ -1899,7 +1890,7 @@ const rat=[
       '<b>이달의 제휴 특가전</b> 전면 배치 + <b>실시간 인기 시술 Top 10</b>.',
       '관심 진료과·지역 <b>개인화 매칭 + 스폰서(AD) 우선 노출</b>로 광고 매출·전환 동시 확보.',
       '<b>어드민에서 배너(노출 병원·시술·지역·순서·기간) 직접 설정</b> → 제휴 협상 중인 병원을 원하는 자리에 노출하는 <b>영업의 무기</b>로 활용.'],
-    src:'여신티켓 참고 · 미활용 인벤토리 수익화 · 어드민 배너 설정 · AS-IS/TO-BE 토글'},
+    src:'여신티켓 참고 · 미활용 인벤토리 수익화 · 어드민 배너 설정'},
   {tab:'⑦ 예약 수정',t:'예약 변경 기능 신설 (취소만 → 변경 + 취소)',
     pts:[
       '<b>AS-IS는 예약 취소하기만</b> 제공 — 일정이 바뀌면 취소 후 재예약해야 함.',
@@ -2246,7 +2237,7 @@ function switchView(v){
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; closeRegionPicker(); plAutoTab(); renderProcList(); }
   if(v==='reserve'){ rvReset(); renderReserveAsis(); }
   if(v==='resedit'){ reReset(); }
-  if(v==='ad'){ adMode='tobe'; document.getElementById('adAsis').className=''; document.getElementById('adTobe').className='on'; renderAd(); }
+  if(v==='ad'){ adMode='tobe'; renderAd(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
