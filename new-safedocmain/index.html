@@ -1785,12 +1785,15 @@ function renderPlDeptSheet(){
     </div>`;
 }
 function plPickDept(c){ plCatDraft=c; renderPlDeptSheet(); }
-function applyPlDept(){ plCat=plCatDraft; closePlDept(); plUpdate(); }
+function applyPlDept(){ plCat=plCatDraft; syncDeptToOb(); closePlDept(); plUpdate(); }
 function closePlDept(){ const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} }
+/* 시술리스트에서 바꾼 진료과·지역을 온보딩 관심정보(ob)에 역동기화 (개인화 양방향) */
+function syncDeptToOb(){ if(typeof ob==='undefined'||!ob.dept) return; if(plCat!==plDeptAll) ob.dept=new Set([plCat]); }
+function syncRegionToOb(){ if(typeof ob!=='undefined' && ob.region){ ob.region=new Set(mainRegions); } }
 function plReset(){ plQuery=''; plCat=plDefaultCat(); plTab='시술'; plAutoTab(); renderProcList(); }
 function closeRegionPicker(){ const o=document.getElementById('plOvl'); if(o){o.hidden=true; o.innerHTML='';} }
 /* 예시칩 '지역→부산 서면' : 관심 지역을 해당 1곳으로 빠르게 전환 */
-function plSetRegion(r){ mainRegions.length=0; mainRegions.push(r); plQuery=''; plCat=plDefaultCat(); closeRegionPicker(); plAutoTab(); renderProcList(); }
+function plSetRegion(r){ mainRegions.length=0; mainRegions.push(r); syncRegionToOb(); plQuery=''; plCat=plDefaultCat(); closeRegionPicker(); plAutoTab(); renderProcList(); }
 
 /* ===== 시술리스트 지역 선택 = 가입 온보딩 STEP3 화면 재사용(멀티·인기상권+시술/병원수·현재위치·검색) ===== */
 function plRegOvl(){ return document.getElementById('plOvl'); }
@@ -1853,7 +1856,7 @@ function plRegCloseSearch(){ mainSearchOn=false; renderPlRegion(); }
 function plRegSearchInput(q){ mainRegQuery=q; const r=document.getElementById('plRegResults'); if(r) r.innerHTML=plRegResults(q); }
 function plRegFocus(){ const i=document.getElementById('plRegInput'); if(i){i.focus(); const v=i.value; i.value=''; i.value=v;} }
 function openPlRegion(){ mainSearchOn=false; mainRegQuery=''; renderPlRegion(); }
-function plRegionApply(){ mainSearchOn=false; mainRegQuery=''; const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} plAutoTab(); renderProcList(); }
+function plRegionApply(){ mainSearchOn=false; mainRegQuery=''; const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} syncRegionToOb(); plAutoTab(); renderProcList(); }
 
 /* ---------- ONBOARDING (safedoc.io/menu 전체 카테고리) ---------- */
 // 진료과 17종 + 세부 시술 — 출처: api.safedoc.io/department/list (safedoc.io/menu 동일)
@@ -2033,7 +2036,8 @@ const rat=[
       '<b>관심 지역 멀티 선택(최대 3곳) → 합집합 재조회</b> — 가입 온보딩 지역 화면 재사용, 지역별 시술·병원 수 표시(AD 2건 방어 후 인기순).',
       '시술 <b>0건이면 병원 탭 자동 전환</b> + 희망 시술 요청 유도.',
       '지역별 <b>시술·병원 수 자동 표시</b>, 카드에 <b>병원·지역·지하철역</b> 표기.',
-      '<b>진료과 필터 = 온보딩 관심 진료과 기본</b> — 가로 스크롤 칩 대신 <b>‘진료과/시술 ▾’ 바텀시트</b>에서 선택(관심 진료과 뱃지). ‘전체’는 <b>‘전체 진료과’</b>로 명확화.'],
+      '<b>진료과 필터 = 온보딩 관심 진료과 기본</b> — 가로 스크롤 칩 대신 <b>‘진료과/시술 ▾’ 바텀시트</b>에서 선택(관심 진료과 뱃지). ‘전체’는 <b>‘전체 진료과’</b>로 명확화.',
+      '<b>지역·진료과를 여기서 바꾸면 온보딩 관심정보에 반영</b> — 시술리스트에서 고른 지역·진료과가 <b>온보딩 관심 지역/진료과 · 메인 개인화</b>에 그대로 갱신(리스트↔온보딩↔메인 <b>양방향 동기화</b>).'],
     src:'2026-07-06 회의 · 지역 재조회 · 결과없음 병원 폴백'},
   {tab:'⑤ 예약플로우',t:'선(先)신청 · 후(後)상세입력',
     pts:[
