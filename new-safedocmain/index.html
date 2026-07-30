@@ -1755,7 +1755,6 @@ function plHosAll(){ const q=plQuery.trim(); const R=plActiveRegions(); return h
 function renderProcList(){
   document.getElementById('plScroll').innerHTML=`
     <div class="pl-sbar"><button class="box" onclick="plOpenSearch(plQuery)">${I.search}<span class="pl-sbtxt${plQuery?' has':''}">${plQuery||'시술명, 병원명, 지역을 검색해보세요'}</span></button></div>
-    <div class="pl-siren"><img src="assets/list-siren.jpg" alt="최저가 보상제 · 같은 병원 다른 가격을 보셨다고요? +5,000P 보상"></div>
     <div class="pl-eg"><span>예시</span>
       <button onclick="plTry('이갈이/코골이')">이갈이/코골이</button>
       <button onclick="plTry('임플란트')">임플란트</button>
