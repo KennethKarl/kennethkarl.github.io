@@ -684,6 +684,37 @@
   .rv-target-d{font-size:12.5px;color:#48566e;margin-top:5px;}
   .rv-addfam{width:100%;border:0;background:var(--ink);color:#fff;font-family:inherit;font-weight:800;font-size:13.5px;border-radius:10px;padding:13px;cursor:pointer;margin:4px 0 12px;} .rv-addfam:disabled{opacity:.4;cursor:not-allowed;}
   .rv-notes{margin:0;padding-left:18px;} .rv-notes li{font-size:11.5px;color:var(--muted);line-height:1.7;}
+  /* ── 시술 상세 (신규) ── */
+  #dtScroll{background:#fff;letter-spacing:-.02em;}
+  .dt-head{display:flex;align-items:center;gap:10px;padding:38px 14px 12px;position:sticky;top:0;background:#fff;z-index:11;}
+  .dt-back{border:0;background:none;padding:0;cursor:pointer;color:#111;} .dt-back svg{width:24px;height:24px;}
+  .dt-head b{font-size:16px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#111;}
+  .dt-actbtns{display:flex;gap:14px;color:#111;} .dt-actbtns svg{width:22px;height:22px;}
+  .dt-hero{width:100%;aspect-ratio:1/1;background:#f2f4f8;overflow:hidden;} .dt-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+  .dt-tabs{display:flex;border-bottom:1px solid #EBEBEB;background:#fff;}
+  .dt-tab{flex:1;border:0;background:none;font-family:inherit;font-size:14px;font-weight:600;color:#8A97AB;padding:14px 0;cursor:pointer;position:relative;}
+  .dt-tab.on{color:#111;font-weight:700;} .dt-tab.on::after{content:'';position:absolute;left:22%;right:22%;bottom:-1px;height:2px;background:#1B59FA;}
+  .dt-main{padding:18px 16px 0;}
+  .dt-title{font-size:19px;font-weight:700;color:#111;line-height:1.3;}
+  .dt-rate{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:700;margin-top:9px;color:#111;} .dt-rate svg{width:15px;height:15px;color:#FFB100;} .dt-rate>span{color:#8A97AB;font-weight:500;} .dt-rate .dt-more{margin-left:auto;font-size:12.5px;color:#8A97AB;font-weight:600;}
+  .dt-price{margin:16px 0 4px;padding:16px;background:#F6F8FC;border-radius:12px;}
+  .dt-was{font-size:12.5px;color:#A7B0B9;} .dt-was s{color:#A7B0B9;}
+  .dt-now{display:flex;align-items:center;gap:8px;margin-top:5px;} .dt-now b{font-size:22px;font-weight:800;color:#111;}
+  .dt-pct{color:#1B59FA;font-size:20px;font-weight:800;}
+  .dt-mtag{font-size:11px;font-weight:700;color:#1550E0;background:#DCE6FF;border-radius:6px;padding:3px 8px;margin-left:auto;}
+  .dt-cpn{margin-top:11px;font-size:12.5px;color:#1550E0;background:#fff;border:1px solid #DCE6FF;border-radius:8px;padding:9px;text-align:center;font-weight:600;} .dt-cpn b{font-weight:800;}
+  .dt-sec{padding:20px 0;border-top:8px solid #F2F4F8;} .dt-main>.dt-sec:first-child{border-top:0;padding-top:6px;}
+  .dt-sec h4{font-size:16px;font-weight:800;color:#111;margin:0 0 11px;}
+  .dt-sec p{font-size:13.5px;color:#4a5568;line-height:1.65;margin:0;} .dt-sec p b{color:#111;}
+  .dt-benefit{border:1.5px solid var(--blue);border-radius:12px;overflow:hidden;}
+  .dt-benefit-h{background:var(--blue);color:#fff;font-size:12.5px;font-weight:700;padding:10px 13px;}
+  .dt-benefit ul{margin:0;padding:11px 13px 12px 27px;} .dt-benefit li{font-size:12.5px;color:#38465e;line-height:1.7;}
+  .dt-reco{list-style:none;margin:0;padding:0;} .dt-reco li{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:#33425c;line-height:1.5;margin-bottom:10px;} .dt-reco svg{width:18px;height:18px;color:#06A42D;flex:none;margin-top:1px;}
+  .dt-kp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .dt-kpc{background:#F6F8FC;border-radius:12px;padding:16px 6px;text-align:center;} .dt-kpc i{display:block;} .dt-kpc svg{width:26px;height:26px;color:var(--blue);margin:0 auto 8px;} .dt-kpc span{font-size:11.5px;font-weight:600;color:#33425c;line-height:1.35;}
+  .dt-hosnm{font-size:15px;font-weight:700;color:#111;} .dt-hsub{font-size:12.5px;color:#808B96;margin-top:4px;} .dt-htime{font-size:12.5px;color:#4a5568;margin-top:8px;}
+  .dt-foot{position:sticky;bottom:0;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #EBEBEB;z-index:10;}
+  .dt-cta{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:12px;padding:15px;cursor:pointer;}
   .rv-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:13px;resize:none;outline:none;color:var(--ink);}
   .rv-sel{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 12px;font-family:inherit;font-size:13.5px;color:var(--ink);background:#fff;outline:none;}
   /* AS-IS 현행 예약 폼 전용 */
@@ -828,6 +859,7 @@
     <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
     <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
+    <button role="tab" aria-selected="false" data-view="detail">시술 상세</button>
     <button role="tab" aria-selected="false" data-view="reserve">예약플로우</button>
     <button role="tab" aria-selected="false" data-view="resedit">예약 수정</button>
     <button role="tab" aria-selected="false" data-view="ad">광고·특가</button>
@@ -919,6 +951,39 @@
           </ol>
         </div>
         <p class="spec-src">2026-07-06 회의 반영 · 지역 선택 재조회 · 결과 없음 시 병원 폴백</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 시술 상세 (신규) ============ -->
+  <section class="view" id="v-detail">
+    <div class="stage cmp">
+      <figure class="cmp-col tobe"><figcaption class="cmp-lbl tobe">시술 상세 <small>· 신규 구현</small></figcaption>
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="scroll" id="dtScroll"></div>
+          <div class="ovl" id="dtOvl" hidden></div>
+          <nav class="tabbar sd-nav">
+            <div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.06 3.63a1.5 1.5 0 0 1 1.88 0l6.75 5.46a2 2 0 0 1 .71 1.53V19a2 2 0 0 1-2 2h-2.9v-4.9a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5V21H5.6a2 2 0 0 1-2-2v-8.38a2 2 0 0 1 .71-1.53Z"/></svg>홈</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>주변병원</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5c-1.2 0-2.34-.28-3.35-.78L4.5 20l1.28-4.16A7.5 7.5 0 1 1 20 11.5Z"/></svg>채팅상담</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8.5" width="17" height="5" rx="1"/><path d="M5 13.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6.5M12 8.5V21"/><path d="M12 8.5S10.5 4 8 4a2.2 2.2 0 0 0 0 4.5h4Zm0 0S13.5 4 16 4a2.2 2.2 0 0 1 0 4.5h-4Z"/></svg>혜택</div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>MY</div>
+          </nav>
+        </div>
+      </div></figure>
+      <div class="cmp-explain">
+      <div class="rat-mount" data-rat="7"></div>
+      <div class="obspec">
+        <div class="spec-h">시술 상세 — 실제 화면 자체 구현 + 예약 연결</div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>실제 상세를 앱 내 화면으로 재현</b><p>기존에는 시술 카드를 누르면 <b>외부 페이지</b>로 이동했으나, <b>히어로 · 탭(시술정보·리뷰·병원정보·상세정보) · 시술명·평점 · 회원 우대가 · 프로그램 설명 · 안심 혜택 · 추천 대상 · 시술 특장점</b>을 실제 welfaremall 상세와 동일하게 앱 내 화면으로 구성했습니다.</p></div></div>
+          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>회원 우대가 즉시 노출</b><p>비로그인 ‘인증하고 우대가 확인’ 대신, 로그인 회원에게는 <b>정가 · 할인율 · 회원 우대가 · 쿠폰 적용가</b>를 바로 노출합니다.</p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>하단 고정 ‘예약하기’ → 앱 내 예약 연결</b><p>하단 고정 CTA로 <b>예약 플로우</b>에 바로 연결됩니다. (외부 이탈 없이 상세 → 예약 완결)</p></div></div>
+        </div>
+        <p class="spec-src">기준: welfaremall.stage.safedoc.kr 시술 상세 · 프로토타입</p>
       </div>
       </div>
     </div>
@@ -1559,7 +1624,7 @@ function procCard(d){
   const pct = w>0?Math.round((1-p/w)*100)+'%':'';
   const cp = d.coupon ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
   const th=plThumbMap[d.dept];
-  return `<div class="sd-card">
+  return `<div class="sd-card" style="cursor:pointer" onclick="openDetailNm('${(d.nm||'').replace(/'/g,'')}')">
     <div class="sd-thumb">${th?`<img src="${th}" alt="${d.nm}" loading="lazy">`:''}${d.ad?'<span class="sd-ad">AD</span>':''}</div>
     <div class="sd-body">
       ${d.coupon?`<span class="sd-badge">고유가 지원금 사용가능</span>`:''}
@@ -1570,6 +1635,54 @@ function procCard(d){
       <div class="sd-price">${pct?`<span class="sd-pct">${pct}</span>`:''}${d.price}</div>
       ${cp?`<div class="sd-cpn">쿠폰 적용 시 ${cp}</div>`:''}
     </div></div>`;
+}
+/* ---------- 시술 상세 (신규 구현) ---------- */
+let dtItem=null;
+const dtReco={
+  '치과':['충치가 초기 단계이거나 범위가 넓지 않은 분','치아가 깨졌거나 틈이 벌어져 심미적 개선이 필요하신 분','금세라믹 인레이보다 짧은 시간·간단한 치료를 원하시는 분'],
+  '피부과':['모공·잔주름 등 피부 결 개선을 원하시는 분','시술 후 빠른 일상 복귀를 원하시는 분','자극이 적은 관리를 선호하시는 분'],
+  '안과':['안경·렌즈 없는 생활을 원하시는 분','각막 두께·시력 조건이 맞는 분','짧은 회복 기간을 원하시는 분'],
+  '성형외과':['또렷한 눈매를 원하시는 분','자연스러운 라인을 선호하시는 분','회복이 빠른 시술을 찾으시는 분'],
+  '건강검진':['종합적인 건강 상태를 점검하고 싶은 분','가족력이 있어 정기 검진이 필요한 분'],
+  '두피/탈모':['모발 밀도 개선을 원하시는 분','자연스러운 헤어라인을 원하시는 분'],
+  default:['합리적인 우대가 시술을 찾으시는 분','검증된 제휴 병원에서 시술받고 싶은 분']
+};
+const dtKP={
+  '치과':[['우수한 심미성','tooth'],['짧은 시술·당일 진료','clock'],['치아 삭제 최소화','check']],
+  default:[['검증된 제휴 병원','check'],['회원 전용 우대가','ticket'],['안심 사후 관리','heart']]
+};
+function openDetailNm(nm){ dtItem = procList.find(p=>p.nm===nm) || procList[0]; switchView('detail'); }
+function dtToReserve(){ switchView('reserve'); }
+function renderDetail(){
+  const d = dtItem || procList[0];
+  const th = plThumbMap[d.dept] || 'assets/thumb-tooth.jpg';
+  const p=won(d.price), w=won(d.was);
+  const pct = w>0?Math.round((1-p/w)*100)+'%':'';
+  const cp = d.coupon ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
+  const reco = dtReco[d.dept] || dtReco.default;
+  const kp = dtKP[d.dept] || dtKP.default;
+  const share='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4M12 2v14"/></svg>';
+  document.getElementById('dtScroll').innerHTML=`
+    <div class="dt-head"><button class="dt-back" onclick="switchView('proclist')">${I.back}</button><b>${d.hos}</b><span class="dt-actbtns">${I.search}${share}</span></div>
+    <div class="dt-hero"><img src="${th}" alt="${d.nm}"></div>
+    <div class="dt-tabs"><button class="dt-tab on">시술정보</button><button class="dt-tab">리뷰(${d.rv})</button><button class="dt-tab">병원정보</button><button class="dt-tab">상세정보</button></div>
+    <div class="dt-main">
+      <div class="dt-title">${d.nm}</div>
+      <div class="dt-rate">${I.star}<b>${d.rate}</b> <span>(${d.rv})</span><span class="dt-more">전체보기 ›</span></div>
+      <div class="dt-price">
+        ${w>0?`<div class="dt-was"><s>${d.was}</s> · VAT 포함</div>`:''}
+        <div class="dt-now">${pct?`<span class="dt-pct">${pct}</span>`:''}<b>${d.price}</b><span class="dt-mtag">회원 우대가</span></div>
+        ${cp?`<div class="dt-cpn">쿠폰 적용 시 <b>${cp}</b></div>`:''}
+      </div>
+      <div class="dt-sec"><h4>프로그램 설명</h4><p><b>${d.nm}</b> 프로그램입니다. 세이프닥 제휴 병원의 <b>회원 전용 우대가</b>로 진행되며, 시술 전 상담을 통해 개인별 맞춤 안내를 받으실 수 있습니다.</p></div>
+      <div class="dt-sec"><div class="dt-benefit"><div class="dt-benefit-h">세이프닥 예약 전용 안심 혜택</div><ul><li>예약할 때마다 세이프닥 회원 전용 우대가 적용</li><li>의료 분쟁 발생 시, 전문 법률 상담 무료 지원</li><li>병원 이용 불편 시, 세이프닥이 신속 조율 지원</li></ul></div></div>
+      <div class="dt-sec"><h4>이런 분께 추천해요</h4><ul class="dt-reco">${reco.map(r=>`<li>${I.check}<span>${r}</span></li>`).join('')}</ul></div>
+      <div class="dt-sec"><h4>시술 특장점</h4><div class="dt-kp">${kp.map(k=>`<div class="dt-kpc"><i>${I[k[1]]}</i><span>${k[0]}</span></div>`).join('')}</div></div>
+      <div class="dt-sec"><h4>병원 정보</h4><div class="dt-hosnm">${d.hos}</div><div class="dt-hsub">${d.region}${d.station?` · ${d.station}`:''}</div><div class="dt-htime">진료시간 · 월–금 10:00–19:00 / 토 10:00–14:00</div></div>
+      <div style="height:88px"></div>
+    </div>
+    <div class="dt-foot"><button class="dt-cta" onclick="dtToReserve()">예약하기</button></div>`;
+  document.getElementById('dtScroll').scrollTop=0;
 }
 function hCard(h){
   return `<div class="hcard"><div class="hth">${h.nm.replace(/\s.*/,'').slice(0,2)}</div>
@@ -1902,7 +2015,13 @@ const rat=[
       '<b>예약 변경하기 신설</b> — <b>일시·진료 대상·병원 전달사항·추가 상담·쿠폰</b>을 취소 없이 바로 수정.',
       '취소 사유 대다수가 <b>일정 변경</b> → 취소 플로우에서도 <b>‘변경으로 처리’</b> 제안.'],
     ev:[['대다수','취소사유=일정 변경','warn']],
-    src:'welfaremall.stage /profile/reservation · 취소사유 분석'}
+    src:'welfaremall.stage /profile/reservation · 취소사유 분석'},
+  {tab:'④-2 시술 상세',t:'실제 상세 화면 자체 구현 + 예약 연결',
+    pts:[
+      '외부 이동 대신 <b>히어로·탭·시술명·평점·회원 우대가·프로그램 설명·안심 혜택·추천 대상·시술 특장점</b>을 앱 내 화면으로 재현.',
+      '비로그인 ‘인증하고 우대가 확인’ 대신 회원에게 <b>정가·할인율·회원 우대가·쿠폰가</b> 즉시 노출.',
+      '하단 고정 <b>예약하기 → 예약 플로우</b> 앱 내 연결(외부 이탈 없이 상세→예약 완결).'],
+    src:'welfaremall.stage 시술 상세 · 프로토타입'}
 ];
 /* 개선 포인트 카드를 각 페이지 설명에 인라인 배치 */
 document.querySelectorAll('.rat-mount').forEach(m=>{
@@ -2240,6 +2359,7 @@ function switchView(v){
   document.querySelectorAll('#v-'+v+' .asis-scroll').forEach(e=>e.scrollTop=0);
   if(v==='signup'){ sg=0; sgRender(); }
   if(v==='proclist'){ plCat='전체'; plTab='시술'; plQuery=''; closeRegionPicker(); plAutoTab(); renderProcList(); }
+  if(v==='detail'){ renderDetail(); }
   if(v==='reserve'){ rvReset(); renderReserveAsis(); }
   if(v==='resedit'){ reReset(); }
   if(v==='ad'){ adMode='tobe'; renderAd(); }
