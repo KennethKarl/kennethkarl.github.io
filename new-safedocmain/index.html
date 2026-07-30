@@ -608,6 +608,11 @@
   .plsheet-foot{display:flex;gap:10px;padding:12px 16px calc(14px + env(safe-area-inset-bottom));border-top:1px solid #EBEBEB;}
   .plsheet-reset{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 18px;font-family:inherit;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;}
   .plsheet-apply{flex:1;border:0;background:var(--blue);color:#fff;border-radius:12px;padding:14px;font-family:inherit;font-weight:800;font-size:15px;cursor:pointer;}
+  .plsheet-sub{font-size:12px;font-weight:700;color:#8A97AB;padding:14px 20px 6px;letter-spacing:-.01em;} .plsheet-sub small{font-weight:500;color:#B0B8C4;}
+  .plsheet-chips{display:flex;flex-wrap:wrap;gap:8px;padding:4px 18px 14px;}
+  .plsheet-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:600;color:#4a5568;cursor:pointer;letter-spacing:-.02em;}
+  .plsheet-chip.on{border-color:var(--blue);background:var(--blue-50);color:var(--blue-700);font-weight:700;}
+  .plsheet-nodetail{font-size:12.5px;color:#8A97AB;padding:10px 20px 16px;}
   .pl-region{cursor:pointer;transition:.14s;} .pl-region:hover b{color:var(--blue);}
   .rp-list{display:flex;flex-direction:column;gap:6px;}
   .rp-grp{font-size:12px;font-weight:800;color:#3a475d;margin:2px 0 9px;display:flex;align-items:baseline;gap:6px;}
@@ -1768,27 +1773,40 @@ function plSearch(q){ plQuery=q; plCat=plDeptAll; plAutoTab(); plUpdate(); }
 function plTry(q){ plQuery=q; plCat=plDeptAll; plAutoTab(); renderProcList(); const i=document.getElementById('plInput'); if(i){i.value=q;} }
 function plSetTab(t){ plTab=t; plUpdate(); }
 function plSetCat(c){ plCat=c; plUpdate(); }
-/* 진료과 필터 바텀시트 (스테이지 스샷2 방식 — 가로 스크롤 대신 시트에서 선택) */
-let plCatDraft='피부과';
-function openPlDept(){ plCatDraft=plCat; renderPlDeptSheet(); }
+/* 진료과 필터 바텀시트 (스테이지 스샷2 방식 — 진료과 + 세부 시술 선택) */
+let plCatDraft='피부과', plDetailDraft=new Set();
+function obDetailNow(){ return (typeof ob!=='undefined'&&ob.detail)?[...ob.detail]:[]; }
+function openPlDept(){ plCatDraft=plCat; plDetailDraft=new Set(obDetailNow().filter(k=>k.startsWith(plCatDraft+'::'))); renderPlDeptSheet(); }
 function renderPlDeptSheet(){
   const o=plRegOvl(); if(!o) return; o.hidden=false;
   const mine=myDepts();
+  const treats=(plCatDraft!==plDeptAll)?(deptTreat[plCatDraft]||[]):[];
   o.innerHTML=`<div class="plsheet-dim" onclick="closePlDept()"></div>
     <div class="plsheet">
       <div class="plsheet-grab"></div>
       <div class="plsheet-h">진료과 · 시술</div>
       <div class="plsheet-list">
+        <div class="plsheet-sub">진료과</div>
         ${plCats.map(c=>`<button class="plsheet-i${c===plCatDraft?' on':''}" onclick="plPickDept('${c}')"><span class="plsheet-nm">${c}${mine.includes(c)?'<span class="plsheet-mine">관심</span>':''}</span>${c===plCatDraft?I.check:''}</button>`).join('')}
+        ${treats.length?`<div class="plsheet-sub">세부 시술 <small>· ${plCatDraft} · 복수 선택</small></div>
+          <div class="plsheet-chips">${treats.map(t=>{const k=plCatDraft+'::'+t; const on=plDetailDraft.has(k); return `<button class="plsheet-chip${on?' on':''}" onclick="plPickDetail('${k}')">${t}</button>`;}).join('')}</div>`
+          :(plCatDraft!==plDeptAll?`<div class="plsheet-nodetail">선택하신 진료과는 세부 시술 없이 바로 예약할 수 있어요.</div>`:'')}
       </div>
-      <div class="plsheet-foot"><button class="plsheet-reset" onclick="plPickDept('${plDefaultCat()}')">초기화</button><button class="plsheet-apply" onclick="applyPlDept()">적용하기</button></div>
+      <div class="plsheet-foot"><button class="plsheet-reset" onclick="plDeptReset()">초기화</button><button class="plsheet-apply" onclick="applyPlDept()">적용하기</button></div>
     </div>`;
 }
-function plPickDept(c){ plCatDraft=c; renderPlDeptSheet(); }
+function plPickDept(c){ if(c!==plCatDraft){ plCatDraft=c; plDetailDraft=new Set(obDetailNow().filter(k=>k.startsWith(c+'::'))); } renderPlDeptSheet(); }
+function plPickDetail(k){ plDetailDraft.has(k)?plDetailDraft.delete(k):plDetailDraft.add(k); renderPlDeptSheet(); }
+function plDeptReset(){ plCatDraft=plDefaultCat(); plDetailDraft=new Set(); renderPlDeptSheet(); }
 function applyPlDept(){ plCat=plCatDraft; syncDeptToOb(); closePlDept(); plUpdate(); }
 function closePlDept(){ const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} }
-/* 시술리스트에서 바꾼 진료과·지역을 온보딩 관심정보(ob)에 역동기화 (개인화 양방향) */
-function syncDeptToOb(){ if(typeof ob==='undefined'||!ob.dept) return; if(plCat!==plDeptAll) ob.dept=new Set([plCat]); }
+/* 시술리스트에서 바꾼 진료과·세부시술·지역을 온보딩 관심정보(ob)에 역동기화 (개인화 양방향) */
+function syncDeptToOb(){
+  if(typeof ob==='undefined'||!ob.dept) return;
+  if(plCat===plDeptAll) return;
+  ob.dept=new Set([plCat]);
+  if(ob.detail){ [...ob.detail].forEach(k=>{ if(k.startsWith(plCat+'::')) ob.detail.delete(k); }); plDetailDraft.forEach(k=>ob.detail.add(k)); }
+}
 function syncRegionToOb(){ if(typeof ob!=='undefined' && ob.region){ ob.region=new Set(mainRegions); } }
 function plReset(){ plQuery=''; plCat=plDefaultCat(); plTab='시술'; plAutoTab(); renderProcList(); }
 function closeRegionPicker(){ const o=document.getElementById('plOvl'); if(o){o.hidden=true; o.innerHTML='';} }
@@ -2037,7 +2055,7 @@ const rat=[
       '시술 <b>0건이면 병원 탭 자동 전환</b> + 희망 시술 요청 유도.',
       '지역별 <b>시술·병원 수 자동 표시</b>, 카드에 <b>병원·지역·지하철역</b> 표기.',
       '<b>진료과 필터 = 온보딩 관심 진료과 기본</b> — 가로 스크롤 칩 대신 <b>‘진료과/시술 ▾’ 바텀시트</b>에서 선택(관심 진료과 뱃지). ‘전체’는 <b>‘전체 진료과’</b>로 명확화.',
-      '<b>지역·진료과를 여기서 바꾸면 온보딩 관심정보에 반영</b> — 시술리스트에서 고른 지역·진료과가 <b>온보딩 관심 지역/진료과 · 메인 개인화</b>에 그대로 갱신(리스트↔온보딩↔메인 <b>양방향 동기화</b>).'],
+      '<b>지역·진료과·세부 시술을 여기서 바꾸면 온보딩 관심정보에 반영</b> — 진료과 바텀시트에서 <b>세부 시술(복수 선택)</b>까지 고르면 <b>온보딩 관심 지역/진료과/세부 시술 · 메인 개인화</b>에 그대로 갱신(리스트↔온보딩↔메인 <b>양방향 동기화</b>).'],
     src:'2026-07-06 회의 · 지역 재조회 · 결과없음 병원 폴백'},
   {tab:'⑤ 예약플로우',t:'선(先)신청 · 후(後)상세입력',
     pts:[
