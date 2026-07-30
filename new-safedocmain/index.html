@@ -615,6 +615,8 @@
   .sd-card{display:flex;gap:12px;padding:16px 0 18px;border-bottom:1px solid #EBEBEB;letter-spacing:-.02em;}
   .sd-thumb{width:100px;height:100px;border-radius:8px;flex:none;position:relative;overflow:hidden;
     background:linear-gradient(135deg,#DDE6F5,#EEF2FA);}
+  .sd-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pl-siren{margin:12px 0 4px;} .pl-siren img{width:100%;border-radius:12px;display:block;}
   .sd-ad{position:absolute;left:5px;top:5px;background:rgba(14,23,38,.72);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;letter-spacing:.04em;}
   .sd-body{flex:1;min-width:0;}
   .sd-badge{display:inline-block;background:#E7F7EC;color:#06A42D;font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;margin-bottom:5px;letter-spacing:-.02em;}
@@ -1551,12 +1553,14 @@ function myPlRegions(){ return [...new Set((typeof mainRegions!=='undefined'?mai
 function plActiveRegions(){ const m=myPlRegions(); return m.length?m:['강남']; }
 function plRegionLabel(){ const a=plActiveRegions(); return a.length<=1?a[0]:`${a[0]} 외 ${a.length-1}`; }
 let plCat='전체', plTab='시술', plQuery='';
+const plThumbMap={'피부과':'assets/thumb-skin.png','안과':'assets/thumb-eye.png','성형외과':'assets/thumb-face.jpg','치과':'assets/thumb-tooth.jpg','건강검진':'assets/thumb-diet.jpg','두피/탈모':'assets/thumb-hair.png'};
 function procCard(d){
   const p=won(d.price), w=won(d.was);
   const pct = w>0?Math.round((1-p/w)*100)+'%':'';
   const cp = d.coupon ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
+  const th=plThumbMap[d.dept];
   return `<div class="sd-card">
-    <div class="sd-thumb">${d.ad?'<span class="sd-ad">AD</span>':''}</div>
+    <div class="sd-thumb">${th?`<img src="${th}" alt="${d.nm}" loading="lazy">`:''}${d.ad?'<span class="sd-ad">AD</span>':''}</div>
     <div class="sd-body">
       ${d.coupon?`<span class="sd-badge">고유가 지원금 사용가능</span>`:''}
       <div class="sd-hos">${d.hos} · ${d.region}${d.station?` · <span class="sd-st">${I.subway}${d.station}</span>`:''}</div>
@@ -1584,6 +1588,7 @@ function plHosAll(){ const q=plQuery.trim(); const R=plActiveRegions(); return h
 function renderProcList(){
   document.getElementById('plScroll').innerHTML=`
     <div class="pl-sbar"><button class="box" onclick="plOpenSearch(plQuery)">${I.search}<span class="pl-sbtxt${plQuery?' has':''}">${plQuery||'시술명, 병원명, 지역을 검색해보세요'}</span></button></div>
+    <div class="pl-siren"><img src="assets/list-siren.jpg" alt="최저가 보상제 · 같은 병원 다른 가격을 보셨다고요? +5,000P 보상"></div>
     <div class="pl-eg"><span>예시</span>
       <button onclick="plTry('이갈이/코골이')">이갈이/코골이</button>
       <button onclick="plTry('임플란트')">임플란트</button>
