@@ -167,14 +167,16 @@
   /* recently viewed */
   .rrail{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;margin:0 -2px;scrollbar-width:none;}
   .rrail::-webkit-scrollbar{height:0}
-  .rcard{flex:0 0 112px;}
-  .rcard .th{height:112px;border-radius:14px;display:grid;align-content:center;justify-items:center;
-    gap:6px;padding:10px;color:#fff;text-align:center;overflow:hidden;position:relative;}
-  .rcard .th .badge{font-size:9px;font-weight:800;letter-spacing:.02em;background:rgba(255,255,255,.22);
-    border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:2px 6px;}
-  .rcard .th .cap{font-size:11.5px;font-weight:800;line-height:1.25;text-shadow:0 1px 5px rgba(0,0,0,.35);}
-  .rcard .nm{margin-top:7px;font-size:12px;font-weight:700;line-height:1.3;}
-  .rcard .hos{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .rcard{flex:0 0 140px;}
+  .rcard .th{height:140px;border-radius:12px;overflow:hidden;background:#eef1f6;position:relative;}
+  .rcard .th img{width:100%;height:100%;object-fit:cover;display:block;}
+  .rcard .nm{margin-top:8px;font-size:13px;font-weight:700;line-height:1.3;}
+  .rcard .hos{font-size:11px;color:var(--muted);margin-top:2px;}
+  .rc-price{font-size:15px;font-weight:800;margin-top:5px;letter-spacing:-.02em;}
+  .rc-consult{margin-top:7px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 12px;
+    font-size:12px;font-weight:700;color:var(--blue);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px;}
+  .rc-rt{font-size:11px;margin-top:4px;color:var(--muted);}
+  .rc-rt b{color:#FFB020;font-weight:800;}
 
   /* deal banner */
   .deal{flex:0 0 88%;border-radius:16px;padding:16px 16px;color:#fff;
@@ -197,11 +199,8 @@
   /* 신규 입점 병원 grid */
   .newhos{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .nhcard{cursor:pointer;}
-  .nh-th{height:98px;border-radius:14px;padding:11px 12px;color:#fff;display:flex;flex-direction:column;
-    justify-content:flex-end;gap:2px;position:relative;overflow:hidden;text-shadow:0 1px 5px rgba(0,0,0,.35);}
-  .nh-th small{font-size:9.5px;opacity:.92;font-weight:700;}
-  .nh-th b{font-size:15px;font-weight:800;letter-spacing:-.02em;}
-  .nh-th em{font-size:10.5px;font-style:normal;opacity:.9;margin-top:1px;}
+  .nh-th{aspect-ratio:16/10;border-radius:12px;overflow:hidden;position:relative;background:#eef1f6;}
+  .nh-th img{width:100%;height:100%;object-fit:cover;display:block;}
   .nh-badge{position:absolute;right:8px;top:8px;background:var(--coral);color:#fff;font-size:9.5px;
     font-weight:800;border-radius:6px;padding:3px 6px;text-shadow:none;}
   .nh-nm{margin-top:8px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
@@ -1219,21 +1218,24 @@ const reviews = [
 ];
 /* 신규 입점 병원 (AS-IS 동일 섹션 재현) */
 const newHos=[
-  {nm:'강남서연성형외과',tag:'눈성형·리프팅 전문',loc:'서울 · 신사역',g:'linear-gradient(150deg,#2B3A67,#54709E)'},
-  {nm:'강남다움의원',tag:'리프팅·스킨부스터·다이어트',loc:'서울 · 강남역',g:'linear-gradient(150deg,#6E5E86,#B79CC6)'},
-  {nm:'온리원치과',tag:'원데이 임플란트',loc:'경기 화성 · 향남읍',g:'linear-gradient(150deg,#37624F,#6BA98C)',badge:'일요일 진료'},
-  {nm:'수영하임치과',tag:'',loc:'부산 · 수영역',g:'linear-gradient(150deg,#123A5E,#2E6FA0)',rv:'<b>★ 10.0</b> (1)'}
+  {nm:'강남서연성형외과',img:'https://assets.safedoc.io/hospital/images/366df582-6e8a-4faa-b1df-eaca91792950.jpg'},
+  {nm:'강남다움의원',img:'https://assets.safedoc.io/hospital/images/87a8d656-8827-48f7-8d69-ddb7738d4a85.jpg'},
+  {nm:'온리원치과',img:'https://assets.safedoc.io/hospital/images/6d95f33c-0c41-4c28-8c80-ef62c165f345.jpg'},
+  {nm:'수영하임치과',img:'https://assets.safedoc.io/hospital/images/7eb3cb23-049c-4dd2-9aa6-d43bbfa039d7.jpg',rate:'10.0',rv:'1'}
 ];
 const recent = [
-  {nm:'오스템 BA 임플란트',hos:'원데이치과',cap:'하루만에 끝나는<br>원데이 임플란트',badge:'원데이치과',g:'linear-gradient(150deg,#12275F,#2E5BD0)'},
-  {nm:'치아미백 3회 / 9cycle',hos:'서울메스티지치과',cap:'서울대 치과대학<br>동문 병원',badge:'서울메스티지치과',g:'linear-gradient(150deg,#0E6E6D,#12A3A0)'},
-  {nm:'동대문 레이저',hos:'동대문 피부과',cap:'',badge:'',g:'linear-gradient(150deg,#3E7C4E,#7CB889)'},
-  {nm:'테스트',hos:'테스트 병원',cap:'',badge:'',g:'linear-gradient(150deg,#7C879E,#AEB8CC)'}
+  {nm:'레진 구치부',hos:'원치과 | 강남역',price:'상담문의',img:'https://assets.safedoc.io/hospital/images/91c8f3dd-edb6-4cc9-b395-a0241788a310.jpg'},
+  {nm:'골드 크라운',hos:'서울다시봄치과 | 아산역',price:'500,000원',rate:'9.6',rv:'11',img:'https://assets.safedoc.io/hospital/images/348b14f2-7add-4397-afca-90cc22856336.jpg'},
+  {nm:'레진(구치부)',hos:'서울다시봄치과 | 아산역',price:'80,000원',rate:'9.6',rv:'11',img:'https://assets.safedoc.io/hospital/images/348b14f2-7add-4397-afca-90cc22856336.jpg'},
+  {nm:'인레이(골드)',hos:'서울다시봄치과 | 아산역',price:'300,000원',rate:'9.6',rv:'11',img:'https://assets.safedoc.io/hospital/images/348b14f2-7add-4397-afca-90cc22856336.jpg'}
 ];
 function recentCards(){
   return recent.map(r=>`<div class="rcard">
-    <div class="th" style="background:${r.g}">${r.badge?`<span class="badge">${r.badge}</span>`:''}${r.cap?`<span class="cap">${r.cap}</span>`:''}</div>
-    <div class="nm">${r.nm}</div><div class="hos">${r.hos}</div></div>`).join('');
+    <div class="th"><img src="${r.img}" alt="${r.nm}" loading="lazy"></div>
+    <div class="nm">${r.nm}</div><div class="hos">${r.hos}</div>
+    ${r.price==='상담문의'?`<button class="rc-consult">${I.chat||'💬'} 상담문의</button>`:`<div class="rc-price">${r.price}</div>`}
+    ${r.rate?`<div class="rc-rt"><b>★ ${r.rate}</b> <span>(${r.rv})</span></div>`:''}
+  </div>`).join('');
 }
 
 /* ---------- search & popups ---------- */
@@ -1499,8 +1501,8 @@ function mainRegionApply(){ mainSearchOn=false; mainRegQuery=''; const o=ovl(); 
 function openHospital(u){ window.open(u||HOSP_URL,'_blank','noopener'); }
 function newHosGrid(){
   return newHos.map(h=>`<div class="nhcard" role="button" tabindex="0" onclick="openHospital()" onkeydown="if(event.key==='Enter'){openHospital()}">
-    <div class="nh-th" style="background:${h.g}">${h.badge?`<span class="nh-badge">${h.badge}</span>`:''}${h.tag?`<small>${h.tag}</small>`:''}<b>${h.nm}</b><em>${h.loc}</em></div>
-    <div class="nh-nm">${h.nm}${h.rv?`<span class="nh-rv">${h.rv}</span>`:''}</div>
+    <div class="nh-th"><img src="${h.img}" alt="${h.nm}" loading="lazy"></div>
+    <div class="nh-nm">${h.nm}${h.rate?`<span class="nh-rv"><b>★ ${h.rate}</b> (${h.rv})</span>`:''}</div>
   </div>`).join('');
 }
 function persoRail(){
