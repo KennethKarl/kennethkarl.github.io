@@ -1072,13 +1072,11 @@
       <div class="cmp-explain">
       <div class="rat-mount" data-rat="7"></div>
       <div class="obspec">
-        <div class="spec-h">시술 상세 — AS-IS 그대로 재현 (개선 없음)</div>
+        <div class="spec-h">시술 상세 — 개선 사항 없음</div>
         <div class="spec">
-          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>이 화면은 개선 항목이 없습니다 <span class="sc-tag keep">AS-IS 동일</span></b><p>실제 시술 상세 페이지(welfaremall.stage)를 <b>구조·순서·콘텐츠 그대로 재현</b>했습니다. 마커/개선 포인트를 별도로 표기하지 않습니다.</p></div></div>
-          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>재현한 AS-IS 섹션</b><p><b>히어로 → 탭(시술정보·리뷰·병원정보·상세정보) → 제목·평점 → 가격 → 프로그램 설명 → 리뷰(평점 요약·추천 수·후기) → 병원 정보(주소·지도·편의 태그·진료시간) → 안심 혜택 → 이 병원의 다른 시술 → 이런 시술은 어때요? → 다른 회원들이 함께 본 병원 → 하단 예약하기</b> 순으로 동일 구성.</p></div></div>
-          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>한 가지 차이 — 로그인 회원 기준</b><p>AS-IS 비로그인은 가격이 가려지고 ‘인증하고 우대가 확인/로그인하기’가 뜨지만, 본 데모는 <b>로그인 회원</b> 기준이라 <b>회원 우대가</b>가 바로 보입니다. (그 외 동일)</p></div></div>
+          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>개선 사항 없음 <span class="sc-tag keep">AS-IS 동일</span></b><p>이 화면은 <b>개선 항목이 없어</b> 실제 시술 상세 페이지(welfaremall.stage)를 <b>그대로</b> 사용합니다. 별도 마커/개선 포인트를 표기하지 않습니다.</p></div></div>
         </div>
-        <p class="spec-src">기준: welfaremall.stage.safedoc.kr 시술 상세(AS-IS) 동일 재현 · 개선 없음</p>
+        <p class="spec-src">기준: welfaremall.stage.safedoc.kr 시술 상세(AS-IS) · 개선 없음</p>
       </div>
       </div>
     </div>
@@ -1121,8 +1119,8 @@
       <div class="cmp-explain"><div class="rat-mount" data-rat="6"></div><div class="obspec">
         <div class="spec-h">예약 수정 — 취소만 → 변경 + 취소</div>
         <div class="spec">
-          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>AS-IS = 예약 취소만</b><p>현행 <b>마이 › 예약 내역</b>에서는 <b>예약 취소하기</b>만 제공됩니다. 일정이 바뀌면 <b>취소 후 재예약</b>해야 해 이탈이 발생합니다.</p></div></div>
-          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>TO-BE = 예약 변경하기 신설</b><p>기존 취소 기능은 그대로 두고, <b>‘예약 변경하기’</b>를 추가해 <b>일시(날짜·시간)·진료 대상·병원 전달사항·추가 상담 희망 시술·쿠폰</b>을 <b>취소 없이 한 화면에서 수정</b>합니다. 단, <b>예약대기 상태만</b> 변경 가능 — <b>예약확정·예약완료는 변경 불가</b>.</p></div></div>
+          <div class="sc"><div class="sc-n g">01</div><div class="sc-b"><b>AS-IS = 예약 취소만</b><p>현행 <b>마이 › 예약 내역</b>에서는 <b>예약 취소하기</b>만 제공됩니다. 일정이 바뀌면 <b>취소 후 재예약</b>해야 해 이탈이 발생합니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>TO-BE = 예약 변경하기 신설</b><p>기존 취소 기능은 그대로 두고, <b>‘예약 변경하기’</b>를 추가해 <b>일시(날짜·시간)·진료 대상·병원 전달사항·추가 상담 희망 시술·쿠폰</b>을 <b>취소 없이 한 화면에서 수정</b>합니다. 단, <b>예약대기 상태만</b> 변경 가능 — <b>예약확정·예약완료는 변경 불가</b>.</p></div></div>
           <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>취소 사유 = 일정 변경 대응</b><p>취소 사유 대다수가 <b>일정 변경</b>인 점을 반영 — 취소 플로우에서도 <b>‘변경으로 처리’</b>를 제안해 불필요한 취소·재예약을 막습니다.</p></div></div>
           <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>일정 변경 이탈을 <em>예약 유지</em>로 전환 — 예약 취소율↓, 실내원 전환율↑.</p></div></div>
         </div>
@@ -2270,19 +2268,17 @@ const rat=[
       '취소 사유 대다수가 <b>일정 변경</b> → 취소 플로우에서도 <b>‘변경으로 처리’</b> 제안.'],
     ev:[['대다수','취소사유=일정 변경','warn']],
     src:'welfaremall.stage /profile/reservation · 취소사유 분석'},
-  {tab:'④-2 시술 상세',t:'AS-IS 그대로 재현 — 개선 항목 없음',
+  {tab:'④-2 시술 상세',t:'개선 사항 없음',lead:'참고',
     pts:[
-      '이 화면은 <b>별도 개선 사항이 없어</b> 실제(AS-IS) 시술 상세 페이지를 <b>동일하게 재현</b>했습니다.',
-      '<b>히어로 · 탭 · 제목/평점 · 가격 · 프로그램 설명 · 리뷰 · 병원 정보(지도·태그·진료시간) · 안심 혜택 · 이 병원의 다른 시술 · 이런 시술은 어때요? · 함께 본 병원</b> 섹션을 AS-IS 순서 그대로 구성.',
-      '데모 일관성을 위해 로그인 회원 기준으로 가격(회원 우대가)만 노출 — 그 외 구조·순서·콘텐츠는 AS-IS와 동일.'],
-    src:'welfaremall.stage 시술 상세(AS-IS) 동일 재현 · 개선 없음'}
+      '이 화면은 <b>개선 사항이 없습니다.</b> 실제(AS-IS) 시술 상세 페이지를 <b>그대로</b> 사용합니다.'],
+    src:'welfaremall.stage 시술 상세(AS-IS) · 개선 없음'}
 ];
 /* 개선 포인트 카드를 각 페이지 설명에 인라인 배치 */
 document.querySelectorAll('.rat-mount').forEach(m=>{
   const r=rat[+m.dataset.rat]; if(!r) return;
   m.innerHTML=`
   <div class="rc rat-inline">
-    <div class="rc-top"><span class="rc-tab pt-lead">개선 포인트</span><span class="rc-sub">${r.tab}</span></div>
+    <div class="rc-top"><span class="rc-tab pt-lead">${r.lead||'개선 포인트'}</span><span class="rc-sub">${r.tab}</span></div>
     <h4>${r.t}</h4>
     <ul class="pts">${r.pts.map(p=>`<li>${p}</li>`).join('')}</ul>
     ${r.ev?`<div class="ev">${r.ev.map(e=>`<div class="metric ${e[2]||''}"><span class="v">${e[0]}</span><span class="l">${e[1]}</span></div>`).join('')}</div>`:''}
@@ -2491,7 +2487,19 @@ function reCard(mode, r, i){
     ${pay}${foot}</div>`;
 }
 function renderResEditAsis(){ const el=document.getElementById('reAsisScroll'); if(!el) return; el.innerHTML=reListHead()+`<div class="rl-list">${reList.map((r,i)=>reCard('asis',r,i)).join('')}</div>`; el.scrollTop=0; }
-function renderResEdit(){ const el=document.getElementById('reScroll'); if(!el) return; el.innerHTML=reListHead()+`<div class="rl-list">${reList.map((r,i)=>reCard('tobe',r,i)).join('')}</div>`; el.scrollTop=0; }
+function renderResEdit(){ const el=document.getElementById('reScroll'); if(!el) return; el.innerHTML=reListHead()+`<div class="rl-list">${reList.map((r,i)=>reCard('tobe',r,i)).join('')}</div>`; el.scrollTop=0; reMarkers(); }
+/* 예약 수정 위치 마커 — 설명 01(AS-IS 취소)·02(변경 신설)와 매칭 */
+function reMarkers(){
+  const sc=document.getElementById('reScroll'); if(!sc) return;
+  sc.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,cls,n,ty='-8px',lx='-8px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk '+cls; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  const acts=sc.querySelector('.rl-acts');
+  if(acts){
+    put(acts.querySelector('.rl-mini:not(.blue)'),'g','1','-8px','-8px'); // 01 AS-IS = 예약 취소만(기존 유지)
+    put(acts.querySelector('.rl-mini.blue'),'r','2','-8px','-8px');       // 02 예약 변경하기 신설
+  }
+}
 function reCloseOvl(mode){ const o=document.getElementById(mode==='asis'?'reAsisOvl':'reOvl'); if(o){o.hidden=true; o.innerHTML='';} }
 function reCancelSheet(mode,i){
   const o=document.getElementById(mode==='asis'?'reAsisOvl':'reOvl'); if(!o) return;
