@@ -808,10 +808,10 @@
   .ad-swap{display:flex;justify-content:center;gap:3px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px;width:max-content;margin:0 auto 20px;}
   .ad-swap button{border:0;background:transparent;font-family:inherit;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);padding:7px 16px;border-radius:999px;}
   .ad-swap button.on{background:var(--blue);color:#fff;}
-  .webframe{display:flex;gap:22px;width:100%;max-width:660px;align-items:flex-start;}
+  .webframe{display:flex;gap:22px;width:100%;max-width:716px;align-items:flex-start;}
   .web-side{width:244px;flex:none;padding:18px 16px;background:#EEF1F6;border-radius:20px;border:1px solid #E4E9F2;overflow-y:auto;max-height:800px;scrollbar-width:none;} .web-side::-webkit-scrollbar{width:0;}
-  .web-app{flex:1;background:#fff;min-width:0;overflow:hidden;border-radius:20px;border:1px solid #E4E8F0;box-shadow:0 20px 50px rgba(15,23,42,.16);position:relative;padding:0;}
-  .web-app .wa-inner{background:#fff;border-radius:20px 20px 0 0;overflow:hidden;}
+  .web-app{width:450px;height:974px;flex:none;background:#fff;min-width:0;overflow:hidden;border-radius:20px;border:1px solid #E4E8F0;box-shadow:0 20px 50px rgba(15,23,42,.16);position:relative;padding:0;display:flex;flex-direction:column;}
+  .web-app .wa-inner{flex:1;background:#fff;border-radius:20px 20px 0 0;overflow-y:auto;scrollbar-width:none;} .web-app .wa-inner::-webkit-scrollbar{width:0;}
   .wa-notch{display:none;}
   .wa-inner .wa-head{padding-top:14px;}
   .wa-tabbar{display:flex;background:#fff;border-radius:0 0 26px 26px;border-top:1px solid var(--line);padding:9px 6px 12px;}
@@ -850,7 +850,7 @@
   .wa-head{position:relative;} .wa-logo.c{position:absolute;left:50%;transform:translateX(-50%);} .wa-logo.c img{height:15px;width:auto;display:block;}
   .wa-search{margin-top:14px;} .wa-sech{border-top:8px solid #F1F3F7;margin-top:6px;}
   .wa-disc{position:absolute;left:6px;top:6px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;padding:2px 5px;border-radius:5px;}
-  .ad-stage{grid-template-columns:660px 380px;align-items:start;}
+  .ad-stage{grid-template-columns:716px 380px;align-items:start;}
   @media(max-width:1040px){.ad-stage{grid-template-columns:1fr;justify-items:center;}}
   @media(max-width:900px){.webframe{max-width:100%;} .web-side{width:200px;}}
   @media(max-width:640px){.webframe{flex-direction:column;} .web-side{width:100%;max-height:none;}}
@@ -2444,7 +2444,9 @@ function renderAdApp(){
       <div class="wa-sech">진료과 <b>바로가기</b><span class="wa-tag hot">활동 1위</span></div>
       <div class="wa-depts rank">${depts.map(d=>`<div class="wa-d"><i>${d.img?`<img src="${d.img}" alt="${d.n}">`:I[d.ic]}</i>${d.n}${d.rk?`<span class="wa-rk">▲${d.rk}</span>`:''}</div>`).join('')}</div>
       <div class="wa-sech">재원님 <b>맞춤 추천</b><span class="wa-tag">온보딩 관심정보</span></div>
-      <div class="wa-cards">${perso.slice(0,4).map(p=>`<div class="wa-c"><div class="wa-c-th" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#DCE6FF,#EEF3FF)">${p.img?`<img src="${p.img}" alt="${p.nm}" style="width:100%;height:100%;object-fit:cover;object-position:88% center;display:block">`:''}${p.disc?`<span class="wa-disc">${p.disc}</span>`:''}</div><div class="wa-c-nm">${p.nm}</div><div class="wa-c-pr">${p.price}${p.was?` <s>${p.was}</s>`:''}</div><div class="wa-c-hos">${p.rv}</div></div>`).join('')}</div>`;
+      <div class="wa-cards">${perso.slice(0,4).map(p=>`<div class="wa-c"><div class="wa-c-th" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#DCE6FF,#EEF3FF)">${p.img?`<img src="${p.img}" alt="${p.nm}" style="width:100%;height:100%;object-fit:cover;object-position:88% center;display:block">`:''}${p.disc?`<span class="wa-disc">${p.disc}</span>`:''}</div><div class="wa-c-nm">${p.nm}</div><div class="wa-c-pr">${p.price}${p.was?` <s>${p.was}</s>`:''}</div><div class="wa-c-hos">${p.rv}</div></div>`).join('')}</div>
+      <div class="wa-sech" style="border-top:8px solid #F1F3F7">최재원님이 <b>최근 본 시술</b></div>
+      <div class="wa-cards">${recent.map(r=>`<div class="wa-c"><div class="wa-c-th" style="overflow:hidden;background:#eef1f6">${r.img?`<img src="${r.img}" alt="${r.nm}" style="width:100%;height:100%;object-fit:cover;display:block">`:''}</div><div class="wa-c-nm">${r.nm}</div><div class="wa-c-hos">${r.hos}</div><div class="wa-c-pr">${r.price}</div></div>`).join('')}</div>`;
   }
   el.innerHTML=`<div class="wa-notch"></div><div class="wa-inner">${inner}</div>${waTabbar()}`;
 }
