@@ -755,6 +755,46 @@
   .dt-hosnm{font-size:15px;font-weight:700;color:#111;} .dt-hsub{font-size:12.5px;color:#808B96;margin-top:4px;} .dt-htime{font-size:12.5px;color:#4a5568;margin-top:8px;}
   .dt-foot{position:sticky;bottom:0;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #EBEBEB;z-index:10;}
   .dt-cta{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:12px;padding:15px;cursor:pointer;}
+  .dt-sec em{font-style:normal;color:var(--blue);}
+  .dt-sech{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;} .dt-sech h4{margin:0;}
+  /* 리뷰 */
+  .dt-rvsum{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .dt-rvscore{font-size:26px;font-weight:800;color:#111;line-height:1;} .dt-rvscore span{font-size:15px;color:#A7B0B9;font-weight:700;}
+  .dt-rvmeta{line-height:1.25;} .dt-rvstars{color:#FFB100;font-size:14px;letter-spacing:1px;} .dt-rvcnt{font-size:12px;color:#8A97AB;margin-top:2px;}
+  .dt-rvsum .dt-more{margin-left:auto;font-size:12.5px;color:#8A97AB;font-weight:600;}
+  .dt-rvrec{display:flex;align-items:center;gap:6px;font-size:13px;color:#33425c;background:#F4F7FF;border-radius:10px;padding:11px 13px;margin-bottom:12px;} .dt-rvrec b{color:var(--blue);font-weight:800;} .dt-rvrec svg{width:16px;height:16px;color:var(--blue);flex:none;}
+  .dt-rvlist{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;} .dt-rvlist::-webkit-scrollbar{height:0}
+  .dt-rvcard{flex:none;width:240px;border:1px solid var(--line);border-radius:12px;padding:13px;}
+  .dt-rvcard-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+  .dt-rvcard-star{display:flex;align-items:center;gap:3px;font-weight:800;color:#111;font-size:14px;} .dt-rvcard-star svg{width:14px;height:14px;color:#FFB100;}
+  .dt-rvcard-d{font-size:11.5px;color:#A7B0B9;font-weight:600;}
+  .dt-rvcard p{font-size:12.5px;color:#4a5568;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  /* 병원 정보 */
+  .dt-hosrow{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;} .dt-hosrow .dt-hosnm{font-size:15.5px;font-weight:800;color:#111;flex:none;} .dt-hosaddr{font-size:12.5px;color:#808B96;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dt-map{position:relative;height:150px;border-radius:12px;overflow:hidden;border:1px solid var(--line);
+    background:repeating-linear-gradient(0deg,#eef1f5 0 39px,#e5e9f0 39px 40px),repeating-linear-gradient(90deg,#eef1f5 0 39px,#e5e9f0 39px 40px);}
+  .dt-map-pin{position:absolute;left:50%;top:44%;transform:translate(-50%,-100%);color:var(--blue);} .dt-map-pin svg{width:30px;height:30px;}
+  .dt-map-nm{position:absolute;left:50%;top:50%;transform:translateX(-50%);font-size:12px;font-weight:800;color:#111;background:rgba(255,255,255,.9);padding:3px 9px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+  .dt-map-scale{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:700;color:#5b6572;background:rgba(255,255,255,.85);padding:2px 8px;border-radius:5px;}
+  .dt-tags{display:flex;gap:6px;margin:14px 0 2px;} .dt-tag{flex:1;text-align:center;} .dt-tag i svg{width:26px;height:26px;color:var(--blue);} .dt-tag span{display:block;font-size:12px;font-weight:600;color:#33425c;margin-top:6px;} .dt-tag.off i svg,.dt-tag.off span{color:#C2C9D2;}
+  .dt-time{display:flex;gap:16px;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;} .dt-time b{font-size:14px;color:#111;font-weight:800;flex:none;} .dt-time span{color:#4a5568;}
+  /* 안심 혜택 (AS-IS) */
+  .dt-benefit2{background:#EEF3FF;border-radius:12px;padding:14px;}
+  .dt-benefit2-w{font-size:12.5px;font-weight:700;color:var(--blue);background:#fff;border-radius:8px;padding:11px 12px;margin-bottom:10px;}
+  .dt-benefit2 ul{margin:0;padding-left:18px;} .dt-benefit2 li{font-size:12.5px;color:#38465e;line-height:1.75;}
+  /* 가로 시술 카드 */
+  .dt-hcards{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;} .dt-hcards::-webkit-scrollbar{height:0}
+  .dt-hc{flex:none;width:120px;cursor:pointer;} .dt-hc-th{width:120px;height:120px;border-radius:12px;overflow:hidden;background:#f2f4f8;} .dt-hc-th img{width:100%;height:100%;object-fit:cover;display:block;}
+  .dt-hc-nm{font-size:13px;color:#33425c;margin-top:7px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  /* 함께 본 병원 카드 */
+  .dt-hoscards{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;} .dt-hoscards::-webkit-scrollbar{height:0}
+  .dt-hoc{flex:none;width:240px;cursor:pointer;}
+  .dt-hoc-bn{height:140px;border-radius:12px;background:linear-gradient(135deg,#2E5BD0,#16307e);display:flex;flex-direction:column;justify-content:center;padding:16px;overflow:hidden;}
+  .dt-hoc-bnm{font-size:19px;font-weight:800;color:#fff;} .dt-hoc-loc{font-size:12px;color:rgba(255,255,255,.85);margin-top:4px;}
+  .dt-hoc-tag{font-size:12px;font-weight:800;color:var(--blue);margin-top:10px;}
+  .dt-hoc-nm{font-size:15.5px;font-weight:800;color:#111;margin-top:3px;}
+  .dt-hoc-desc{font-size:12.5px;color:#8A97AB;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dt-hoc-rt{display:flex;align-items:center;gap:3px;margin-top:7px;font-weight:800;color:#111;font-size:13.5px;} .dt-hoc-rt svg{width:14px;height:14px;color:#FFB100;} .dt-hoc-rt span{color:#8A97AB;font-weight:500;}
   .rv-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:13px;resize:none;outline:none;color:var(--ink);}
   .rv-sel{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 12px;font-family:inherit;font-size:13.5px;color:var(--ink);background:#fff;outline:none;}
   /* AS-IS 현행 예약 폼 전용 */
@@ -1019,13 +1059,13 @@
       <div class="cmp-explain">
       <div class="rat-mount" data-rat="7"></div>
       <div class="obspec">
-        <div class="spec-h">시술 상세 — 실제 화면 자체 구현 + 예약 연결</div>
+        <div class="spec-h">시술 상세 — AS-IS 그대로 재현 (개선 없음)</div>
         <div class="spec">
-          <div class="sc"><div class="sc-n r">01</div><div class="sc-b"><b>실제 상세를 앱 내 화면으로 재현</b><p>기존에는 시술 카드를 누르면 <b>외부 페이지</b>로 이동했으나, <b>히어로 · 탭(시술정보·리뷰·병원정보·상세정보) · 시술명·평점 · 회원 우대가 · 프로그램 설명 · 안심 혜택 · 추천 대상 · 시술 특장점</b>을 실제 welfaremall 상세와 동일하게 앱 내 화면으로 구성했습니다.</p></div></div>
-          <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>회원 우대가 즉시 노출</b><p>비로그인 ‘인증하고 우대가 확인’ 대신, 로그인 회원에게는 <b>정가 · 할인율 · 회원 우대가 · 쿠폰 적용가</b>를 바로 노출합니다.</p></div></div>
-          <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>하단 고정 ‘예약하기’ → 앱 내 예약 연결</b><p>하단 고정 CTA로 <b>예약 플로우</b>에 바로 연결됩니다. (외부 이탈 없이 상세 → 예약 완결)</p></div></div>
+          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>이 화면은 개선 항목이 없습니다 <span class="sc-tag keep">AS-IS 동일</span></b><p>실제 시술 상세 페이지(welfaremall.stage)를 <b>구조·순서·콘텐츠 그대로 재현</b>했습니다. 마커/개선 포인트를 별도로 표기하지 않습니다.</p></div></div>
+          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>재현한 AS-IS 섹션</b><p><b>히어로 → 탭(시술정보·리뷰·병원정보·상세정보) → 제목·평점 → 가격 → 프로그램 설명 → 리뷰(평점 요약·추천 수·후기) → 병원 정보(주소·지도·편의 태그·진료시간) → 안심 혜택 → 이 병원의 다른 시술 → 이런 시술은 어때요? → 다른 회원들이 함께 본 병원 → 하단 예약하기</b> 순으로 동일 구성.</p></div></div>
+          <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>한 가지 차이 — 로그인 회원 기준</b><p>AS-IS 비로그인은 가격이 가려지고 ‘인증하고 우대가 확인/로그인하기’가 뜨지만, 본 데모는 <b>로그인 회원</b> 기준이라 <b>회원 우대가</b>가 바로 보입니다. (그 외 동일)</p></div></div>
         </div>
-        <p class="spec-src">기준: welfaremall.stage.safedoc.kr 시술 상세 · 프로토타입</p>
+        <p class="spec-src">기준: welfaremall.stage.safedoc.kr 시술 상세(AS-IS) 동일 재현 · 개선 없음</p>
       </div>
       </div>
     </div>
@@ -1719,30 +1759,37 @@ function procCard(d){
 }
 /* ---------- 시술 상세 (신규 구현) ---------- */
 let dtItem=null;
-const dtReco={
-  '치과':['충치가 초기 단계이거나 범위가 넓지 않은 분','치아가 깨졌거나 틈이 벌어져 심미적 개선이 필요하신 분','금세라믹 인레이보다 짧은 시간·간단한 치료를 원하시는 분'],
-  '피부과':['모공·잔주름 등 피부 결 개선을 원하시는 분','시술 후 빠른 일상 복귀를 원하시는 분','자극이 적은 관리를 선호하시는 분'],
-  '안과':['안경·렌즈 없는 생활을 원하시는 분','각막 두께·시력 조건이 맞는 분','짧은 회복 기간을 원하시는 분'],
-  '성형외과':['또렷한 눈매를 원하시는 분','자연스러운 라인을 선호하시는 분','회복이 빠른 시술을 찾으시는 분'],
-  '건강검진':['종합적인 건강 상태를 점검하고 싶은 분','가족력이 있어 정기 검진이 필요한 분'],
-  '두피/탈모':['모발 밀도 개선을 원하시는 분','자연스러운 헤어라인을 원하시는 분'],
-  default:['합리적인 우대가 시술을 찾으시는 분','검증된 제휴 병원에서 시술받고 싶은 분']
-};
-const dtKP={
-  '치과':[['우수한 심미성','tooth'],['짧은 시술·당일 진료','clock'],['치아 삭제 최소화','check']],
-  default:[['검증된 제휴 병원','check'],['회원 전용 우대가','ticket'],['안심 사후 관리','heart']]
+/* AS-IS 시술 상세 재현용 데이터 */
+const dtReviews=[
+  {r:'9.6',d:'7월 12일',t:'상담이 꼼꼼하고 결과가 자연스러워요. 붓기도 금방 빠졌습니다. 재방문 의사 있어요.'},
+  {r:'9.2',d:'7월 5일',t:'회원 우대가로 합리적으로 받았어요. 병원도 깨끗하고 친절하게 안내해주셨습니다.'},
+  {r:'8.8',d:'6월 28일',t:'예약이 편하고 대기도 길지 않았어요. 전반적으로 만족스러운 경험이었습니다.'}
+];
+const dtTags=[['야간진료','moon',true],['주차가능','park',false],['수면마취','syringe',true],['원장지정','doctor',true]];
+const dtTagIcon={
+  moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>',
+  park:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 17V7h3.6a2.7 2.7 0 0 1 0 5.4H9"/></svg>',
+  syringe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4M15.5 4.5l4 4M4.5 19.5 3 21M3.8 20.2 9 15M12 12l3-3-4-4-3 3M9 15l-4-4"/></svg>',
+  doctor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>'
 };
 function openDetailNm(nm){ dtItem = procList.find(p=>p.nm===nm) || procList[0]; switchView('detail'); }
 function dtToReserve(){ switchView('reserve'); }
+function dtProcCard(x){ const th=plThumbMap[x.dept]||'assets/thumb-tooth.jpg'; return `<div class="dt-hc" onclick="openDetailNm('${(x.nm||'').replace(/'/g,'')}')"><div class="dt-hc-th"><img src="${th}" alt="${x.nm}" loading="lazy"></div><div class="dt-hc-nm">${x.nm}</div></div>`; }
+function dtHosCard(h){ return `<div class="dt-hoc" onclick="switchView('proclist')"><div class="dt-hoc-bn"><span class="dt-hoc-bnm">${h.nm}</span><span class="dt-hoc-loc">서울 · ${h.line||h.region}</span></div><div class="dt-hoc-tag">[${(h.dept||'').split('·')[0]}]</div><div class="dt-hoc-nm">${h.nm}</div><div class="dt-hoc-desc">${h.tag?h.tag+' · ':''}${h.region}</div><div class="dt-hoc-rt">${I.star}<b>${h.rate}</b> <span>(${h.rv})</span></div></div>`; }
 function renderDetail(){
   const d = dtItem || procList[0];
   const th = plThumbMap[d.dept] || 'assets/thumb-tooth.jpg';
   const p=won(d.price), w=won(d.was);
   const pct = w>0?Math.round((1-p/w)*100)+'%':'';
   const cp = d.coupon ? comma(p - Math.min(20000, Math.round(p*0.1)))+'원' : '';
-  const reco = dtReco[d.dept] || dtReco.default;
-  const kp = dtKP[d.dept] || dtKP.default;
   const share='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4M12 2v14"/></svg>';
+  const rvN=(+String(d.rv).replace(/[^0-9]/g,''))||0;
+  const recN=Math.max(3,Math.round(rvN*0.6));
+  const sameHos=procList.filter(x=>x.hos===d.hos && x.nm!==d.nm);
+  const otherProc=procList.filter(x=>x.dept===d.dept && x.hos!==d.hos && x.nm!==d.nm);
+  const carA=(sameHos.length?sameHos:otherProc).slice(0,6);
+  const alsoProc=procList.filter(x=>x.dept!==d.dept).slice(0,6);
+  const otherHos=hosList.filter(h=>(h.dept.includes(d.dept)||h.tag==='제휴') && h.nm!==d.hos).slice(0,6);
   document.getElementById('dtScroll').innerHTML=`
     <div class="dt-head"><button class="dt-back" onclick="switchView('proclist')">${I.back}</button><b>${d.hos}</b><span class="dt-actbtns">${I.search}${share}</span></div>
     <div class="dt-hero"><img src="${th}" alt="${d.nm}"></div>
@@ -1756,25 +1803,30 @@ function renderDetail(){
         ${cp?`<div class="dt-cpn">쿠폰 적용 시 <b>${cp}</b></div>`:''}
       </div>
       <div class="dt-sec"><h4>프로그램 설명</h4><p><b>${d.nm}</b> 프로그램입니다. 세이프닥 제휴 병원의 <b>회원 전용 우대가</b>로 진행되며, 시술 전 상담을 통해 개인별 맞춤 안내를 받으실 수 있습니다.</p></div>
-      <div class="dt-sec"><div class="dt-benefit"><div class="dt-benefit-h">세이프닥 예약 전용 안심 혜택</div><ul><li>예약할 때마다 세이프닥 회원 전용 우대가 적용</li><li>의료 분쟁 발생 시, 전문 법률 상담 무료 지원</li><li>병원 이용 불편 시, 세이프닥이 신속 조율 지원</li></ul></div></div>
-      <div class="dt-sec"><h4>이런 분께 추천해요</h4><ul class="dt-reco">${reco.map(r=>`<li>${I.check}<span>${r}</span></li>`).join('')}</ul></div>
-      <div class="dt-sec"><h4>시술 특장점</h4><div class="dt-kp">${kp.map(k=>`<div class="dt-kpc"><i>${I[k[1]]}</i><span>${k[0]}</span></div>`).join('')}</div></div>
-      <div class="dt-sec"><h4>병원 정보</h4><div class="dt-hosnm">${d.hos}</div><div class="dt-hsub">${d.region}${d.station?` · ${d.station}`:''}</div><div class="dt-htime">진료시간 · 월–금 10:00–19:00 / 토 10:00–14:00</div></div>
-      <div style="height:88px"></div>
+      <div class="dt-sec">
+        <div class="dt-rvsum"><div class="dt-rvscore">${d.rate}<span>/10</span></div><div class="dt-rvmeta"><div class="dt-rvstars">★★★★★</div><div class="dt-rvcnt">(${d.rv})</div></div><span class="dt-more">전체보기 ›</span></div>
+        <div class="dt-rvrec">${I.check}<span><b>${comma(recN)}명</b>이 이 병원을 추천해요!</span></div>
+        <div class="dt-rvlist">${dtReviews.map(rv=>`<div class="dt-rvcard"><div class="dt-rvcard-h"><span class="dt-rvcard-star">${I.star}<b>${rv.r}</b></span><span class="dt-rvcard-d">${rv.d}</span></div><p>${rv.t}</p></div>`).join('')}</div>
+      </div>
+      <div class="dt-sec">
+        <div class="dt-hosrow"><span class="dt-hosnm">${d.hos} ›</span><span class="dt-hosaddr">서울 ${d.region}${d.station?` · ${d.station}`:''}</span></div>
+        <div class="dt-map"><span class="dt-map-pin">${I.pin}</span><span class="dt-map-nm">${d.hos}</span><span class="dt-map-scale">300m</span></div>
+        <div class="dt-tags">${dtTags.map(t=>`<div class="dt-tag${t[2]?'':' off'}"><i>${dtTagIcon[t[1]]}</i><span>${t[0]}</span></div>`).join('')}</div>
+        <div class="dt-time"><b>진료 시간</b><span>월–금 10:00–19:00 / 토 10:00–14:00 / 일·공휴일 휴진</span></div>
+      </div>
+      <div class="dt-sec"><h4>세이프닥 예약 전용 <em>안심 혜택</em></h4>
+        <div class="dt-benefit2"><div class="dt-benefit2-w">⚠ 병원으로 직접 예약 시, 아래 혜택은 제공되지 않아요</div>
+          <ul><li>의료 분쟁 발생 시, 전문 법률 상담 무료 지원</li><li>병원 이용 불편 시, 세이프닥이 신속 조율 지원</li></ul></div></div>
+      <div class="dt-sec"><div class="dt-sech"><h4>${d.hos}의 다른 시술</h4><span class="dt-more">더보기 ›</span></div>
+        <div class="dt-hcards">${carA.map(dtProcCard).join('')}</div></div>
+      <div class="dt-sec"><div class="dt-sech"><h4>이런 시술은 어때요?</h4><span class="dt-more">더보기 ›</span></div>
+        <div class="dt-hcards">${alsoProc.map(dtProcCard).join('')}</div></div>
+      <div class="dt-sec"><div class="dt-sech"><h4>다른 회원들이 함께 본 병원</h4><span class="dt-more">더보기 ›</span></div>
+        <div class="dt-hoscards">${otherHos.map(dtHosCard).join('')}</div></div>
+      <div style="height:20px"></div>
     </div>
     <div class="dt-foot"><button class="dt-cta" onclick="dtToReserve()">예약하기</button></div>`;
   document.getElementById('dtScroll').scrollTop=0;
-  dtMarkers();
-}
-/* 시술 상세 위치 마커 — 설명 01~03과 1:1 */
-function dtMarkers(){
-  const sc=document.getElementById('dtScroll'); if(!sc) return;
-  sc.querySelectorAll('.pmk').forEach(m=>m.remove());
-  const put=(el,cls,n,ty,lx)=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
-    const m=document.createElement('div'); m.className='pmk '+cls; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
-  put(sc.querySelector('.dt-hero'),'r','1','10px','10px');   // 01 실제 상세를 앱 내 화면으로 재현(히어로·탭…)
-  put(sc.querySelector('.dt-price'),'r','2','-8px','-8px');  // 02 회원 우대가 즉시 노출(정가·할인율·우대가·쿠폰가)
-  put(sc.querySelector('.dt-cta'),'r','3','-8px','-8px');    // 03 하단 고정 예약하기 → 앱 내 예약 연결
 }
 function hCard(h){
   return `<div class="hcard"><div class="hth">${h.nm.replace(/\s.*/,'').slice(0,2)}</div>
@@ -2204,12 +2256,12 @@ const rat=[
       '취소 사유 대다수가 <b>일정 변경</b> → 취소 플로우에서도 <b>‘변경으로 처리’</b> 제안.'],
     ev:[['대다수','취소사유=일정 변경','warn']],
     src:'welfaremall.stage /profile/reservation · 취소사유 분석'},
-  {tab:'④-2 시술 상세',t:'실제 상세 화면 자체 구현 + 예약 연결',
+  {tab:'④-2 시술 상세',t:'AS-IS 그대로 재현 — 개선 항목 없음',
     pts:[
-      '외부 이동 대신 <b>히어로·탭·시술명·평점·회원 우대가·프로그램 설명·안심 혜택·추천 대상·시술 특장점</b>을 앱 내 화면으로 재현.',
-      '비로그인 ‘인증하고 우대가 확인’ 대신 회원에게 <b>정가·할인율·회원 우대가·쿠폰가</b> 즉시 노출.',
-      '하단 고정 <b>예약하기 → 예약 플로우</b> 앱 내 연결(외부 이탈 없이 상세→예약 완결).'],
-    src:'welfaremall.stage 시술 상세 · 프로토타입'}
+      '이 화면은 <b>별도 개선 사항이 없어</b> 실제(AS-IS) 시술 상세 페이지를 <b>동일하게 재현</b>했습니다.',
+      '<b>히어로 · 탭 · 제목/평점 · 가격 · 프로그램 설명 · 리뷰 · 병원 정보(지도·태그·진료시간) · 안심 혜택 · 이 병원의 다른 시술 · 이런 시술은 어때요? · 함께 본 병원</b> 섹션을 AS-IS 순서 그대로 구성.',
+      '데모 일관성을 위해 로그인 회원 기준으로 가격(회원 우대가)만 노출 — 그 외 구조·순서·콘텐츠는 AS-IS와 동일.'],
+    src:'welfaremall.stage 시술 상세(AS-IS) 동일 재현 · 개선 없음'}
 ];
 /* 개선 포인트 카드를 각 페이지 설명에 인라인 배치 */
 document.querySelectorAll('.rat-mount').forEach(m=>{
