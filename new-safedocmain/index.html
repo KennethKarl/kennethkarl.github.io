@@ -1021,9 +1021,9 @@
       <div class="obspec">
         <div class="spec-h">시술 상세 — 실제 화면 자체 구현 + 예약 연결</div>
         <div class="spec">
-          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>실제 상세를 앱 내 화면으로 재현</b><p>기존에는 시술 카드를 누르면 <b>외부 페이지</b>로 이동했으나, <b>히어로 · 탭(시술정보·리뷰·병원정보·상세정보) · 시술명·평점 · 회원 우대가 · 프로그램 설명 · 안심 혜택 · 추천 대상 · 시술 특장점</b>을 실제 welfaremall 상세와 동일하게 앱 내 화면으로 구성했습니다.</p></div></div>
-          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>회원 우대가 즉시 노출</b><p>비로그인 ‘인증하고 우대가 확인’ 대신, 로그인 회원에게는 <b>정가 · 할인율 · 회원 우대가 · 쿠폰 적용가</b>를 바로 노출합니다.</p></div></div>
-          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>하단 고정 ‘예약하기’ → 앱 내 예약 연결</b><p>하단 고정 CTA로 <b>예약 플로우</b>에 바로 연결됩니다. (외부 이탈 없이 상세 → 예약 완결)</p></div></div>
+          <div class="sc"><div class="sc-n r">01</div><div class="sc-b"><b>실제 상세를 앱 내 화면으로 재현</b><p>기존에는 시술 카드를 누르면 <b>외부 페이지</b>로 이동했으나, <b>히어로 · 탭(시술정보·리뷰·병원정보·상세정보) · 시술명·평점 · 회원 우대가 · 프로그램 설명 · 안심 혜택 · 추천 대상 · 시술 특장점</b>을 실제 welfaremall 상세와 동일하게 앱 내 화면으로 구성했습니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>회원 우대가 즉시 노출</b><p>비로그인 ‘인증하고 우대가 확인’ 대신, 로그인 회원에게는 <b>정가 · 할인율 · 회원 우대가 · 쿠폰 적용가</b>를 바로 노출합니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>하단 고정 ‘예약하기’ → 앱 내 예약 연결</b><p>하단 고정 CTA로 <b>예약 플로우</b>에 바로 연결됩니다. (외부 이탈 없이 상세 → 예약 완결)</p></div></div>
         </div>
         <p class="spec-src">기준: welfaremall.stage.safedoc.kr 시술 상세 · 프로토타입</p>
       </div>
@@ -1764,6 +1764,17 @@ function renderDetail(){
     </div>
     <div class="dt-foot"><button class="dt-cta" onclick="dtToReserve()">예약하기</button></div>`;
   document.getElementById('dtScroll').scrollTop=0;
+  dtMarkers();
+}
+/* 시술 상세 위치 마커 — 설명 01~03과 1:1 */
+function dtMarkers(){
+  const sc=document.getElementById('dtScroll'); if(!sc) return;
+  sc.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,cls,n,ty,lx)=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk '+cls; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  put(sc.querySelector('.dt-hero'),'r','1','10px','10px');   // 01 실제 상세를 앱 내 화면으로 재현(히어로·탭…)
+  put(sc.querySelector('.dt-price'),'r','2','-8px','-8px');  // 02 회원 우대가 즉시 노출(정가·할인율·우대가·쿠폰가)
+  put(sc.querySelector('.dt-cta'),'r','3','-8px','-8px');    // 03 하단 고정 예약하기 → 앱 내 예약 연결
 }
 function hCard(h){
   return `<div class="hcard"><div class="hth">${h.nm.replace(/\s.*/,'').slice(0,2)}</div>
