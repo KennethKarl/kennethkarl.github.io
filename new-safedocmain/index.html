@@ -502,6 +502,8 @@
   .pmk{position:absolute;z-index:40;min-width:16px;height:16px;padding:0 2px;border-radius:5px;color:#fff;
     font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35);font-family:inherit;}
   .pmk.r{background:#ff3b30;} .pmk.o{background:#F5A623;} .pmk.g{background:#8A94A6;} .pmk.b{background:#1B59FA;}
+  /* 온보딩·예약 설명 번호도 개선 메인처럼 빨강(폰 마커와 매칭) */
+  #v-onboard .spec .sc-n, #v-reserve .spec .sc-n{background:#ff3b30;color:#fff;}
   .spec .sc-b{flex:1;min-width:0;}
   .spec .sc-b b{font-size:13.5px;font-weight:800;color:var(--ink);}
   .spec .sc-b p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55;}
@@ -2019,7 +2021,7 @@ function obMarkers(){
   const sc=document.getElementById('obScroll'); if(!sc) return;
   sc.querySelectorAll('.pmk').forEach(m=>m.remove());
   const put=(el,n,ty='-7px',lx='-7px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
-    const m=document.createElement('div'); m.className='pmk b'; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+    const m=document.createElement('div'); m.className='pmk r'; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
   if(ob.step===0){                                   // STEP 1 — 카테고리 노출·정렬
     put(sc.querySelector('.selgrid'),'1','2px','2px');       // 01 전체 카테고리 노출
     const s=sc.querySelectorAll('.obsort button');
@@ -2252,6 +2254,22 @@ function renderReserve(){
       <div class="rv-foot">${rvSaved?`<button class="rv-cta ok" disabled>저장 완료 ✓ · 예약 건에 반영(DB 업데이트)</button>`:`<button class="rv-cta" onclick="rvSaveExtra()">입력 완료 · 저장하기</button><button class="rv-cta ghost" onclick="rvReset()">나중에 입력</button>`}</div>`;
   }
   el.scrollTop=0;
+  rvMarkers();
+}
+/* 예약플로우 단계별 마커 — form(신청)·done(접수) 상태 전환 시 갱신 (개선 메인식 빨간 마커) */
+function rvMarkers(){
+  const sc=document.getElementById('rvScroll'); if(!sc) return;
+  sc.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,n,ty='-7px',lx='-7px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk r'; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  const secByText=t=>[...sc.querySelectorAll('.rv-sec')].find(s=>(s.querySelector('.rv-sec-t')?.textContent||'').includes(t));
+  if(rvStep==='form'){                                     // 01 예약 신청 마찰 최소화(일시+약관만)
+    put(secByText('내원 희망 일시'),'1','2px','2px');
+  } else {                                                 // done
+    put(sc.querySelector('.rv-done'),'2','2px','2px');     // 02 팝업 → 접수 페이지
+    put(sc.querySelector('.rv-extra-h'),'3','-7px','2px'); // 03 상세정보 후속 수집
+    put(sc.querySelector('.rv-foot'),'4','2px','2px');     // 04 기대 효과(저장·DB 업데이트)
+  }
 }
 function rvSetDate(d){rvDate=d; renderReserve();}
 function rvSetTime(t){rvTime=t; renderReserve();}
