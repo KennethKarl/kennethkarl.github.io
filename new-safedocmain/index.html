@@ -1781,6 +1781,19 @@ function renderProcList(){
       ${(plQuery||plActiveRegions().length>1)?`<button class="clr" onclick="plReset()">초기화</button>`:''}
     </div>
     <div id="plDyn">${renderPlDyn()}</div>`;
+  plMarkers();
+}
+/* 시술리스트 위치 마커 — 설명 01~05와 1:1 (개선 메인식 빨간·오렌지 마커) */
+function plMarkers(){
+  const sc=document.getElementById('plScroll'); if(!sc) return;
+  sc.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,cls,n,ty='-7px',lx='-7px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk '+cls; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  put(sc.querySelector('.pl-sbar .box'),'r','1','-8px','-8px');          // 01 상단 검색 영역(검색창·연관·AD·탭)
+  put(sc.querySelector('.pl-region'),'r','2','-7px','-7px');             // 02 지역 선택 → 재조회(관심 지역 멀티)
+  put(sc.querySelectorAll('.pl-tabs2 .plt2')[1],'r','3','-7px','-7px');  // 03 시술 0건 → 병원 탭 자동 전환
+  put(sc.querySelector('.pl-cnt'),'o','4','2px','2px');                  // 04 지역별 시술·병원 수 자동 표시
+  put(sc.querySelector('.pl-list .sd-card .sd-hos'),'o','5','-9px','-7px'); // 05 카드 = 병원명·지역·지하철역
 }
 function renderPlDyn(){
   const nP=plProcAll().length, nH=plHosAll().length;
@@ -1813,7 +1826,7 @@ function renderPlHosTab(){
     <div class="pl-cnt">병원 <b>${hos.length}</b>곳 · ${plRegionLabel()}</div>
     <div class="pl-hlist">${hos.map(hCard).join('')}</div><div style="height:20px"></div>`;
 }
-function plUpdate(){ document.getElementById('plDyn').innerHTML=renderPlDyn(); }
+function plUpdate(){ document.getElementById('plDyn').innerHTML=renderPlDyn(); plMarkers(); }
 function plAutoTab(){ plTab = (plProcAll().length===0 && plHosAll().length>0) ? '병원' : (plProcAll().length>0 ? '시술' : plTab); }
 function plSearch(q){ plQuery=q; plDeptSel=new Set(); plAutoTab(); plUpdate(); }
 function plTry(q){ plQuery=q; plDeptSel=new Set(); plAutoTab(); renderProcList(); const i=document.getElementById('plInput'); if(i){i.value=q;} }
