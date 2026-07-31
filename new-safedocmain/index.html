@@ -755,6 +755,19 @@
   .dt-hosnm{font-size:15px;font-weight:700;color:#111;} .dt-hsub{font-size:12.5px;color:#808B96;margin-top:4px;} .dt-htime{font-size:12.5px;color:#4a5568;margin-top:8px;}
   .dt-foot{position:sticky;bottom:0;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #EBEBEB;z-index:10;}
   .dt-cta{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:12px;padding:15px;cursor:pointer;}
+  /* 가격 — 쿠폰 적용가 박스 (AS-IS) */
+  .dt-cpnbox{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;background:#EEF3FF;border-radius:10px;padding:13px 14px;}
+  .dt-cpnbox-l{display:flex;align-items:center;gap:6px;font-size:13.5px;color:#33425c;min-width:0;}
+  .dt-cpnbox-l svg{width:16px;height:16px;color:var(--blue);flex:none;}
+  .dt-cpnbox-t{color:#4a5568;font-weight:600;}
+  .dt-cpnbox-l b{color:#111;font-weight:800;font-size:14.5px;}
+  .dt-cpnbox-info svg{color:#B0B8C4;}
+  .dt-cpnbox-chev svg{width:18px;height:18px;color:#8A97AB;flex:none;}
+  .dt-price-note{margin-top:9px;font-size:12.5px;color:var(--blue);font-weight:600;}
+  /* 하단 CTA — 전화상담 + 방문예약 (AS-IS) */
+  .dt-foot2{display:flex;gap:8px;}
+  .dt-cta2{border:0;font-family:inherit;font-weight:800;font-size:15.5px;border-radius:12px;padding:15px;cursor:pointer;background:var(--blue);color:#fff;flex:1;}
+  .dt-cta2.ghost{background:#E9EEFF;color:var(--blue);flex:0 0 38%;}
   .dt-sec em{font-style:normal;color:var(--blue);}
   .dt-sech{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;} .dt-sech h4{margin:0;}
   /* 리뷰 */
@@ -1796,11 +1809,12 @@ function renderDetail(){
     <div class="dt-tabs"><button class="dt-tab on">시술정보</button><button class="dt-tab">리뷰(${d.rv})</button><button class="dt-tab">병원정보</button><button class="dt-tab">상세정보</button></div>
     <div class="dt-main">
       <div class="dt-title">${d.nm}</div>
-      <div class="dt-rate">${I.star}<b>${d.rate}</b> <span>(${d.rv})</span><span class="dt-more">전체보기 ›</span></div>
+      <div class="dt-rate">${I.star}<b>${d.rate}</b> <span>(${d.rv})</span><span class="dt-more">›</span></div>
       <div class="dt-price">
         ${w>0?`<div class="dt-was"><s>${d.was}</s> · VAT 포함</div>`:''}
-        <div class="dt-now">${pct?`<span class="dt-pct">${pct}</span>`:''}<b>${d.price}</b><span class="dt-mtag">회원 우대가</span></div>
-        ${cp?`<div class="dt-cpn">쿠폰 적용 시 <b>${cp}</b></div>`:''}
+        <div class="dt-now">${pct?`<span class="dt-pct">${pct}</span>`:''}<b>${d.price}</b></div>
+        ${cp?`<div class="dt-cpnbox"><span class="dt-cpnbox-l">${I.ticket}<span class="dt-cpnbox-t">쿠폰 적용가</span> <b>${cp}</b><span class="dt-cpnbox-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6h.01"/></svg></span></span><span class="dt-cpnbox-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></div>`:''}
+        <div class="dt-price-note">원장님 지정시 별도 금액 발생</div>
       </div>
       <div class="dt-sec"><h4>프로그램 설명</h4><p><b>${d.nm}</b> 프로그램입니다. 세이프닥 제휴 병원의 <b>회원 전용 우대가</b>로 진행되며, 시술 전 상담을 통해 개인별 맞춤 안내를 받으실 수 있습니다.</p></div>
       <div class="dt-sec">
@@ -1825,7 +1839,7 @@ function renderDetail(){
         <div class="dt-hoscards">${otherHos.map(dtHosCard).join('')}</div></div>
       <div style="height:20px"></div>
     </div>
-    <div class="dt-foot"><button class="dt-cta" onclick="dtToReserve()">예약하기</button></div>`;
+    <div class="dt-foot dt-foot2"><button class="dt-cta2 ghost">전화상담</button><button class="dt-cta2" onclick="dtToReserve()">방문예약</button></div>`;
   document.getElementById('dtScroll').scrollTop=0;
 }
 function hCard(h){
