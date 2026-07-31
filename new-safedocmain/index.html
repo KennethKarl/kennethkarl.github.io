@@ -577,6 +577,8 @@
   .pl-filters{display:flex;gap:7px;overflow-x:auto;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none;}
   .pl-filters::-webkit-scrollbar{height:0}
   .plf{flex:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;color:#33425c;background:#fff;white-space:nowrap;}
+  button.plf{font-family:inherit;cursor:pointer;transition:.14s;}
+  .plf.on{border-color:var(--blue);background:var(--blue-50);color:var(--blue-700);font-weight:700;}
   .pl-cnt{padding:13px 16px 2px;font-size:12px;color:var(--muted);} .pl-cnt b{color:var(--ink);}
   .pl-cnt .pl-adnote{color:var(--blue);font-weight:700;}
   .pl-list{padding:0 16px 8px;}
@@ -1691,6 +1693,7 @@ function myPlRegions(){ return [...new Set((typeof mainRegions!=='undefined'?mai
 function plActiveRegions(){ const m=myPlRegions(); return m.length?m:['강남']; }
 function plRegionLabel(){ const a=plActiveRegions(); return a.length<=1?a[0]:`${a[0]} 외 ${a.length-1}`; }
 let plDeptSel=new Set(['피부과']), plTab='시술', plQuery='';
+let plChips=new Set();   // 필터 칩(쿠폰 추가할인·당일할인·특가전·오늘 예약가능) 토글 상태
 const plThumbMap={'피부과':'assets/thumb-skin.png','안과':'assets/thumb-eye.png','성형외과':'assets/thumb-face.jpg','치과':'assets/thumb-tooth.jpg','건강검진':'assets/thumb-diet.jpg','두피/탈모':'assets/thumb-hair.png'};
 function procCard(d){
   const p=won(d.price), w=won(d.was);
@@ -1814,7 +1817,7 @@ function renderPlProcTab(){
       <div class="pl-empty-hint"><b>${plRegionLabel()}</b> 지역은 등록된 시술이 아직 없어요.<br>위 <b>병원 탭</b>에서 해당 지역 병원을 먼저 확인해 보세요.</div></div>`;
   }
   const items=plProcShown();
-  return `<div class="pl-filters">${['쿠폰 추가할인','당일할인','특가전','오늘 예약가능'].map(f=>`<span class="plf">${f}</span>`).join('')}</div>
+  return `<div class="pl-filters">${['쿠폰 추가할인','당일할인','특가전','오늘 예약가능'].map(f=>`<button class="plf${plChips.has(f)?' on':''}" onclick="plToggleChip('${f}')">${f}</button>`).join('')}</div>
     <div class="pl-cnt">시술 <b>${items.length}</b>건 · ${plRegionLabel()} · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
     <div class="pl-list">${items.map(procCard).join('')}</div><div style="height:20px"></div>`;
 }
@@ -1827,6 +1830,7 @@ function renderPlHosTab(){
     <div class="pl-hlist">${hos.map(hCard).join('')}</div><div style="height:20px"></div>`;
 }
 function plUpdate(){ document.getElementById('plDyn').innerHTML=renderPlDyn(); plMarkers(); }
+function plToggleChip(f){ plChips.has(f)?plChips.delete(f):plChips.add(f); plUpdate(); }
 function plAutoTab(){ plTab = (plProcAll().length===0 && plHosAll().length>0) ? '병원' : (plProcAll().length>0 ? '시술' : plTab); }
 function plSearch(q){ plQuery=q; plDeptSel=new Set(); plAutoTab(); plUpdate(); }
 function plTry(q){ plQuery=q; plDeptSel=new Set(); plAutoTab(); renderProcList(); const i=document.getElementById('plInput'); if(i){i.value=q;} }
