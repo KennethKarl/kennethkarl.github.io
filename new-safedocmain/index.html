@@ -617,6 +617,9 @@
   .plsheet-list{overflow-y:auto;flex:1;padding:4px 0;}
   .plsheet-i{width:100%;border:0;background:none;font-family:inherit;display:flex;align-items:center;justify-content:space-between;padding:15px 20px;cursor:pointer;font-size:15px;color:#33425c;letter-spacing:-.02em;}
   .plsheet-i.on{background:#F4F7FF;color:#111;font-weight:700;}
+  .plsheet-list.sort{padding:8px 12px 14px;}
+  .plsheet-i.sort{justify-content:center;font-size:15.5px;color:#33425c;font-weight:600;padding:16px;border-radius:12px;}
+  .plsheet-i.sort.on{background:#EEF3FF;color:var(--blue);font-weight:800;}
   .plsheet-i svg{width:20px;height:20px;color:var(--blue);}
   .plsheet-nm{display:flex;align-items:center;gap:7px;}
   .plsheet-mine{font-size:10.5px;font-weight:700;color:#1550E0;background:#DCE6FF;border-radius:5px;padding:2px 6px;}
@@ -976,10 +979,10 @@
       <div class="obspec">
         <div class="spec-h">시술 리스트 — 실제(AS-IS) 대비 변경점</div>
         <div class="spec">
-          <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>최저가 보장제 배너 → AD 영역으로 변경 <span class="sc-tag chg">변경</span></b><p>AS-IS의 <b>‘같은 병원, 다른 가격? 가격 조율 +5,000P 보상’</b> 최저가 보장제 배너 자리를 <b>AD(스폰서) 인벤토리</b>로 교체했습니다. 활용도가 낮던 배너를 <b>광고·특가 매출 영역</b>으로 전환.</p></div></div>
-          <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>지역 선택 <span class="sc-tag chg">개선</span></b><p>기존 <b>지역 칩</b>을 <b>지역 선택 버튼</b>으로 개선 — 누르면 온보딩식 지역 선택 화면에서 <b>관심 지역을 선택·변경</b>하고 재조회합니다. 관심 지역은 <b>온보딩·메인과 공유</b>됩니다.</p></div></div>
-          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>진료과 선택 추가 <span class="sc-tag add">추가</span></b><p><b>진료과 선택</b> 기능을 신설했습니다 — <b>진료과 버튼(바텀시트)</b>에서 진료과를 고르면 해당 진료과 시술로 필터됩니다. (선택한 진료과는 온보딩 관심정보에 반영)</p></div></div>
-          <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>필터 · 정렬 아이콘 영역 분리 <span class="sc-tag chg">변경</span></b><p>AS-IS는 <b>정렬(인기순)·지역·진료과·필터 칩</b>이 한 줄에 섞여 가로 스크롤됐습니다. TO-BE는 <b>[지역·진료과·정렬] 셀렉트 영역</b>과 <b>[쿠폰 추가할인·당일할인·특가전·오늘 예약가능] 필터 칩 영역</b>을 <b>별도로 분리</b>했습니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">01</div><div class="sc-b"><b>최저가 보장제 배너 → AD 영역으로 변경 <span class="sc-tag chg">변경</span></b><p>AS-IS의 <b>‘같은 병원, 다른 가격? 가격 조율 +5,000P 보상’</b> 최저가 보장제 배너 자리를 <b>AD(스폰서) 인벤토리</b>로 교체했습니다. 활용도가 낮던 배너를 <b>광고·특가 매출 영역</b>으로 전환.</p></div></div>
+          <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>지역 선택 <span class="sc-tag chg">개선</span></b><p>기존 <b>지역 칩</b>을 <b>지역 선택 버튼</b>으로 개선 — 누르면 온보딩식 지역 선택 화면에서 <b>관심 지역을 선택·변경</b>하고 재조회합니다. 관심 지역은 <b>온보딩·메인과 공유</b>됩니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>진료과 선택 추가 <span class="sc-tag add">추가</span></b><p><b>진료과 선택</b> 기능을 신설했습니다 — <b>진료과 버튼(바텀시트)</b>에서 진료과를 고르면 해당 진료과 시술로 필터됩니다. (선택한 진료과는 온보딩 관심정보에 반영)</p></div></div>
+          <div class="sc"><div class="sc-n o">04</div><div class="sc-b"><b>필터 · 정렬 아이콘 영역 분리 <span class="sc-tag chg">변경</span></b><p>AS-IS는 <b>정렬(인기순)·지역·진료과·필터 칩</b>이 한 줄에 섞여 가로 스크롤됐습니다. TO-BE는 <b>[지역·진료과·정렬] 셀렉트 영역</b>과 <b>[쿠폰 추가할인·당일할인·특가전·오늘 예약가능] 필터 칩 영역</b>을 <b>별도로 분리</b>했습니다.</p></div></div>
         </div>
         <div class="spec-try">
           <div class="try-h">▶ 직접 해보기</div>
@@ -1694,6 +1697,8 @@ function plActiveRegions(){ const m=myPlRegions(); return m.length?m:['강남'];
 function plRegionLabel(){ const a=plActiveRegions(); return a.length<=1?a[0]:`${a[0]} 외 ${a.length-1}`; }
 let plDeptSel=new Set(['피부과']), plTab='시술', plQuery='';
 let plChips=new Set();   // 필터 칩(쿠폰 추가할인·당일할인·특가전·오늘 예약가능) 토글 상태
+let plSort='인기순';      // 정렬 상태
+const plSortOpts=['인기순','후기 많은 순','평점 높은 순','최신 등록 순','가격 낮은 순'];
 const plThumbMap={'피부과':'assets/thumb-skin.png','안과':'assets/thumb-eye.png','성형외과':'assets/thumb-face.jpg','치과':'assets/thumb-tooth.jpg','건강검진':'assets/thumb-diet.jpg','두피/탈모':'assets/thumb-hair.png'};
 function procCard(d){
   const p=won(d.price), w=won(d.was);
@@ -1772,7 +1777,18 @@ function plTokens(q){return q.trim().split(/[\s·\/,]+/).filter(Boolean).map(plN
 function plMatch(fields,q){const t=plTokens(q); if(!t.length) return true; return t.some(tk=>fields.some(f=>plNorm(f).includes(tk)));}
 // 활성 지역(합집합) + 검색어(plQuery) 교차 필터. 검색어는 시술명/진료과/병원명 매칭
 function plProcAll(){ const q=plQuery.trim(); const R=plActiveRegions(); return procList.filter(d=> R.some(pr=>itemInRegion(d.region,pr)) && (q?plMatch([d.nm,d.dept,d.hos],q):true) ); }
-function plProcShown(){ let l=plProcAll(); if(plDeptSel.size) l=l.filter(d=>plDeptSel.has(d.dept)); return l; }
+function plProcShown(){ let l=plProcAll(); if(plDeptSel.size) l=l.filter(d=>plDeptSel.has(d.dept)); if(plChips.has('쿠폰 추가할인')) l=l.filter(d=>d.coupon); return plSortList(l); }
+/* 정렬 — AD는 상단 방어(고정), 나머지를 선택 기준으로 정렬 */
+function plSortList(l){
+  const num=s=>(+String(s).replace(/[^0-9.]/g,''))||0;
+  const ads=l.filter(d=>d.ad), rest=l.filter(d=>!d.ad);
+  if(plSort==='후기 많은 순') rest.sort((a,b)=>num(b.rv)-num(a.rv));
+  else if(plSort==='평점 높은 순') rest.sort((a,b)=>parseFloat(b.rate)-parseFloat(a.rate));
+  else if(plSort==='최신 등록 순') rest.reverse();
+  else if(plSort==='가격 낮은 순') rest.sort((a,b)=>won(a.price)-won(b.price));
+  // 인기순: 원본 순서 유지
+  return [...ads, ...rest];
+}
 function plHosAll(){ const q=plQuery.trim(); const R=plActiveRegions(); return hosList.filter(h=> R.some(pr=>itemInRegion(h.region,pr)) && (q?plMatch([h.nm,h.dept,h.line],q):true) ); }
 function renderProcList(){
   document.getElementById('plScroll').innerHTML=`
@@ -1802,7 +1818,7 @@ function renderPlDyn(){
   const nP=plProcAll().length, nH=plHosAll().length;
   return `${plQuery.trim()?`<div class="pl-rel">연관 <b>${plQuery.trim()}</b></div>`:''}
     <div class="pl-ad"><div class="pl-ad-t">덴티움 → 오스템 임플란트 업그레이드</div><div class="pl-ad-s">*뼈 이식 등 추가 시술은 별도 금액 발생</div><span class="pl-ad-tag">AD</span></div>
-    <div class="pl-top2"><button class="pl-region" onclick="openPlRegion()">${I.pin}<b>${plRegionLabel()}</b><span class="plchev">${I.chev}</span></button><button class="pl-dept" onclick="openPlDept()"><b>${plDeptLabel()}</b><span class="plchev">${I.chev}</span></button><button class="pl-sort">인기순 <span>▾</span></button></div>
+    <div class="pl-top2"><button class="pl-region" onclick="openPlRegion()">${I.pin}<b>${plRegionLabel()}</b><span class="plchev">${I.chev}</span></button><button class="pl-dept" onclick="openPlDept()"><b>${plDeptLabel()}</b><span class="plchev">${I.chev}</span></button><button class="pl-sort" onclick="openPlSort()">${plSort} <span>▾</span></button></div>
     <div class="pl-tabs2">
       <button class="plt2 ${plTab==='시술'?'on':''}" onclick="plSetTab('시술')">시술 <b>${nP}</b></button>
       <button class="plt2 ${plTab==='병원'?'on':''}" onclick="plSetTab('병원')">병원 <b>${nH}</b></button>
@@ -1818,7 +1834,7 @@ function renderPlProcTab(){
   }
   const items=plProcShown();
   return `<div class="pl-filters">${['쿠폰 추가할인','당일할인','특가전','오늘 예약가능'].map(f=>`<button class="plf${plChips.has(f)?' on':''}" onclick="plToggleChip('${f}')">${f}</button>`).join('')}</div>
-    <div class="pl-cnt">시술 <b>${items.length}</b>건 · ${plRegionLabel()} · 인기순 <span class="pl-adnote">· 상단 AD 방어</span></div>
+    <div class="pl-cnt">시술 <b>${items.length}</b>건 · ${plRegionLabel()} · ${plSort} <span class="pl-adnote">· 상단 AD 방어</span></div>
     <div class="pl-list">${items.map(procCard).join('')}</div><div style="height:20px"></div>`;
 }
 function renderPlHosTab(){
@@ -1870,6 +1886,18 @@ function plPickDetail(k){ plDetailDraft.has(k)?plDetailDraft.delete(k):plDetailD
 function plDeptReset(){ plDeptDraft=plDefaultDepts(); plDetailDraft=new Set(obDetailNow().filter(k=>[...plDeptDraft].some(d=>k.startsWith(d+'::')))); renderPlDeptSheet(); }
 function applyPlDept(){ plDeptSel=new Set(plDeptDraft); syncDeptToOb(); closePlDept(); plUpdate(); }
 function closePlDept(){ const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} }
+/* 정렬 바텀시트 (인기순·후기 많은 순·평점 높은 순·최신 등록 순·가격 낮은 순) */
+function openPlSort(){ const o=plRegOvl(); if(!o) return; o.hidden=false;
+  o.innerHTML=`<div class="plsheet-dim" onclick="closePlSort()"></div>
+    <div class="plsheet">
+      <div class="plsheet-grab"></div>
+      <div class="plsheet-list sort">
+        ${plSortOpts.map(s=>`<button class="plsheet-i sort${plSort===s?' on':''}" onclick="plPickSort('${s}')">${s}</button>`).join('')}
+      </div>
+    </div>`;
+}
+function plPickSort(s){ plSort=s; closePlSort(); plUpdate(); }
+function closePlSort(){ const o=plRegOvl(); if(o){o.hidden=true; o.innerHTML='';} }
 /* 시술리스트에서 바꾼 진료과(멀티)·세부시술·지역을 온보딩 관심정보(ob)에 역동기화 (개인화 양방향) */
 function syncDeptToOb(){
   if(typeof ob==='undefined'||!ob.dept) return;
