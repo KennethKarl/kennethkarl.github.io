@@ -809,10 +809,10 @@
   .ad-swap button.on{background:var(--blue);color:#fff;}
   .webframe{display:flex;gap:22px;width:100%;max-width:660px;align-items:flex-start;}
   .web-side{width:244px;flex:none;padding:18px 16px;background:#EEF1F6;border-radius:20px;border:1px solid #E4E9F2;overflow-y:auto;max-height:800px;scrollbar-width:none;} .web-side::-webkit-scrollbar{width:0;}
-  .web-app{flex:1;background:#fff;min-width:0;overflow:hidden;border-radius:34px;border:1px solid #E9EDF4;box-shadow:var(--shadow);position:relative;padding:10px 10px 0;}
-  .web-app .wa-inner{background:#F7F9FD;border-radius:26px 26px 0 0;overflow:hidden;}
-  .wa-notch{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:104px;height:22px;background:#0E1726;border-radius:999px;z-index:6;}
-  .wa-inner .wa-head{padding-top:34px;}
+  .web-app{flex:1;background:#fff;min-width:0;overflow:hidden;border-radius:20px;border:1px solid #E4E8F0;box-shadow:0 20px 50px rgba(15,23,42,.16);position:relative;padding:0;}
+  .web-app .wa-inner{background:#fff;border-radius:20px 20px 0 0;overflow:hidden;}
+  .wa-notch{display:none;}
+  .wa-inner .wa-head{padding-top:14px;}
   .wa-tabbar{display:flex;background:#fff;border-radius:0 0 26px 26px;border-top:1px solid var(--line);padding:9px 6px 12px;}
   .wa-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;color:#8A97AB;} .wa-tab svg{width:20px;height:20px;} .wa-tab.on{color:#111;font-weight:700;}
   .ws-label{font-size:10.5px;font-weight:800;border-radius:6px;padding:4px 8px;margin-bottom:12px;text-align:center;}
@@ -843,7 +843,11 @@
   .wa-search{margin:11px 12px 2px;display:flex;align-items:center;gap:8px;border:1.6px solid var(--blue);border-radius:12px;padding:11px 13px;box-shadow:0 8px 20px -14px rgba(31,99,255,.5);} .wa-search svg{width:16px;height:16px;color:var(--blue);flex:none;} .wa-search span{color:var(--faint);font-size:12.5px;}
   .wa-sech{font-size:13px;font-weight:800;color:var(--ink);padding:13px 14px 8px;display:flex;align-items:center;gap:6px;} .wa-sech b{color:var(--blue);}
   .wa-tag{font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:6px;background:var(--blue-50);color:var(--blue-700);} .wa-tag.hot{background:var(--coral-50);color:#E23B40;}
-  .wa-depts.rank .wa-d{gap:3px;} .wa-rk{font-size:9px;color:var(--coral);font-weight:800;}
+  .wa-depts.rank{grid-template-columns:repeat(5,1fr);gap:14px 4px;padding:16px 10px 8px;} .wa-depts.rank .wa-d{gap:5px;} .wa-rk{font-size:9px;color:var(--coral);font-weight:800;}
+  .wa-depts.rank .wa-d i{width:46px;height:46px;background:#fff;box-shadow:0 3px 10px rgba(15,23,42,.08);} .wa-depts.rank .wa-d i img{width:30px;height:30px;object-fit:contain;}
+  /* TO-BE: 로고 중앙 + 섹션 구분(개선 메인 디자인) */
+  .wa-head{position:relative;} .wa-logo.c{position:absolute;left:50%;transform:translateX(-50%);} .wa-logo.c img{height:15px;width:auto;display:block;}
+  .wa-search{margin-top:14px;} .wa-sech{border-top:8px solid #F1F3F7;margin-top:6px;}
   .wa-disc{position:absolute;left:6px;top:6px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;padding:2px 5px;border-radius:5px;}
   .ad-stage{grid-template-columns:660px 380px;align-items:start;}
   @media(max-width:1040px){.ad-stage{grid-template-columns:1fr;justify-items:center;}}
@@ -2434,10 +2438,10 @@ function renderAdApp(){
       <div class="wa-cards">${recent.map(r=>`<div class="wa-c"><div class="wa-c-th" style="background:${r.g}"></div><div class="wa-c-nm">${r.nm}</div><div class="wa-c-hos">${r.hos}</div><div class="wa-c-pr">${r.price}</div></div>`).join('')}</div>`;
   } else {
     // TO-BE = 개선 메인 적용 (검색 최상단 · 진료과 인기순 · 재원님 맞춤 추천)
-    inner=`<div class="wa-head"><span class="wa-loc">${I.pin}<b>강남·압구정</b></span><span class="wa-logo">SafeDoc</span><span class="wa-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h16M4 15h16"/></svg></span></div>
+    inner=`<div class="wa-head"><span class="wa-loc">${I.pin}<b>강남·압구정</b></span><span class="wa-logo c"><img src="assets/logo.svg" alt="SAFE DOC"></span><span class="wa-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9h16M4 15h16"/></svg></span></div>
       <div class="wa-search">${I.search}<span>어떤 시술을 찾으세요?</span></div>
       <div class="wa-sech">진료과 <b>바로가기</b><span class="wa-tag hot">활동 1위</span></div>
-      <div class="wa-depts rank">${depts.map(d=>`<div class="wa-d"><i>${I[d.ic]}</i>${d.n}${d.rk?`<span class="wa-rk">▲${d.rk}</span>`:''}</div>`).join('')}</div>
+      <div class="wa-depts rank">${depts.map(d=>`<div class="wa-d"><i>${d.img?`<img src="${d.img}" alt="${d.n}">`:I[d.ic]}</i>${d.n}${d.rk?`<span class="wa-rk">▲${d.rk}</span>`:''}</div>`).join('')}</div>
       <div class="wa-sech">재원님 <b>맞춤 추천</b><span class="wa-tag">온보딩 관심정보</span></div>
       <div class="wa-cards">${perso.slice(0,4).map(p=>`<div class="wa-c"><div class="wa-c-th" style="position:relative;background:linear-gradient(135deg,#DCE6FF,#EEF3FF)">${p.disc?`<span class="wa-disc">${p.disc}</span>`:''}</div><div class="wa-c-nm">${p.nm}</div><div class="wa-c-pr">${p.price}${p.was?` <s>${p.was}</s>`:''}</div><div class="wa-c-hos">${p.rv}</div></div>`).join('')}</div>`;
   }
