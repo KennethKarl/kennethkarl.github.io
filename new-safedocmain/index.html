@@ -501,7 +501,7 @@
   /* 폰 위치 마커 (main-plan 스타일) */
   .pmk{position:absolute;z-index:40;min-width:16px;height:16px;padding:0 2px;border-radius:5px;color:#fff;
     font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35);font-family:inherit;}
-  .pmk.r{background:#ff3b30;} .pmk.o{background:#F5A623;} .pmk.g{background:#8A94A6;}
+  .pmk.r{background:#ff3b30;} .pmk.o{background:#F5A623;} .pmk.g{background:#8A94A6;} .pmk.b{background:#1B59FA;}
   .spec .sc-b{flex:1;min-width:0;}
   .spec .sc-b b{font-size:13.5px;font-weight:800;color:var(--ink);}
   .spec .sc-b p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55;}
@@ -2012,6 +2012,26 @@ function obRender(){
         <button class="cta ghost" onclick="obReset()">처음부터 다시</button></div></div>`;
   }
   el.scrollTop=0;
+  obMarkers();
+}
+/* STEP 전환 시 현재 STEP 요소에 설명 마커(파란 번호)를 얹는다 — 라이브 데모라 액션마다 갱신 */
+function obMarkers(){
+  const sc=document.getElementById('obScroll'); if(!sc) return;
+  sc.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,n,ty='-7px',lx='-7px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk b'; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  if(ob.step===0){                                   // STEP 1 — 카테고리 노출·정렬
+    put(sc.querySelector('.selgrid'),'1','2px','2px');       // 01 전체 카테고리 노출
+    const s=sc.querySelectorAll('.obsort button');
+    put(s[0],'2'); put(s[1],'3');                            // 02 가나다순 · 03 많이 찾는 순
+  } else if(ob.step===1){                            // STEP 2 — 세부 시술
+    put(sc.querySelector('.selgroups'),'4','2px','2px');     // 04 세부 시술 = /menu 동일
+  } else if(ob.step===2){                            // STEP 3 — 관심 지역
+    put(sc.querySelector('.selgrid'),'1','2px','2px');       // 01 관심 지역 복수 선택
+    put(sc.querySelector('.geo')||sc.querySelector('.locsearchbox'),'2');  // 02 현재 위치
+    put(sc.querySelector('.loclbl'),'3','-10px','-10px');     // 03 인기 상권
+    put(sc.querySelector('.locsearchbtn'),'4');              // 04 지역·지하철역 검색
+  }
 }
 function obPick(k,v){const s=ob[k]; s.has(v)?s.delete(v):s.add(v); obRender();}
 function obPickKey(k){ob.detail.has(k)?ob.detail.delete(k):ob.detail.add(k); obRender();}
