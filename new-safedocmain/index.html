@@ -154,7 +154,8 @@
   .rail::-webkit-scrollbar{height:0}
   .pcard{flex:0 0 132px;background:#fff;border:1px solid var(--line);border-radius:14px;
     overflow:hidden;}
-  .pcard .ph{height:76px;background:linear-gradient(135deg,#DCE6FF,#EEF3FF);position:relative;}
+  .pcard .ph{height:76px;background:linear-gradient(135deg,#DCE6FF,#EEF3FF);position:relative;overflow:hidden;}
+  .pcard .ph img{width:100%;height:100%;object-fit:cover;object-position:88% center;display:block;}
   .pcard .ph .disc{position:absolute;left:8px;top:8px;background:var(--coral);color:#fff;
     font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;}
   .pcard .b{padding:9px 10px 11px;}
@@ -1198,10 +1199,10 @@ const depts = [
   {n:'모발이식',ic:'hair',img:'assets/dept-hair.png'},{n:'비만/체형',ic:'body',img:'assets/dept-body.png'},{n:'전체',ic:'grid'}
 ];
 const perso = [
-  {nm:'보톡스 이마 100U',price:'9,900원',was:'39,000원',disc:'74%',rv:'★4.9 (1,284)'},
-  {nm:'물광주사 3cc',price:'59,000원',was:'120,000원',disc:'50%',rv:'★4.8 (860)'},
-  {nm:'리쥬란 힐러 2cc',price:'149,000원',was:'220,000원',disc:'32%',rv:'★4.9 (512)'},
-  {nm:'스마일라식',price:'1,490,000원',was:'',disc:'',rv:'★4.9 (2,010)'}
+  {nm:'보톡스 이마 100U',price:'9,900원',was:'39,000원',disc:'74%',rv:'★4.9 (1,284)',img:'https://assets.safedoc.io/hospital/images/366df582-6e8a-4faa-b1df-eaca91792950.jpg'},
+  {nm:'물광주사 3cc',price:'59,000원',was:'120,000원',disc:'50%',rv:'★4.8 (860)',img:'https://assets.safedoc.io/ad-banner/3f5d96a1-a1dc-4535-b37a-be7a32c394aa.jpg'},
+  {nm:'리쥬란 힐러 2cc',price:'149,000원',was:'220,000원',disc:'32%',rv:'★4.9 (512)',img:'https://assets.safedoc.io/hospital/images/87a8d656-8827-48f7-8d69-ddb7738d4a85.jpg'},
+  {nm:'스마일라식',price:'1,490,000원',was:'',disc:'',rv:'★4.9 (2,010)',img:'assets/ad1.jpg'}
 ];
 /* 맞춤 추천 '더보기' 전체 목록 (관심 진료과·최근 본 시술 기반 개인화) */
 const persoAll = [
@@ -1511,7 +1512,7 @@ function newHosGrid(){
 }
 function persoRail(){
   return perso.map(p=>`<div class="pcard">
-    <div class="ph">${p.disc?`<span class="disc">${p.disc}</span>`:''}</div>
+    <div class="ph">${p.img?`<img src="${p.img}" alt="${p.nm}" loading="lazy">`:''}${p.disc?`<span class="disc">${p.disc}</span>`:''}</div>
     <div class="b"><div class="nm">${p.nm}</div>
       <div class="price">${p.price}${p.was?`<s>${p.was}</s>`:''}</div>
       <div class="rv">${p.rv}</div></div></div>`).join('');
@@ -2443,7 +2444,7 @@ function renderAdApp(){
       <div class="wa-sech">진료과 <b>바로가기</b><span class="wa-tag hot">활동 1위</span></div>
       <div class="wa-depts rank">${depts.map(d=>`<div class="wa-d"><i>${d.img?`<img src="${d.img}" alt="${d.n}">`:I[d.ic]}</i>${d.n}${d.rk?`<span class="wa-rk">▲${d.rk}</span>`:''}</div>`).join('')}</div>
       <div class="wa-sech">재원님 <b>맞춤 추천</b><span class="wa-tag">온보딩 관심정보</span></div>
-      <div class="wa-cards">${perso.slice(0,4).map(p=>`<div class="wa-c"><div class="wa-c-th" style="position:relative;background:linear-gradient(135deg,#DCE6FF,#EEF3FF)">${p.disc?`<span class="wa-disc">${p.disc}</span>`:''}</div><div class="wa-c-nm">${p.nm}</div><div class="wa-c-pr">${p.price}${p.was?` <s>${p.was}</s>`:''}</div><div class="wa-c-hos">${p.rv}</div></div>`).join('')}</div>`;
+      <div class="wa-cards">${perso.slice(0,4).map(p=>`<div class="wa-c"><div class="wa-c-th" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#DCE6FF,#EEF3FF)">${p.img?`<img src="${p.img}" alt="${p.nm}" style="width:100%;height:100%;object-fit:cover;object-position:88% center;display:block">`:''}${p.disc?`<span class="wa-disc">${p.disc}</span>`:''}</div><div class="wa-c-nm">${p.nm}</div><div class="wa-c-pr">${p.price}${p.was?` <s>${p.was}</s>`:''}</div><div class="wa-c-hos">${p.rv}</div></div>`).join('')}</div>`;
   }
   el.innerHTML=`<div class="wa-notch"></div><div class="wa-inner">${inner}</div>${waTabbar()}`;
 }
