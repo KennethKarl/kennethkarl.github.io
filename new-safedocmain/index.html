@@ -503,7 +503,7 @@
     font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35);font-family:inherit;}
   .pmk.r{background:#ff3b30;} .pmk.o{background:#F5A623;} .pmk.g{background:#8A94A6;} .pmk.b{background:#1B59FA;}
   /* 온보딩·예약 설명 번호도 개선 메인처럼 빨강(폰 마커와 매칭) */
-  #v-onboard .spec .sc-n, #v-reserve .spec .sc-n{background:#ff3b30;color:#fff;}
+  #v-onboard .spec .sc-n, #v-reserve .spec .sc-n, #searchSpec .spec .sc-n{background:#ff3b30;color:#fff;}
   .spec .sc-b{flex:1;min-width:0;}
   .spec .sc-b b{font-size:13.5px;font-weight:800;color:var(--ink);}
   .spec .sc-b p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55;}
@@ -1319,6 +1319,19 @@ function openSearch(kw){
   const sp=document.getElementById('searchSpec'), mc=document.getElementById('mainCap'), df=document.getElementById('diffSpec');
   if(sp) sp.hidden=false; if(mc) mc.style.display='none'; if(df) df.hidden=true;
   const inp=o.querySelector('input'); if(inp) inp.focus();
+  searchMarkers(o);
+}
+/* 검색 화면 마커 — 설명 '검색 화면(01~04)'과 1:1 (개선 메인식 빨간 마커) */
+function searchMarkers(root){
+  if(!root) return;
+  root.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,n,ty='-7px',lx='-7px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk r'; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  const reco=[...root.querySelectorAll('.ss-body .lbl')].find(l=>l.textContent.includes('맞춤 추천'));
+  put(reco,'01','-11px','-6px');                                 // 01 신규 영역 위치
+  put(reco?reco.querySelector('.lbl-sub'):null,'02','-11px','-11px'); // 02 지역·관심 진료과 개인화
+  put(root.querySelector('.ptabs .pt'),'03','-6px','-6px');      // 03 진료과 탭 구성(첫 탭 코너)
+  put(root.querySelector('.pbody'),'04','2px','2px');            // 04 기대 효과(맞춤 시술 즉시 제안)
 }
 /* 시술리스트 검색바 → plOvl (같은 검색 화면) */
 function plOpenSearch(kw){
