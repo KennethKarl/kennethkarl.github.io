@@ -870,7 +870,7 @@
   .rl-pm{min-width:0;} .rl-hos{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .rl-nm{font-size:14.5px;font-weight:800;color:#111;margin-top:3px;}
   .rl-info{padding:11px 0;border-bottom:1px solid var(--line);}
   .rl-row{display:flex;gap:12px;font-size:12.5px;padding:3px 0;align-items:center;} .rl-row>span{color:var(--muted);width:88px;flex:none;} .rl-row b{color:#111;font-weight:700;} .rl-row b em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--blue-700);background:var(--blue-50);border-radius:5px;padding:1px 6px;margin-left:5px;}
-  .rl-chg{margin-left:8px;font-size:10.5px;font-weight:800;color:#06A42D;background:#E7F7EC;border-radius:5px;padding:2px 6px;}
+  .rl-row>.rl-chg{margin-left:8px;width:auto;flex:none;font-size:10.5px;font-weight:800;color:#B54708;background:var(--warn-50);border-radius:5px;padding:2px 6px;}
   .rl-pay{padding:11px 0 2px;} .rl-pr{display:flex;justify-content:space-between;font-size:12.5px;color:#38465e;padding:4px 0;} .rl-pr span:last-child{font-weight:700;color:#111;font-variant-numeric:tabular-nums;} .rl-pr.red span:last-child{color:#E23B40;} .rl-pr.total{border-top:1px solid var(--line);margin-top:6px;padding-top:9px;font-weight:800;} .rl-pr.total span:last-child{font-size:15px;}
   .rl-review{width:100%;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:800;font-size:13px;border-radius:10px;padding:12px;cursor:pointer;margin-top:12px;}
   .re-changed{margin-top:10px;font-size:12px;font-weight:700;color:#06A42D;background:#E7F7EC;border-radius:9px;padding:9px 11px;}
@@ -1157,7 +1157,7 @@
         </div>
         <div class="spec-try"><div class="try-h">▶ 직접 해보기</div>
           <ol>
-            <li>TO-BE <b>‘예약 변경하기’</b> → 새 날짜·시간 선택 → <b>변경하기</b> (내원 희망 일시 갱신)</li>
+            <li>TO-BE <b>‘예약 변경하기’</b> → 새 날짜·시간 선택 → <b>변경 신청하기</b> → <b>‘병원 확인 중’</b> 표시(병원 확인 후 일시 반영)</li>
             <li>AS-IS <b>‘예약 취소하기’</b> → 취소 사유(일정 변경)뿐 — 취소만 가능</li>
             <li>TO-BE <b>‘예약 취소하기’</b> → <b>‘예약 변경으로 처리’</b> 제안 확인</li>
           </ol></div>
@@ -2563,7 +2563,7 @@ function reCard(mode, r, i){
   return `<div class="rl-card">
     <div class="rl-top"><span class="rl-badge ${r.status}">${badge}</span>${acts}</div>
     <div class="rl-prod"><div class="rl-th" style="background:${r.thumb}"></div><div class="rl-pm"><div class="rl-hos">${r.hos}</div><div class="rl-nm">${r.nm}</div></div></div>
-    <div class="rl-info"><div class="rl-row"><span>진료 대상</span><b>♂ 최재원 <em>본인</em></b></div><div class="rl-row"><span>내원 희망 일시</span><b>${reWhen(r)}</b>${r.changed?'<span class="rl-chg">변경됨</span>':''}</div></div>
+    <div class="rl-info"><div class="rl-row"><span>진료 대상</span><b>♂ 최재원 <em>본인</em></b></div><div class="rl-row"><span>내원 희망 일시</span><b>${reWhen(r)}</b>${r.changed?'<span class="rl-chg">병원 확인 중</span>':''}</div></div>
     ${pay}${foot}</div>`;
 }
 function renderResEditAsis(){ const el=document.getElementById('reAsisScroll'); if(!el) return; el.innerHTML=reListHead()+`<div class="rl-list">${reList.map((r,i)=>reCard('asis',r,i)).join('')}</div>`; el.scrollTop=0; }
@@ -2624,7 +2624,7 @@ function reOpenChange(i){
   o.innerHTML=`<div class="subscreen">
     <div class="sub-head"><button class="bk" onclick="reCloseOvl('tobe')" aria-label="뒤로">${I.back}</button><div class="ttl">예약 변경</div></div>
     <div class="sub-body">${reChangeForm()}</div>
-    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">변경 완료하기</button></div></div>`;
+    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">변경 신청하기</button></div></div>`;
   o.hidden=false;
 }
 function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
