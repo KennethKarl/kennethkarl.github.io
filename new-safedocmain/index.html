@@ -865,6 +865,7 @@
   .rl-acts{display:flex;gap:6px;}
   .rl-mini{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-family:inherit;font-size:11.5px;font-weight:700;color:#5A6A82;cursor:pointer;white-space:nowrap;} .rl-mini.blue{border-color:var(--blue);color:var(--blue);background:var(--blue-50);} .rl-mini:disabled{color:#B7BEC9;background:#F1F4F9;border-color:transparent;cursor:not-allowed;}
   .rl-locked{margin-top:12px;font-size:11.5px;color:#8A6a3a;background:var(--warn-50);border-radius:9px;padding:10px 12px;line-height:1.5;} .rl-locked b{color:#B54708;}
+  .re-approve-note{margin:0 0 10px;font-size:11.5px;line-height:1.55;color:#8A6a3a;background:var(--warn-50);border-radius:10px;padding:10px 12px;} .re-approve-note b{color:#B54708;}
   .rl-prod{display:flex;gap:11px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);}
   .rl-th{width:48px;height:48px;border-radius:10px;flex:none;}
   .rl-pm{min-width:0;} .rl-hos{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .rl-nm{font-size:14.5px;font-weight:800;color:#111;margin-top:3px;}
@@ -1152,6 +1153,7 @@
         <div class="spec">
           <div class="sc"><div class="sc-n g">01</div><div class="sc-b"><b>AS-IS = 예약 취소만</b><p>현행 <b>마이 › 예약 내역</b>에서는 <b>예약 취소하기</b>만 제공됩니다. 일정이 바뀌면 <b>취소 후 재예약</b>해야 해 이탈이 발생합니다.</p></div></div>
           <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>TO-BE = 예약 변경하기 신설</b><p>기존 취소 기능은 그대로 두고, <b>‘예약 변경하기’</b>를 추가해 <b>일시(날짜·시간)·진료 대상·병원 전달사항·추가 상담 희망 시술·쿠폰</b>을 <b>취소 없이 한 화면에서 수정</b>합니다. 단, <b>예약대기 상태만</b> 변경 가능 — <b>예약확정·예약완료는 변경 불가</b>.</p></div></div>
+          <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>변경은 병원 승인 후 확정 <span class="sc-tag add">승인 플로우</span></b><p><b>‘변경 신청하기’</b>를 누르면 즉시 확정이 아니라 <b>병원 관리자에 변경 요청 상태값으로 전달</b>됩니다. 예약은 <b>‘병원 확인 중’</b>으로 표시되고, <b>병원에서 확인·승인하면 그때 예약이 변경</b>됩니다.</p></div></div>
           <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>취소 사유 = 일정 변경 대응 <span class="sc-tag keep">취소 플로우</span></b><p>취소 사유 대다수가 <b>일정 변경</b>인 점을 반영 — 취소 플로우(‘예약 취소하기’ 진입) 안에서 <b>‘변경으로 처리’</b>를 제안해 불필요한 취소·재예약을 막습니다. <b>화면 위 별도 마커는 없습니다</b>(취소 시트 내부 동작).</p></div></div>
           <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>기대 효과 <span class="sc-tag keep">효과</span></b><p>일정 변경 이탈을 <em>예약 유지</em>로 전환 — 예약 취소율↓, 실내원 전환율↑. (측정 지표 · 화면 마커 없음)</p></div></div>
         </div>
@@ -2624,7 +2626,7 @@ function reOpenChange(i){
   o.innerHTML=`<div class="subscreen">
     <div class="sub-head"><button class="bk" onclick="reCloseOvl('tobe')" aria-label="뒤로">${I.back}</button><div class="ttl">예약 변경</div></div>
     <div class="sub-body">${reChangeForm()}</div>
-    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">변경 신청하기</button></div></div>`;
+    <div class="ob-foot"><p class="re-approve-note">🔒 <b>변경 신청하기</b>를 누르면 병원 관리자에게 변경 요청이 전달돼 <b>‘병원 확인 중’</b>으로 표시되며, <b>병원 확인·승인 후 예약이 변경</b>됩니다.</p><button class="cta" onclick="reApplyChange()">변경 신청하기</button></div></div>`;
   o.hidden=false;
 }
 function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
