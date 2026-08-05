@@ -865,7 +865,6 @@
   .rl-acts{display:flex;gap:6px;}
   .rl-mini{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-family:inherit;font-size:11.5px;font-weight:700;color:#5A6A82;cursor:pointer;white-space:nowrap;} .rl-mini.blue{border-color:var(--blue);color:var(--blue);background:var(--blue-50);} .rl-mini:disabled{color:#B7BEC9;background:#F1F4F9;border-color:transparent;cursor:not-allowed;}
   .rl-locked{margin-top:12px;font-size:11.5px;color:#8A6a3a;background:var(--warn-50);border-radius:9px;padding:10px 12px;line-height:1.5;} .rl-locked b{color:#B54708;}
-  .re-approve-note{margin:0 0 10px;font-size:11.5px;line-height:1.55;color:#8A6a3a;background:var(--warn-50);border-radius:10px;padding:10px 12px;} .re-approve-note b{color:#B54708;}
   .rl-prod{display:flex;gap:11px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);}
   .rl-th{width:48px;height:48px;border-radius:10px;flex:none;}
   .rl-pm{min-width:0;} .rl-hos{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .rl-nm{font-size:14.5px;font-weight:800;color:#111;margin-top:3px;}
@@ -2626,8 +2625,18 @@ function reOpenChange(i){
   o.innerHTML=`<div class="subscreen">
     <div class="sub-head"><button class="bk" onclick="reCloseOvl('tobe')" aria-label="뒤로">${I.back}</button><div class="ttl">예약 변경</div></div>
     <div class="sub-body">${reChangeForm()}</div>
-    <div class="ob-foot"><p class="re-approve-note">🔒 <b>변경 신청하기</b>를 누르면 병원 관리자에게 변경 요청이 전달돼 <b>‘병원 확인 중’</b>으로 표시되며, <b>병원 확인·승인 후 예약이 변경</b>됩니다.</p><button class="cta" onclick="reApplyChange()">변경 신청하기</button></div></div>`;
+    <div class="ob-foot"><button class="cta" onclick="reApplyChange()">변경 신청하기</button></div></div>`;
   o.hidden=false;
+  reFormMarkers();
+}
+/* 예약 변경 폼 마커 — 03(변경 신청=병원 승인 후 확정)과 매칭 */
+function reFormMarkers(){
+  const o=document.getElementById('reOvl'); if(!o) return;
+  o.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const cta=o.querySelector('.ob-foot .cta'); if(!cta) return;
+  if(getComputedStyle(cta).position==='static') cta.style.position='relative';
+  const m=document.createElement('div'); m.className='pmk r'; m.textContent='3';
+  m.style.top='-9px'; m.style.left='-9px'; cta.appendChild(m);
 }
 function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
 function reSetNewTime(t){ reNewTime=t; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
