@@ -287,6 +287,37 @@
   .summ .row .lb{color:var(--muted);}
   .summ .row .vl{font-weight:700;text-align:right;color:var(--ink);}
 
+  /* 홈 최초 진입 설정 시트 (온보딩 STEP 플로우를 홈 위에 재사용) */
+  .homeSetup{background:#F7F9FD;}
+  .homeSetup .hs-top{display:flex;align-items:center;justify-content:space-between;
+    padding:38px 18px 2px;background:#fff;}
+  .homeSetup .hs-lead{display:inline-flex;align-items:center;gap:8px;}
+  .homeSetup .hs-mk{position:static;}
+  .homeSetup .hs-tag{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.01em;}
+  .homeSetup .hs-skip{background:none;border:0;font-family:inherit;font-size:13px;font-weight:700;
+    color:var(--faint);cursor:pointer;padding:6px 2px;}
+  .homeSetup .hs-skip:hover{color:var(--muted);}
+  .homeSetup .steps{padding:12px 16px 4px;}
+  #homeSetupScroll{display:flex;flex-direction:column;}
+  /* 홈: 저장 관심정보 없음 안내 배너 */
+  .setup-banner{display:flex;align-items:center;gap:11px;margin:2px 0 2px;padding:13px 14px;
+    background:linear-gradient(180deg,#F1F6FF,#fff);border:1.4px solid var(--blue-100);
+    border-radius:14px;cursor:pointer;transition:.16s;}
+  .setup-banner:hover{border-color:var(--blue);box-shadow:0 8px 20px -14px rgba(31,99,255,.6);}
+  .setup-banner .sb-ic{width:34px;height:34px;flex:none;border-radius:10px;background:var(--blue-50);
+    display:grid;place-items:center;color:var(--blue);}
+  .setup-banner .sb-ic svg{width:19px;height:19px;}
+  .setup-banner .sb-tx{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .setup-banner .sb-tx b{font-size:13.5px;font-weight:800;color:var(--ink);}
+  .setup-banner .sb-tx small{font-size:11.5px;color:var(--muted);}
+  .setup-banner .sb-go{flex:none;font-size:12.5px;font-weight:800;color:var(--blue);
+    background:var(--blue-50);border-radius:999px;padding:6px 11px;}
+  /* 데모 리플레이 버튼 (설명 패널) */
+  .demo-reset{display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;padding:9px 13px;
+    background:#fff;border:1.4px dashed var(--blue-100);border-radius:11px;font-family:inherit;
+    font-size:12.5px;font-weight:700;color:var(--blue-700);cursor:pointer;transition:.16s;}
+  .demo-reset:hover{border-style:solid;border-color:var(--blue);background:var(--blue-50);}
+
   /* rationale */
   .rat{max-width:960px;margin:0 auto;}
   .rat .lead{text-align:center;color:var(--muted);font-size:14px;max-width:600px;margin:0 auto 24px;}
@@ -953,7 +984,7 @@
 
   <div class="seg" role="tablist" aria-label="데모 화면 전환">
     <button role="tab" aria-selected="false" data-view="signup">회원가입</button>
-    <button role="tab" aria-selected="false" data-view="onboard">가입 온보딩</button>
+    <button role="tab" aria-selected="false" data-view="onboard">관심정보 설정</button>
     <button role="tab" aria-selected="true" data-view="main">개선 메인</button>
     <button role="tab" aria-selected="false" data-view="proclist">시술리스트</button>
     <button role="tab" aria-selected="false" data-view="detail">시술 상세</button>
@@ -986,6 +1017,7 @@
         <div class="obspec" id="diffSpec">
           <div class="spec-h">실제 메인(welfaremall.stage) 대비 변경점</div>
           <div class="spec">
+            <div class="sc"><div class="sc-n r">0</div><div class="sc-b"><b>관심정보 설정 = 홈 최초 진입 시 진행 <span class="df-tag add">신설</span></b><p><b>홈에 처음 왔을 때 저장된 관심정보(진료과·지역)가 없으면</b> 그 자리에서 설정 시트를 띄웁니다(<b>「관심정보 설정」 탭</b>에서 플로우 확인). 설정을 마치면 이 개선 메인이 관심 진료과·지역 기반으로 개인화됩니다.</p></div></div>
             <div class="sc"><div class="sc-n r">1</div><div class="sc-b"><b>관심 지역 선택 신설 <span class="df-tag add">추가</span></b><p><b>지역 지정(최대 3곳)</b>을 상단에 신설. 선택 지역 기준으로 추천·특가를 우선 노출합니다.</p></div></div>
             <div class="sc"><div class="sc-n r">2</div><div class="sc-b"><b>검색바 최상단 + 탑바 검색 버튼 <span class="df-tag add">추가</span></b><p>실제는 배너·프로모 아이콘에 밀려 검색이 하단에 묻힘 → <b>검색바를 최상단</b>에 두고, 스크롤로 검색바가 사라지면 <b>고정 탑바에 검색 버튼</b>이 다시 노출됩니다. 어느 위치에서든 즉시 검색 진입.</p></div></div>
             <div class="sc"><div class="sc-n r">3</div><div class="sc-b"><b>개인화 추천 영역 신설 <span class="df-tag add">추가</span></b><p>실제엔 없는 <b>‘재원님 맞춤 추천’</b>(관심 진료과·최근 본 시술 기반) + <b>‘요즘 인기 시술 바로 검색’ 칩</b>(비슷한 사용자 인기 시술을 눌러 바로 검색)을 상단에 배치.</p></div></div>
@@ -1188,7 +1220,11 @@
       </div>
       <div class="obspec">
         <div class="rat-mount" data-rat="1"></div>
-        <div class="spec-h">카테고리 노출 &amp; 정렬 로직</div>
+        <div class="spec-h">언제 나타나나 — 홈 최초 진입 시</div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n">★</div><div class="sc-b"><b>가입 단계가 아닌 ‘홈 최초 진입’ 시 진행 <span class="df-tag add">변경</span></b><p><b>홈에 처음 왔을 때 저장된 관심정보(진료과·지역)가 없으면</b> 아래 STEP을 <b>홈 위 시트</b>로 띄웁니다. 아래는 그 설정 플로우입니다.</p></div></div>
+        </div>
+        <div class="spec-h" style="margin-top:22px">카테고리 노출 &amp; 정렬 로직</div>
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>전체 카테고리 노출</b><p><a href="https://safedoc.io/menu" target="_blank" rel="noopener">safedoc.io/menu</a>의 진료과 <b>17종 전부</b>를 STEP 1에 노출합니다.</p></div></div>
           <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>1차 정렬 · 가나다순</b><p>신규 유저는 탐색 기준이 없으므로, 카테고리를 <b>이름 가나다순</b>으로 예측 가능하게 정렬해 노출합니다. <span class="now-badge">현재 기본</span></p></div></div>
@@ -1630,13 +1666,17 @@ function renderTOBE(){
       </div>
     </div>
     <div class="search" role="button" tabindex="0" onclick="openSearch()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSearch();}">${I.search}<span>어떤 시술을 찾으세요?</span></div>
+    ${profileReady?'':`<div class="setup-banner" role="button" tabindex="0" onclick="openHomeSetup()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSetup();}">
+      <span class="sb-ic">${I.pin}</span>
+      <span class="sb-tx"><b>관심 진료과·지역을 설정해 주세요</b><small>저장된 정보가 없어요 · 설정하면 첫 화면부터 맞춤 추천</small></span>
+      <span class="sb-go">설정 ›</span></div>`}
     <div class="sec"><div class="sec-h"><h3>진료과 <b>바로가기</b><span class="tag hot">활동 1위</span></h3></div>
       ${deptGrid(true)}</div>
-    <div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">온보딩 관심정보</span></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openPersoMore()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPersoMore();}">더보기 ›</span></div>
-      <div class="perso"><div class="who"><span class="av">재</span><div><b>30대 · 피부과 관심</b></div></div>
+    ${profileReady?`<div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">관심정보 기반</span></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openPersoMore()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPersoMore();}">더보기 ›</span></div>
+      <div class="perso"><div class="who"><span class="av">재</span><div><b>30대 · ${([...(ob.dept||[])].slice(0,2).join('·'))||'피부과'} 관심</b></div></div>
         <div class="rail">${persoRail()}</div></div></div>
     <div class="sec"><div class="sec-h"><h3>재원님이 <b>최근 본 시술</b></h3></div>
-      <div class="rrail">${recentCards()}</div></div>
+      <div class="rrail">${recentCards()}</div></div>`:''}
     <div class="sec"><div class="sec-h"><h3>이번 주 <b>핵심 특가</b></h3></div>
       <div class="rail">
         <div class="deal"><small>7월 한정 특가</small><h4>보톡스 100U · 9,900원</h4><p>선착순 · 오늘 예약 가능</p><span class="pill">예약하기</span></div>
@@ -2076,6 +2116,10 @@ function deptIcon(n){return I[deptIconMap[n]]||I.cross;}
 const obRegion=['강남·강남역','서초·교대','잠실·송파','홍대·신촌','판교·분당','수원·영통','부산 서면','대구 동성로'];
 let obSort='ganada'; // 'ganada'(현재 기본) | 'popular'(추후 검색량 기반 재정렬)
 let ob={step:0, dept:new Set(), detail:new Set(), region:new Set()};
+/* 관심정보 설정을 어디에 렌더할지 · 홈 저장정보 존재 여부 */
+let obHost='onboard';     // 'onboard'(참고용 탭) | 'home'(홈 최초 진입 오버레이)
+let profileReady=true;    // 개선 메인은 항상 메인 화면만 표시(설정 시트 자동 노출 안 함)
+let setupDismissed=false;
 /* STEP 3 관심 지역 — A(하이브리드) / B(검색우선) 두 방식 데모 */
 let obLoc='A';        // 'A' 하이브리드 | 'B' 검색우선
 let obSearchOn=false; // A에서 검색 서브뷰 열림 여부
@@ -2093,9 +2137,11 @@ function obDeptList(){const a=obDeptData.slice(); if(obSort==='ganada') a.sort((
 function obSetSort(s){obSort=s; obRender();}
 
 function obRender(){
-  const S=document.querySelectorAll('#v-onboard .steps .s');
+  const home = obHost==='home';
+  const S=document.querySelectorAll(home?'#homeSetup .steps .s':'#v-onboard .steps .s');
   S.forEach((s,i)=>s.className='s'+(i<=ob.step?' on':''));
-  const el=document.getElementById('obScroll');
+  const el=document.getElementById(home?'homeSetupScroll':'obScroll');
+  if(!el) return;
   if(ob.step===0){
     const list=obDeptList();
     el.innerHTML=`<div class="ob-h"><div class="k">STEP 1 / 3</div><h2>어떤 진료에<br>관심이 있으세요?</h2><p>관심 진료과 위주로 홈을 구성해 드려요. (복수 선택)</p>
@@ -2142,7 +2188,7 @@ function obRender(){
         <div class="row"><span class="lb">관심 시술</span><span class="vl">${detNames.join(', ')||'-'}</span></div>
         <div class="row"><span class="lb">관심 지역</span><span class="vl">${[...ob.region].join(', ')||'-'}</span></div>
       </div>
-      <div class="ob-foot" style="padding-top:22px"><button class="cta" onclick="goMain()">개인화된 홈 보기 →</button>
+      <div class="ob-foot" style="padding-top:22px"><button class="cta" onclick="obCommit()">개인화된 홈 보기 →</button>
         <button class="cta ghost" onclick="obReset()">처음부터 다시</button></div></div>`;
   }
   el.scrollTop=0;
@@ -2173,6 +2219,41 @@ function obNext(){ob.step++; obRender();}
 function obPrev(){ob.step--; obRender();}
 function obReset(){obSort='ganada'; obLoc='A'; obSearchOn=false; obQuery=''; obGeoArea=''; ob={step:0,dept:new Set(),detail:new Set(),region:new Set()}; obRender();}
 function goMain(){switchView('main');}
+
+/* ---------- 관심정보 설정: 홈 최초 진입 시(저장정보 없을 때) ---------- */
+/* 설정 완료 → 관심정보 저장(profileReady) 후 맞춤 홈으로 전환 */
+function obCommit(){
+  profileReady=true; setupDismissed=false;
+  const regs=[...ob.region].filter(r=>r!=='전국·어디든');
+  mainRegions=(regs.length?regs:['강남·압구정']).slice(0,3);
+  const wasHome=(obHost==='home');
+  obHost='onboard';
+  const o=ovl(); if(o){o.hidden=true; o.innerHTML='';}
+  renderMain();
+  if(!wasHome) switchView('main');
+}
+/* 홈 위에 설정 시트를 띄운다 (온보딩 STEP 플로우 재사용) */
+function openHomeSetup(){
+  obHost='home';
+  obSort='ganada'; obLoc='A'; obSearchOn=false; obQuery=''; obGeoArea='';
+  ob={step:0, dept:new Set(), detail:new Set(), region:new Set()};
+  const o=ovl();
+  o.innerHTML=`<div class="subscreen homeSetup" id="homeSetup">
+    <div class="hs-top"><span class="hs-lead"><span class="pmk r hs-mk">0</span><span class="hs-tag">맞춤 홈 설정 · 최초 1회</span></span></div>
+    <div class="steps"><span class="s on"></span><span class="s"></span><span class="s"></span></div>
+    <div class="scroll" id="homeSetupScroll"></div>
+  </div>`;
+  o.hidden=false;
+  obRender();
+}
+function closeHomeSetup(){ obHost='onboard'; const o=ovl(); if(o){o.hidden=true; o.innerHTML='';} }
+function homeSetupSkip(){ setupDismissed=true; closeHomeSetup(); renderMain(); }
+/* 데모 리플레이 — 저장정보 없는 신규 사용자 상태로 되돌림 */
+function resetProfileDemo(){
+  profileReady=false; setupDismissed=false; mainRegions=[];
+  ob={step:0, dept:new Set(), detail:new Set(), region:new Set()};
+  renderMain();
+}
 
 /* ---------- STEP 3 관심 지역: A 하이브리드 / B 검색우선 ---------- */
 function step3FootHTML(){
@@ -2225,12 +2306,12 @@ const rat=[
       '<b>소속(회사) 이메일 인증</b>으로 복지 혜택가 자격 확인.',
       '가입 완료 직후 <b>관심정보 온보딩</b>으로 자연스럽게 연결.'],
     src:'회원가입 실제 플로우 스크린샷 walkthrough(12단계)'},
-  {tab:'② 가입 온보딩',t:'관심정보 수집 + 관심 지역 저장으로 개인화',
+  {tab:'② 관심정보 설정',t:'가입에서 분리 → 홈 최초 진입 시 관심정보 수집',
     pts:[
-      '<b>진료과 → 세부 시술 → 관심 지역</b> 순으로 관심 정보를 수집 → <b>첫 홈부터 개인화 추천</b> 노출.',
-      '관심 지역을 <b>미리 저장</b> → 해당 지역 병원을 우선 노출해 <b>사용자 액션 감소·맞춤형 경험</b> 제공.',
-      '병원 VOC <b>‘우리 병원은 어디서 찾나요?’</b> 대응 — 방문 예정 지역 병원을 <b>리스트를 한참 내리지 않고 빠르게 확인</b>.'],
-    src:'아이디어 「온보딩 정보 획득」 · 병원 VOC(지역 병원 탐색) 대응'},
+      '<b>홈에 처음 왔을 때 저장된 관심정보가 없으면</b> 그 자리에서 설정 시트를 띄웁니다.',
+      '<b>진료과 → 세부 시술 → 관심 지역</b> 순서는 동일 → 완료 즉시 <b>맞춤 홈</b>으로 전환.',
+      '<b>홈 최초 진입</b> 시 진행해 가입 이탈을 줄이고, 저장된 관심 지역 기준으로 <b>방문 예정 지역 병원을 우선 노출</b>(병원 VOC 대응).'],
+    src:'아이디어 「온보딩 정보 획득」 · 홈 최초 진입 개인화(저장정보 없을 때)'},
   {tab:'③ 개선 메인',t:'검색·개인화 상단, 저활동 위젯 축소',
     pts:[
       '<b>관심 지역 선택(최대 3곳)</b> 신설 → 추천·특가를 지역 우선 노출.',
@@ -2298,13 +2379,13 @@ const sgSteps=[
   {img:'signup/09.jpg', act:'<em>「이메일 인증하기」</em>', cap:'세이프닥 혜택을 위한 소속 이메일 인증 안내'},
   {img:'signup/10.jpg', act:'회사 이메일 입력 후 <em>「인증하기」</em>', cap:'소속(직장인) 이메일 인증 — choijw@safedoc.io'},
   {img:'signup/11.jpg', act:'메일 확인 후 <em>「인증 완료하기」</em>', cap:'받은 이메일에서 소속 인증 확인'},
-  {img:'signup/12.jpg', act:'<em>「세이프닥 이용하러 가기」</em> → 관심정보 입력', cap:'가입 완료! 이어서 관심 정보를 입력하면 맞춤 홈이 완성돼요', last:true}
+  {img:'signup/12.jpg', act:'<em>「세이프닥 이용하러 가기」</em> → 관심정보 설정', cap:'가입 완료! 이어서 관심정보를 설정하면 맞춤 홈이 완성돼요', last:true}
 ];
 let sg=0;
 function sgRender(){
   const s=sgSteps[sg];
   document.getElementById('sgImg').src=s.img;
-  document.getElementById('sgTap').textContent = s.last?'가입 온보딩으로 →':'다음 →';
+  document.getElementById('sgTap').textContent = s.last?'관심정보 설정으로 →':'다음 →';
   document.getElementById('sgAct').innerHTML = `STEP ${sg+1}. <b>${s.act}</b>`;
   document.getElementById('sgCount').textContent = `${sg+1} / ${sgSteps.length}`;
   document.getElementById('sgPrev').disabled = sg===0;
@@ -2652,6 +2733,8 @@ function switchView(v){
   document.getElementById('v-'+v).classList.add('active');
   document.querySelectorAll('#v-'+v+' .asis-scroll').forEach(e=>e.scrollTop=0);
   if(v==='signup'){ sg=0; sgRender(); }
+  if(v==='onboard'){ obHost='onboard'; obReset(); }   // '관심정보 설정' 탭 = 설정 플로우 참고용(항상 STEP1부터)
+  if(v==='main'){ renderMain(); }                       // 홈 재진입 시 저장정보 유무에 따라 시트/개인화 재평가
   if(v==='proclist'){ plDeptSel=plDefaultDepts(); plTab='시술'; plQuery=''; closeRegionPicker(); plAutoTab(); renderProcList(); }
   if(v==='detail'){ renderDetail(); }
   if(v==='reserve'){ rvReset(); renderReserveAsis(); }
@@ -2667,15 +2750,15 @@ document.addEventListener('keydown',e=>{
 });
 
 /* init */
-renderMain();
+obHost='onboard'; obRender();   // '관심정보 설정' 탭(#obScroll)을 먼저 채운다
 renderProcList();
 renderReserve();
 renderReserveAsis();
 renderResEdit();
 renderResEditAsis();
 renderAd();
-obRender();
 sgRender();
+renderMain();                    // 활성 탭(개선 메인) — 저장정보 없으면 홈 위 설정 시트 open (obHost='home')
 /* AS-IS 현행 화면 캡처는 항상 상단부터 보이도록 고정 (지연로딩·스크롤 앵커 방지) */
 function resetAsisScroll(){ document.querySelectorAll('.asis-scroll').forEach(e=>e.scrollTop=0); }
 resetAsisScroll();
