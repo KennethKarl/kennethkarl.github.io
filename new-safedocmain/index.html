@@ -528,7 +528,7 @@
   .spec .sc-n{flex:none;width:26px;height:26px;border-radius:8px;background:var(--blue-50);color:var(--blue-700);
     font-size:12px;font-weight:800;display:grid;place-items:center;font-variant-numeric:tabular-nums;}
   /* main-plan 마커 색상: 빨강=추가 · 주황=변경 · 회색=제거 */
-  .spec .sc-n.r{background:#ff3b30;color:#fff;} .spec .sc-n.o{background:#F5A623;color:#fff;} .spec .sc-n.g{background:#8A94A6;color:#fff;}
+  .spec .sc-n.r{background:#ff3b30;color:#fff;} .spec .sc-n.o{background:#F5A623;color:#fff;} .spec .sc-n.g{background:#8A94A6;color:#fff;} .spec .sc-n.b{background:#1B59FA;color:#fff;}
   /* 폰 위치 마커 (main-plan 스타일) */
   .pmk{position:absolute;z-index:40;min-width:16px;height:16px;padding:0 2px;border-radius:5px;color:#fff;
     font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35);font-family:inherit;}
@@ -1067,6 +1067,13 @@
           <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>지역 선택 <span class="sc-tag chg">개선</span></b><p>기존 <b>지역 칩</b>을 <b>지역 선택 버튼</b>으로 개선 — 누르면 온보딩식 지역 선택 화면에서 <b>관심 지역을 선택·변경</b>하고 재조회합니다. 관심 지역은 <b>온보딩·메인과 공유</b>됩니다.</p></div></div>
           <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>진료과 선택 추가 <span class="sc-tag add">추가</span></b><p><b>진료과 선택</b> 기능을 신설했습니다 — <b>진료과 버튼(바텀시트)</b>에서 진료과를 고르면 해당 진료과 시술로 필터됩니다. (선택한 진료과는 온보딩 관심정보에 반영)</p></div></div>
           <div class="sc"><div class="sc-n o">04</div><div class="sc-b"><b>필터 · 정렬 아이콘 영역 분리 <span class="sc-tag chg">변경</span></b><p>AS-IS는 <b>정렬(인기순)·지역·진료과·필터 칩</b>이 한 줄에 섞여 가로 스크롤됐습니다. TO-BE는 <b>[지역·진료과·정렬] 셀렉트 영역</b>과 <b>[쿠폰 추가할인·당일할인·특가전·오늘 예약가능] 필터 칩 영역</b>을 <b>별도로 분리</b>했습니다.</p></div></div>
+        </div>
+        <div class="spec-h" style="margin-top:22px">관심 지역 선택 화면 <span class="soon-badge">지역 버튼 → 진입</span></div>
+        <div class="spec">
+          <div class="sc"><div class="sc-n b">1</div><div class="sc-b"><b>관심 지역 복수 선택 (최대 3곳) <span class="sc-tag add">멀티선택</span></b><p>한 번에 <b>최대 3곳</b>까지 관심 지역을 선택할 수 있습니다. 선택한 지역은 <b>온보딩·메인과 공유</b>되어 리스트에 함께 반영됩니다.</p></div></div>
+          <div class="sc"><div class="sc-n b">2</div><div class="sc-b"><b>지역별 시술·병원 수 표시 <span class="sc-tag add">추가</span></b><p>인기 상권을 <b>병원 밀집순</b>으로 정렬하고, 각 지역 카드에 <b>해당 지역에 존재하는 시술·병원 수</b>(예: 시술 10 · 병원 6)를 함께 노출해 어디에 매물이 많은지 한눈에 보여줍니다.</p></div></div>
+          <div class="sc"><div class="sc-n b">3</div><div class="sc-b"><b>현재 위치로 설정</b><p><b>현재 위치</b> 기반으로 내 주변 병원을 먼저 볼 수 있습니다. (위치 권한 기반 자동 매칭)</p></div></div>
+          <div class="sc"><div class="sc-n b">4</div><div class="sc-b"><b>지역·지하철역 직접 검색</b><p>목록에 없는 지역은 <b>지역·지하철역 검색</b>으로 직접 찾아 추가할 수 있습니다.</p></div></div>
         </div>
         <div class="spec-try">
           <div class="try-h">▶ 직접 해보기</div>
@@ -2069,6 +2076,18 @@ function renderPlRegion(){
     <div class="ob-foot"><button class="cta" id="plRegFoot" onclick="plRegionApply()">${mainRegions.length}곳 적용</button></div>
   </div>`;
   o.hidden=false;
+  plRegMarkers();
+}
+/* 관심 지역 화면 마커 — 설명 1~4(멀티선택·시술/병원 수·현재위치·검색)와 매칭 */
+function plRegMarkers(){
+  const o=plRegOvl(); if(!o) return;
+  o.querySelectorAll('.pmk').forEach(m=>m.remove());
+  const put=(el,n,ty='-9px',lx='-9px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
+    const m=document.createElement('div'); m.className='pmk b'; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
+  put(o.querySelector('.rg-max'),'1','-10px','-12px');            // 1 멀티선택(최대 3곳)
+  put(o.querySelector('.selgrid.rg-cnt'),'2','2px','2px');        // 2 지역별 시술·병원 수
+  put(o.querySelector('.geo'),'3');                              // 3 현재 위치로 설정
+  put(o.querySelector('.locsearchbtn'),'4');                     // 4 지역·지하철역 검색
 }
 function plRegToggle(r){
   const i=mainRegions.indexOf(r);
