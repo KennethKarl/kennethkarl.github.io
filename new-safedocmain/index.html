@@ -927,6 +927,16 @@
   .ws-foot{font-size:10px;color:var(--faint);margin-top:14px;line-height:1.6;}
   .ws-sec{font-size:13px;font-weight:800;color:var(--ink);margin:16px 0 8px;letter-spacing:-.02em;} .ws-sec b{color:var(--blue);} .ws-sec .tag{margin-left:4px;}
   .ad-fair.small{padding:13px 14px;margin:0 0 4px;border-radius:14px;} .ad-fair.small .ad-fair-t{font-size:15px;margin:4px 0 2px;} .ad-fair.small .ad-fair-s{font-size:10.5px;} .ad-fair.small .ad-fair-go{font-size:14px;padding:0;background:none;border:0;}
+  .ad-fair.secret{padding:0;background:none;border:0;overflow:visible;margin:0 0 4px;border-radius:14px;}
+  .secret-in{position:relative;overflow:hidden;border-radius:14px;padding:15px 15px 15px 16px;display:flex;align-items:center;gap:8px;background:linear-gradient(120deg,#2A1065 0%,#4C1D95 48%,#6D28D9 100%);}
+  .secret-glow{position:absolute;right:-14px;top:-34px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,#8B5CF6 0%,rgba(139,92,246,0) 70%);opacity:.75;pointer-events:none;}
+  .secret-tx{position:relative;flex:1;min-width:0;}
+  .secret-pill{display:inline-block;font-size:10px;font-weight:800;color:#EDE9FE;background:rgba(0,0,0,.28);border-radius:999px;padding:3px 9px;letter-spacing:-.01em;}
+  .secret-t{font-size:17px;font-weight:800;color:#fff;margin:8px 0 3px;letter-spacing:-.02em;}
+  .secret-t b{background:linear-gradient(90deg,#F5B8FB,#C4B5FD);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .secret-s{font-size:11px;color:#DDD6FE;font-weight:600;letter-spacing:-.01em;}
+  .secret-ill{position:relative;flex:none;width:60px;height:60px;}
+  .secret-ill svg{width:60px;height:60px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));}
   .ad-rank.single{display:block;} .ad-rank.single .ad-rk{padding:8px 0;}
   .ad-spon-note.small{font-size:10.5px;padding:8px 10px;line-height:1.5;}
   .ad-mini{display:flex;gap:9px;align-items:center;padding:9px 0;border-top:1px solid var(--line);position:relative;}
@@ -2693,7 +2703,7 @@ function renderAdSide(){
       <div class="ws-foot">기업 제휴 문의 · 병원 입점 문의 · 원하는 병원 요청하기</div>`;
   } else {
     el.innerHTML=`<div class="ws-label tobe">TO-BE · 개인화 광고·특가 인벤토리</div>
-      <div class="ad-fair small" onclick="switchView('proclist')"><div class="ad-fair-l"><div class="ad-fair-tag">이달의 제휴 특가</div><div class="ad-fair-t">7월 인기 시술 특가전</div><div class="ad-fair-s">직장인·대학생 최저가 혜택</div></div><span class="ad-fair-go">›</span></div>
+      <div class="ad-fair secret" onclick="switchView('proclist')"><div class="secret-in"><div class="secret-glow"></div><div class="secret-tx"><span class="secret-pill">원장님도 놀라버린 가격</span><div class="secret-t">이달의 시크릿 <b>초특가</b></div><div class="secret-s">타사 비교 불가, 플랫폼 최저가 보장!</div></div><div class="secret-ill"><svg viewBox="0 0 72 72" fill="none" aria-hidden="true"><g stroke="#C4B5FD" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><circle cx="16" cy="19" r="6"/><path d="M20 23 L35 38"/><path d="M28 31 l4 4 M32 35 l4 4"/></g><g stroke="#A78BFA" stroke-width="3" stroke-linecap="round" opacity=".55"><circle cx="12" cy="31" r="5"/><path d="M15.5 34.5 L27 46"/></g><path d="M30 34v-5a10 10 0 0 1 20 0v5" stroke="#EDE9FE" stroke-width="4" stroke-linecap="round"/><rect x="26" y="34" width="28" height="24" rx="6" fill="#EDE9FE"/><circle cx="40" cy="45" r="3.4" fill="#6D28D9"/><rect x="38.3" y="47" width="3.4" height="7" rx="1.7" fill="#6D28D9"/></svg></div></div></div>
       <div class="ws-sec">실시간 <b>인기 시술</b> <span class="tag hot">LIVE</span></div>
       <div class="ad-rank single">${adHotRank.map((r,i)=>adRankItem(r,i)).join('')}</div>
       <div class="ws-sec">재원님 <b>맞춤</b> <span class="tag">스폰서</span></div>
