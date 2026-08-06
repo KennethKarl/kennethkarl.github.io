@@ -412,13 +412,17 @@
   .sheet-h .x svg{width:18px;height:18px;}
   .sheet-b{padding:16px 18px 26px;overflow-y:auto;}
   .sheet-note{background:var(--coral-50);color:#E23B40;font-size:12px;font-weight:700;border-radius:10px;padding:10px 13px;margin-bottom:14px;}
-  .allgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .allgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-items:start;}
   .allcat{border:1px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;}
   .allcat:hover,.allcat:focus-visible{border-color:var(--blue);background:var(--blue-50);outline:none;}
   .allcat .ct{font-size:13px;font-weight:800;margin-bottom:9px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;}
-  .allcat .ct-ar{color:var(--blue);font-weight:700;}
+  .allcat .ct-nm{display:flex;align-items:center;gap:6px;min-width:0;}
+  .allcat .ct-ic{width:17px;height:17px;flex:none;display:grid;place-items:center;color:var(--blue);}
+  .allcat .ct-ic svg{width:17px;height:17px;}
+  .allcat .ct-ar{color:var(--blue);font-weight:700;flex:none;}
   .allcat .it{display:flex;flex-wrap:wrap;gap:6px;}
   .allcat .it span{font-size:11.5px;background:var(--blue-50);color:var(--blue-700);border-radius:6px;padding:3px 8px;font-weight:600;}
+  .allcat .it-empty span{background:transparent;color:var(--muted);padding-left:0;}
   .deal-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
   .deal-row:last-child{border-bottom:0;}
   .deal-row .dth{width:56px;height:56px;border-radius:12px;flex:none;background:linear-gradient(135deg,#DCE6FF,#EEF3FF);}
@@ -1357,16 +1361,6 @@ const persoSearch = [
 let pTab=0;
 function persoBody(i){return persoSearch[i].items.map(x=>`<button class="pchip" onclick="runSearch('${x}')">${x}</button>`).join('');}
 function setPTab(i){pTab=i; const b=document.getElementById('pbody'); if(b) b.innerHTML=persoBody(i); document.querySelectorAll('.ptabs .pt').forEach((el,idx)=>el.classList.toggle('on',idx===i));}
-const allProc = [
-  ['피부과',['보톡스','필러','리프팅','물광·스킨부스터','여드름·흉터','제모']],
-  ['성형외과',['눈성형','코성형','안면윤곽','지방이식','실리프팅']],
-  ['안과',['라식','라섹','스마일라식','렌즈삽입술','노안교정']],
-  ['치과',['임플란트','교정','미백','충치치료','라미네이트']],
-  ['건강검진',['종합검진','프리미엄검진','여성검진','내시경','MRI']],
-  ['모발이식',['절개식','비절개식','두피문신']],
-  ['비만/체형',['지방분해주사','체형관리','냉각','인바디']],
-  ['한방',['다이어트 한약','추나요법','침·약침']]
-];
 const deptDeals = {
   '피부과':[{nm:'보톡스 이마 100U',hos:'강남 SW피부과',price:'9,900원',was:'39,000원'},{nm:'물광주사 3cc',hos:'압구정 라비앙',price:'59,000원',was:'120,000원'},{nm:'리쥬란 힐러 2cc',hos:'청담 온의원',price:'149,000원',was:'220,000원'}],
   '성형외과':[{nm:'자연유착 눈매교정',hos:'강남 라인성형외과',price:'990,000원',was:'1,400,000원'},{nm:'실리프팅 20line',hos:'신사 더페이스',price:'390,000원',was:'700,000원'}],
@@ -1446,7 +1440,7 @@ function openAllProcedures(){
     <div class="sheet"><div class="sheet-h"><h3>전체 시술</h3>
       <button class="x" onclick="closeOvl()" aria-label="닫기">${I.x}</button></div>
       <div class="sheet-b"><div class="allgrid">
-        ${allProc.map(([c,items])=>`<div class="allcat" role="button" tabindex="0" onclick="deptClick('${c}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();deptClick('${c}')}"><div class="ct">${c} <span class="ct-ar">›</span></div><div class="it">${items.map(x=>`<span>${x}</span>`).join('')}</div></div>`).join('')}
+        ${obDeptData.map(d=>`<div class="allcat" role="button" tabindex="0" onclick="deptClick('${d.n}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();deptClick('${d.n}')}"><div class="ct"><span class="ct-nm"><span class="ct-ic">${deptIcon(d.n)}</span>${d.n}</span> <span class="ct-ar">›</span></div>${d.t.length?`<div class="it">${d.t.map(x=>`<span>${x}</span>`).join('')}</div>`:'<div class="it it-empty"><span>바로 예약</span></div>'}</div>`).join('')}
       </div></div></div>`;
   o.hidden=false;
 }
