@@ -2554,12 +2554,12 @@ function renderReserveAsis(){
 const reDowNames=['일','월','화','수','목','금','토'];
 function reDow(d){ return reDowNames[(3+d-1)%7]; }
 let reList=[
-  {status:'wait', hos:'(T) 세이프닥치과 동대문점 · 부산2', nm:'포함테스트1', thumb:"url('asis/detail.jpg') 50% 7%/cover", d:28, t:'오후 3:30', normal:'10,000,000원', disc:'- 2,050,000원', total:'7,950,000원', changed:false},
+  {status:'wait', hos:'(T) 세이프닥치과 동대문점 · 부산2', nm:'포함테스트1', thumb:"url('asis/detail.jpg') 50% 7%/cover", d:28, t:'오후 3:30', normal:'10,000,000원', disc:'- 2,050,000원', total:'7,950,000원', changed:true},
   {status:'done', hos:'원데이치과 · 신논현역·강남역', nm:'오스템 BA 임플란트', thumb:'linear-gradient(135deg,#12275F,#2E5BD0)', d:21, t:'오후 3:30', total:'285,000원'},
   {status:'confirmed', hos:'원데이치과 · 신논현역·강남역', nm:'오스템 BA 임플란트', thumb:'linear-gradient(135deg,#1550E0,#4E86FF)', d:16, t:'오후 5:30', normal:'600,000원', disc:'- 200,000원', total:'400,000원'},
   {status:'done', hos:'세이프닥치과 동대문점 · 부산2', nm:'동대문 레이저', thumb:'linear-gradient(135deg,#3E7C4E,#7CB889)', d:9, t:'오후 9:00', total:'361,000원'}
 ];
-const reOrig = reList.map(r=>({d:r.d, t:r.t}));
+const reOrig = reList.map(r=>({d:r.d, t:r.t, changed:!!r.changed}));
 let reEditIdx=-1, reNewDate=28, reNewTime='오후 3:30';
 function reWhen(r){ return `7월 ${r.d}일(${reDow(r.d)}) ${r.t}`; }
 function reListHead(){ return `<div class="rv-head"><button class="rv-back">${I.back}</button><span>나의 예약 관리</span></div>
@@ -2659,7 +2659,7 @@ function reFormMarkers(){
 function reSetNewDate(d){ reNewDate=d; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
 function reSetNewTime(t){ reNewTime=t; const b=document.getElementById('reDtPart'); if(b) b.innerHTML=reDtPart(); }
 function reApplyChange(){ if(reEditIdx>=0){ reList[reEditIdx].d=reNewDate; reList[reEditIdx].t=reNewTime; reList[reEditIdx].changed=true; } reCloseOvl('tobe'); renderResEdit(); }
-function reReset(){ reList.forEach((r,i)=>{ r.d=reOrig[i].d; r.t=reOrig[i].t; r.changed=false; }); reEditIdx=-1; reCloseOvl('asis'); reCloseOvl('tobe'); renderResEdit(); renderResEditAsis(); }
+function reReset(){ reList.forEach((r,i)=>{ r.d=reOrig[i].d; r.t=reOrig[i].t; r.changed=reOrig[i].changed; }); reEditIdx=-1; reCloseOvl('asis'); reCloseOvl('tobe'); renderResEdit(); renderResEditAsis(); }
 
 /* ---------- 광고·특가 인벤토리 (여신티켓 형) ---------- */
 const adHotRank=[
