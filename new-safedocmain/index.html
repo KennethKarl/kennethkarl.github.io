@@ -212,14 +212,19 @@
   .nh-more:hover{border-color:var(--blue);color:var(--blue);}
 
   /* review list */
-  .rev{display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
-  .rev:last-child{border-bottom:0;}
-  .rev .th{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#E7EDFA,#F5F8FE);flex:none;}
-  .rev .m{flex:1;min-width:0;}
-  .rev .m .nm{font-size:13.5px;font-weight:700;}
-  .rev .m .st{font-size:11.5px;color:var(--muted);margin-top:2px;}
-  .rev .m .st .star{color:#FFB020;font-weight:800;}
-  .rev .go{font-size:13px;font-weight:800;color:var(--blue);white-space:nowrap;}
+  .revscroll{display:flex;gap:12px;overflow-x:auto;padding:2px 16px 6px;margin:0 -16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .revscroll::-webkit-scrollbar{display:none;}
+  .rvcard{flex:0 0 78%;max-width:290px;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 16px 15px;cursor:pointer;box-shadow:0 1px 3px rgba(14,23,38,.04);transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;}
+  .rvcard:hover,.rvcard:focus-visible{border-color:var(--blue);box-shadow:0 5px 16px rgba(31,99,255,.10);outline:none;}
+  .rc-stars{display:flex;gap:2px;color:#FFB020;margin-bottom:10px;}
+  .rc-stars svg{width:15px;height:15px;}
+  .rc-tx{font-size:12.8px;line-height:1.5;color:var(--ink);margin:0 0 13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px;}
+  .rc-div{height:1px;background:var(--line);margin:0 0 12px;}
+  .rc-hos{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .rc-av{width:40px;height:40px;border-radius:11px;flex:none;}
+  .rc-hn{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  .rc-hl{font-size:12px;color:var(--faint);margin-top:1px;}
+  .rc-proc{align-self:flex-start;font-size:12px;font-weight:600;color:var(--muted);background:#F1F4F9;border-radius:8px;padding:6px 11px;}
 
   /* bottom tab */
   .tabbar{display:flex;background:#fff;border-top:1px solid var(--line);
@@ -1321,9 +1326,10 @@ const persoAll = [
 /* 시술페이지(병원) 링크 — 리뷰/신규 병원 클릭 시 이동. 실제 구현은 병원별 고유 URL 매핑 */
 const HOSP_URL='https://welfaremall.stage.safedoc.kr/hospital/490280038222830/514019066647784';
 const reviews = [
-  {nm:'강남 라인성형외과 · 눈매교정',st:'<span class="star">★ 4.9</span> · 후기 2,310 · 재방문율 상위',url:HOSP_URL},
-  {nm:'압구정 SW피부과 · 리프팅',st:'<span class="star">★ 4.9</span> · 후기 1,742 · 이달의 인기',url:HOSP_URL},
-  {nm:'선릉 굿타임치과 · 임플란트',st:'<span class="star">★ 4.8</span> · 후기 980 · 정찰가 공개',url:HOSP_URL}
+  {tx:'처음 왔는데 친절하고 설명도 잘해주셔서 좋았어요. 통증 원인도 잘 찾아주시고, 예전에 치료한 부분도 꼼꼼히 봐주셨어요.',hos:'연세청량한치과',loc:'청량리역',proc:'레진 (어그니)',av:'linear-gradient(135deg,#6E86E6,#8AA0F0)',url:HOSP_URL},
+  {tx:'리프팅 효과가 확실히 느껴져요. 상담도 꼼꼼하게 해주시고 시술 후 관리까지 신경 써주셔서 만족스러웠습니다.',hos:'압구정 SW피부과',loc:'압구정',proc:'리프팅 슈링크 300샷',av:'linear-gradient(135deg,#D98BA0,#E6A6B6)',url:HOSP_URL},
+  {tx:'눈매교정 결과가 자연스러워서 너무 마음에 들어요. 붓기도 빨리 빠지고 상담 때 설명해주신 그대로 나왔어요.',hos:'강남 라인성형외과',loc:'강남역',proc:'자연유착 눈매교정',av:'linear-gradient(135deg,#7F9BEA,#9DB4F2)',url:HOSP_URL},
+  {tx:'임플란트 정찰가라 믿음이 갔어요. 과잉진료 없이 필요한 것만 딱 해주셔서 신뢰가 갑니다. 사후관리도 좋았어요.',hos:'선릉 굿타임치과',loc:'선릉역',proc:'국산 임플란트',av:'linear-gradient(135deg,#7EB4C6,#9BC8D6)',url:HOSP_URL}
 ];
 /* 신규 입점 병원 (AS-IS 동일 섹션 재현) */
 const newHos=[
@@ -1690,7 +1696,7 @@ function renderTOBE(){
         <div class="chip" onclick="runSearch('치아미백')"><b>#</b>치아미백</div><div class="chip" onclick="runSearch('모발이식')"><b>#</b>모발이식</div>
       </div></div>
     <div class="sec"><div class="sec-h"><h3>후기 좋은 <b>시술</b><span class="tag">후기 많은 순</span></h3></div>
-      ${reviews.map(r=>`<div class="rev" role="button" tabindex="0" style="cursor:pointer" onclick="openHospital('${r.url}')" onkeydown="if(event.key==='Enter'){openHospital('${r.url}')}"><div class="th"></div><div class="m"><div class="nm">${r.nm}</div><div class="st">${r.st}</div></div><div class="go">예약</div></div>`).join('')}</div>
+      <div class="revscroll">${reviews.map(r=>`<div class="rvcard" role="button" tabindex="0" onclick="openHospital('${r.url}')" onkeydown="if(event.key==='Enter'){openHospital('${r.url}')}"><div class="rc-stars">${I.star.repeat(5)}</div><p class="rc-tx">${r.tx}</p><div class="rc-div"></div><div class="rc-hos"><div class="rc-av" style="background:${r.av}"></div><div class="rc-hi"><div class="rc-hn">${r.hos}</div><div class="rc-hl">${r.loc}</div></div></div><div class="rc-proc">${r.proc}</div></div>`).join('')}</div></div>
     <div class="sec"><div class="sec-h"><h3>신규 <b>입점 병원</b></h3></div>
       <div class="newhos">${newHosGrid()}</div>
       <button class="nh-more" onclick="openHospital()">더 보기</button></div>
