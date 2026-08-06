@@ -1152,7 +1152,7 @@
         <div class="spec">
           <div class="sc"><div class="sc-n">01</div><div class="sc-b"><b>예약 신청 마찰 최소화</b><p>기존 예약 화면에서 <b>진료 대상 · 병원 전달사항 · 추가 상담 희망 시술</b>을 <b>제거</b>하고, <b>내원 희망 일시 + 약관 동의</b>만으로 <b>‘예약 신청하기’ 즉시 신청</b>되도록 간소화했습니다.</p></div></div>
           <div class="sc"><div class="sc-n">02</div><div class="sc-b"><b>팝업 → 접수 페이지 전환</b><p>신청 후 <s>완료 팝업</s> 대신 <b>새 페이지</b>가 열립니다. 상단에 <b>‘예약 신청이 접수되었어요’</b> 안내(기존 팝업 내용)를 노출합니다.</p></div></div>
-          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>상세정보 후속 수집 → DB 업데이트</b><p>접수 페이지 하단에서 <b>진료 대상(가족·지인 추가) · 병원 전달사항 · 추가 상담 희망 시술</b>을 추가로 입력받아 <b>예약 건에 이어붙여 DB 업데이트</b>합니다. ‘나중에 입력’도 가능.</p></div></div>
+          <div class="sc"><div class="sc-n">03</div><div class="sc-b"><b>상세정보 후속 수집 → DB 업데이트</b><p>접수 페이지 하단에서 <b>병원 전달사항 · 추가 상담 희망 시술</b>을 추가로 입력받아 <b>예약 건에 이어붙여 DB 업데이트</b>합니다. 진료 대상은 <b>예약 신청 단계에서 선택</b>합니다. ‘나중에 입력’도 가능.</p></div></div>
           <div class="sc"><div class="sc-n">04</div><div class="sc-b"><b>기대 효과</b><p>예약 신청 단계의 입력 부담을 낮춰 <em>신청 전환율 ↑</em>, 필수 상세는 접수 직후 자연스럽게 수집해 <em>완결성</em>도 유지합니다.</p></div></div>
         </div>
         <div class="spec-try">
@@ -1160,7 +1160,7 @@
           <ol>
             <li>날짜(예: <b>16일</b>) · 시간(<b>오후 05:00</b>) 선택 → 약관 동의 → <b>‘예약 신청하기’</b></li>
             <li>접수 페이지 상단 <b>접수 안내</b> 확인</li>
-            <li>하단에서 <b>가족·지인 추가</b> · 전달사항 · 추가 상담 입력 → <b>‘입력 완료·저장하기’</b> (DB 업데이트)</li>
+            <li>하단에서 <b>전달사항</b> · 추가 상담 입력 → <b>‘입력 완료·저장하기’</b> (DB 업데이트)</li>
           </ol>
         </div>
         <p class="spec-src">기준: welfaremall.stage.safedoc.kr/reservation · 프로토타입</p>
@@ -2479,10 +2479,6 @@ function renderReserve(){
       <div class="rv-done"><div class="rv-done-ic">${I.check}</div><div class="rv-done-tx"><b>예약 신청이 접수되었어요</b><p>예약 확정 안내를 위해 병원에서 연락 드릴 예정이에요</p></div></div>
       <div class="rv-summary">원데이치과 · 오스템 BA 임플란트<br><b>2026.07.${String(rvDate).padStart(2,'0')} (희망) · 오후 ${rvTime}</b></div>
       <div class="rv-extra-h">예약을 더 빠르게 — <b>추가 정보 입력</b><span>지금 입력하면 병원 연락·상담이 빨라져요</span></div>
-      <div class="rv-sec"><div class="rv-sec-t">진료 대상 <small>진료 받는 분만 선택해주세요.</small></div>
-        ${rvTargets.map(t=>`<div class="rv-target"><div class="rv-target-h"><b>${t.sex} ${t.n}</b> <span class="rv-badge">${t.rel}</span></div><div class="rv-target-d">연락처 ${t.tel}</div><div class="rv-target-d">생년월일 ${t.birth}</div></div>`).join('')}
-        <button class="rv-addfam" ${rvTargets.length>=5?'disabled':''} onclick="rvAddTarget()">+ 가족 · 지인 추가하기</button>
-        <ul class="rv-notes"><li>가족/지인도 동일한 우대가로 이용 가능합니다.</li><li>상담/예약 진행을 위해 이름, 전화번호를 정확하게 입력해주세요.</li><li>가족/지인은 최대 5명까지 등록이 가능합니다.</li></ul></div>
       <div class="rv-sec"><div class="rv-sec-t">병원 전달사항 (선택)</div>
         <textarea class="rv-ta" maxlength="200" placeholder="병원에 전달하실 내용을 적어주세요. (0/200)" oninput="rvNote=this.value">${rvNote}</textarea></div>
       <div class="rv-sec"><div class="rv-sec-t">추가 상담 희망 시술</div>
