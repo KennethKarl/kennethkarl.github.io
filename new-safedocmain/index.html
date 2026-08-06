@@ -1201,10 +1201,9 @@
         <div class="spec-h">스샷2 좌측 사이드바 영역 → 개인화 광고·특가 인벤토리</div>
         <p class="caption" style="text-align:left;margin:0 0 16px">데스크톱 웹 <b>좌측 사이드바 영역</b>(스샷2)이 현재 <b>세이프닥 꿀팁·공지사항·QR</b> 등 저활동 콘텐츠로 비어 있습니다. <b>여신티켓</b>이 같은 자리를 ‘실시간 인기 시술 + 특가전’ 인벤토리로 쓰는 것처럼, <b>이 사이드바를 개인화 광고·특가 인벤토리로 전환</b>합니다.</p>
         <div class="spec">
-          <div class="sc"><div class="sc-n r">01</div><div class="sc-b"><b>특가전 노출</b><p>‘이달의 제휴 특가 · 인기 시술 특가전’을 <b>전면 배치</b>해 최저가 혜택으로 유입·탐색을 유도합니다.</p></div></div>
-          <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>실시간 인기 시술 랭킹</b><p>검색·예약 로그 기반 <b>실시간 Top 10</b>(순위 추이·BEST/NEW)으로 트렌드 탐색을 촉진합니다.</p></div></div>
-          <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>개인화 + 스폰서(광고비 지불) 노출</b><p>고객의 <b>관심 진료과·지역에 매칭되는</b> 병원/시술 중 <b>광고비를 지불한 제휴 병원</b>을 <span class="df-tag mod">AD</span>로 <b>상단 우선 노출</b>합니다. 개인화 매칭이므로 광고여도 관련성이 높습니다.</p></div></div>
-          <div class="sc"><div class="sc-n r">04</div><div class="sc-b"><b>어드민 배너 설정 = 영업의 무기</b><p>이 <span class="df-tag mod">AD</span> 영역은 <b>어드민에서 노출 병원·시술·지역/진료과·순서·기간을 직접 설정</b>할 수 있습니다. 영업팀이 <b>제휴 협상 중인 병원</b>을 원하는 지역·진료과 자리에 배너로 노출해, 광고 인벤토리를 <b>영업의 무기</b>로 활용합니다. (제휴 유치·업셀 협상 카드)</p></div></div>
+          <div class="sc"><div class="sc-n r">01</div><div class="sc-b"><b>실시간 인기 시술 랭킹</b><p>검색·예약 로그 기반 <b>실시간 Top 10</b>(순위 추이·BEST/NEW)으로 트렌드 탐색을 촉진합니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">02</div><div class="sc-b"><b>개인화 + 스폰서(광고비 지불) 노출</b><p>고객의 <b>관심 진료과·지역에 매칭되는</b> 병원/시술 중 <b>광고비를 지불한 제휴 병원</b>을 <span class="df-tag mod">AD</span>로 <b>상단 우선 노출</b>합니다. 개인화 매칭이므로 광고여도 관련성이 높습니다.</p></div></div>
+          <div class="sc"><div class="sc-n r">03</div><div class="sc-b"><b>어드민 배너 설정 = 영업의 무기</b><p>이 <span class="df-tag mod">AD</span> 영역은 <b>어드민에서 노출 병원·시술·지역/진료과·순서·기간을 직접 설정</b>할 수 있습니다. 영업팀이 <b>제휴 협상 중인 병원</b>을 원하는 지역·진료과 자리에 배너로 노출해, 광고 인벤토리를 <b>영업의 무기</b>로 활용합니다. (제휴 유치·업셀 협상 카드)</p></div></div>
           <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>기대 효과 <span class="sc-tag keep">효과</span></b><p>미활용 영역을 <em>광고 매출 인벤토리</em>로 전환하는 동시에, 개인화 매칭으로 <em>예약 전환</em>도 함께 끌어올립니다. (측정 지표 · 화면 마커 없음)</p></div></div>
         </div>
         <p class="spec-src">참고: 여신티켓(스샷1) 실시간 인기 시술·특가전 영역 · 프로토타입</p>
@@ -2720,11 +2719,9 @@ function adMarkers(){
   if(adMode!=='tobe') return;
   const put=(el,cls,n,ty='-8px',lx='-8px')=>{ if(!el) return; if(getComputedStyle(el).position==='static') el.style.position='relative';
     const m=document.createElement('div'); m.className='pmk '+cls; m.textContent=n; m.style.top=ty; m.style.left=lx; el.appendChild(m); };
-  const fair=sc.querySelector('.ad-fair'); if(fair) fair.style.overflow='visible';
-  put(fair,'r','1','-8px','-8px');                               // 01 특가전 노출
-  put(sc.querySelector('.ad-rank'),'r','2','-8px','-8px');       // 02 실시간 인기 시술 랭킹
-  put(sc.querySelector('.ad-spon-note'),'r','3','-8px','-8px');  // 03 개인화 + 스폰서 노출
-  put(sc.querySelector('.ad-mini'),'r','4','-8px','-8px');       // 04 어드민 배너 설정
+  put(sc.querySelector('.ad-rank'),'r','1','-8px','-8px');       // 01 실시간 인기 시술 랭킹
+  put(sc.querySelector('.ad-spon-note'),'r','2','-8px','-8px');  // 02 개인화 + 스폰서 노출
+  put(sc.querySelector('.ad-mini'),'r','3','-8px','-8px');       // 03 어드민 배너 설정
 }
 function waTabbar(){
   return `<nav class="wa-tabbar">
