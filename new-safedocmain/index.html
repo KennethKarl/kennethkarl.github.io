@@ -1982,10 +1982,10 @@ function renderPlDeptSheet(){
   const o=plRegOvl(); if(!o) return; o.hidden=false;
   const mine=myDepts();
   const allOn=plDeptDraft.size===0;
+  const detailFor=d=>{const treats=deptTreat[d]||[]; if(!treats.length) return ''; return `<div class="plsheet-sub">세부 시술 <small>· ${d} · 복수 선택</small></div>
+    <div class="plsheet-chips">${treats.map(t=>{const k=d+'::'+t; const on=plDetailDraft.has(k); return `<button class="plsheet-chip${on?' on':''}" onclick="plPickDetail('${k}')">${t}</button>`;}).join('')}</div>`;};
   const deptBtns=`<button class="plsheet-i${allOn?' on':''}" onclick="plPickDept('${plDeptAll}')"><span class="plsheet-nm">${plDeptAll}</span>${allOn?I.check:''}</button>`
-    +plCats.filter(c=>c!==plDeptAll).map(c=>{const on=plDeptDraft.has(c); return `<button class="plsheet-i${on?' on':''}" onclick="plPickDept('${c}')"><span class="plsheet-nm">${c}${mine.includes(c)?'<span class="plsheet-mine">관심</span>':''}</span>${on?I.check:''}</button>`;}).join('');
-  const detailSecs=[...plDeptDraft].map(d=>{const treats=deptTreat[d]||[]; if(!treats.length) return ''; return `<div class="plsheet-sub">세부 시술 <small>· ${d} · 복수 선택</small></div>
-    <div class="plsheet-chips">${treats.map(t=>{const k=d+'::'+t; const on=plDetailDraft.has(k); return `<button class="plsheet-chip${on?' on':''}" onclick="plPickDetail('${k}')">${t}</button>`;}).join('')}</div>`;}).join('');
+    +plCats.filter(c=>c!==plDeptAll).map(c=>{const on=plDeptDraft.has(c); const btn=`<button class="plsheet-i${on?' on':''}" onclick="plPickDept('${c}')"><span class="plsheet-nm">${c}${mine.includes(c)?'<span class="plsheet-mine">관심</span>':''}</span>${on?I.check:''}</button>`; return on?btn+detailFor(c):btn;}).join('');
   o.innerHTML=`<div class="plsheet-dim" onclick="closePlDept()"></div>
     <div class="plsheet">
       <div class="plsheet-grab"></div>
@@ -1993,7 +1993,6 @@ function renderPlDeptSheet(){
       <div class="plsheet-list">
         <div class="plsheet-sub">진료과 <small>· 복수 선택</small></div>
         ${deptBtns}
-        ${detailSecs}
       </div>
       <div class="plsheet-foot"><button class="plsheet-reset" onclick="plDeptReset()">초기화</button><button class="plsheet-apply" onclick="applyPlDept()">적용하기</button></div>
     </div>`;
