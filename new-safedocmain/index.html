@@ -228,25 +228,24 @@
 
   /* 추천 병원 빠른 시술 비교표 (개선 메인2) */
   .cmpsub{font-size:12.5px;color:var(--muted);margin:-4px 0 12px;}
-  .cmpwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px;scrollbar-width:none;}
-  .cmpwrap::-webkit-scrollbar{display:none;}
-  .cmptbl{border-collapse:separate;border-spacing:0;min-width:660px;width:100%;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:12.5px;}
-  .cmptbl thead th{background:#F6F8FC;color:var(--muted);font-weight:700;font-size:11.5px;text-align:center;padding:11px 10px;white-space:nowrap;border-bottom:1px solid var(--line);}
-  .cmptbl thead th:first-child{text-align:left;}
-  .cmptbl tbody td{padding:14px 10px;text-align:center;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--ink);}
+  .cmpwrap{overflow:hidden;}
+  .cmptbl{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:11px;}
+  .cmptbl thead th{background:#F6F8FC;color:var(--muted);font-weight:700;font-size:10px;text-align:center;padding:9px 4px;line-height:1.25;word-break:keep-all;border-bottom:1px solid var(--line);}
+  .cmptbl thead th:first-child{text-align:left;padding-left:8px;}
+  .cmptbl tbody td{padding:11px 4px;text-align:center;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--ink);word-break:keep-all;}
   .cmptbl tbody tr:last-child td{border-bottom:0;}
   .cmptbl tbody tr{cursor:pointer;transition:background .12s;}
   .cmptbl tbody tr:hover{background:var(--blue-50);}
-  .cmptbl .c-hos{text-align:left;white-space:nowrap;}
-  .cmptbl .c-hos b{font-size:13px;font-weight:800;color:var(--ink);display:block;letter-spacing:-.01em;}
-  .cmptbl .c-hos small{font-size:11px;color:var(--faint);font-weight:600;}
-  .cmptbl .c-price{font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap;}
-  .cmptbl .c-eq{font-weight:700;color:var(--ink);white-space:nowrap;}
+  .cmptbl .c-hos{text-align:left;padding-left:8px;}
+  .cmptbl .c-hos b{font-size:11.5px;font-weight:800;color:var(--ink);display:block;line-height:1.25;letter-spacing:-.02em;}
+  .cmptbl .c-hos small{font-size:10px;color:var(--faint);font-weight:600;}
+  .cmptbl .c-price{font-size:13px;font-weight:800;color:var(--ink);white-space:nowrap;letter-spacing:-.02em;}
+  .cmptbl .c-eq{font-weight:700;color:var(--ink);}
   .cmptbl .c-rate{white-space:nowrap;font-weight:800;color:var(--ink);}
-  .cmptbl .c-rate svg{width:13px;height:13px;color:#FFB020;vertical-align:-2px;margin-left:1px;}
-  .cmptbl .c-ben{text-align:left;min-width:150px;}
-  .bpill{display:inline-block;font-size:11px;font-weight:700;border-radius:7px;padding:4px 9px;margin:2px 0;line-height:1.3;white-space:nowrap;}
-  .cmptbl .c-ben .bpill{display:block;width:max-content;}
+  .cmptbl .c-rate svg{width:11px;height:11px;color:#FFB020;vertical-align:-1px;margin-left:1px;}
+  .cmptbl .c-ben{text-align:left;}
+  .bpill{display:inline-block;font-size:10px;font-weight:700;border-radius:6px;padding:3px 6px;margin:1.5px 0;line-height:1.2;letter-spacing:-.02em;white-space:nowrap;}
+  .cmptbl .c-ben .bpill{display:block;width:max-content;max-width:100%;}
   .bpill.g{background:#E7F6EC;color:#1E8E4E;}
   .bpill.b{background:var(--blue-50);color:var(--blue-700);}
   .bpill.p{background:#EDE9FE;color:#6D28D9;}
@@ -1800,6 +1799,7 @@ function cmpTable(){
   return `<div class="sec"><div class="sec-h"><h3>추천 병원 <b>빠른 시술 비교</b></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openHospital('${HOSP_URL}')" onkeydown="if(event.key==='Enter'){openHospital('${HOSP_URL}')}">더 보기 ›</span></div>
     <p class="cmpsub">추천 병원별 시술과 혜택을 한눈에 비교해보세요.</p>
     <div class="cmpwrap"><table class="cmptbl">
+      <colgroup><col style="width:20%"><col style="width:14%"><col style="width:14%"><col style="width:25%"><col style="width:11%"><col style="width:16%"></colgroup>
       <thead><tr><th>병원</th><th>프로그램명</th><th>세이프닥 우대가</th><th>전용 혜택</th><th>장비</th><th>후기</th></tr></thead>
       <tbody>${cmpRows.map(r=>`<tr onclick="openHospital('${HOSP_URL}')">
         <td class="c-hos"><b>${r.hos}</b><small>[${r.loc}]</small></td>
