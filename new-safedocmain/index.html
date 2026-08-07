@@ -249,6 +249,18 @@
   .bpill.g{background:#E7F6EC;color:#1E8E4E;}
   .bpill.b{background:var(--blue-50);color:var(--blue-700);}
   .bpill.p{background:#EDE9FE;color:#6D28D9;}
+  /* 관심 시술 비교 페이지 (더 보기) */
+  .cmpmore{padding:14px 16px 26px;}
+  .cmpmore-lead{font-size:13px;color:var(--ink);font-weight:700;margin:0 0 18px;line-height:1.5;letter-spacing:-.01em;}
+  .cmpmore-lead b{color:var(--blue);}
+  .cmpmore-lead small{display:block;font-size:11.5px;color:var(--muted);font-weight:500;margin-top:4px;}
+  .cmpmore-grp{margin-bottom:22px;}
+  .cmpmore-h{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+  .cmpmore-h h4{font-size:15px;font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em;}
+  .cmpmore-dept{font-size:11px;font-weight:700;color:var(--blue-700);background:var(--blue-50);border-radius:6px;padding:3px 8px;flex:none;}
+  .cmpmore-cnt{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:600;flex:none;}
+  .cmpmore-foot{font-size:11.5px;color:var(--faint);line-height:1.5;margin:6px 0 0;}
+  .cmpmore-foot b{color:var(--muted);}
 
   /* bottom tab */
   .tabbar{display:flex;background:#fff;border-top:1px solid var(--line);
@@ -1110,6 +1122,7 @@
             <div class="sc"><div class="sc-n r">1</div><div class="sc-b"><b>빠른 시술 비교표 신설 <span class="df-tag add">추가</span></b><p>추천 병원을 <b>병원 · 프로그램명 · 세이프닥 우대가 · 전용 혜택 · 장비 · 후기</b> 6개 열로 <b>가로 스크롤 비교</b>합니다. 행을 누르면 해당 병원으로 이동합니다.</p></div></div>
             <div class="sc"><div class="sc-n r">2</div><div class="sc-b"><b>전용 혜택 색상 태그</b><p><b>당일수술 -20만원</b>(그린) · <b>쿠폰 할인 가능</b>(블루) · <b>자가혈청 무료</b>(퍼플)를 색상 칩으로 구분해 병원별 혜택 차이를 즉시 인지합니다.</p></div></div>
             <div class="sc"><div class="sc-n o">3</div><div class="sc-b"><b>우대가·장비·후기 동시 비교</b><p>세이프닥 <b>우대가</b>와 <b>장비(자이스·아마리스)</b>, <b>후기 별점</b>을 나란히 노출해 가격만이 아닌 <b>품질 기준 선택</b>을 돕습니다.</p></div></div>
+            <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>‘더 보기’ → 관심 시술 비교 페이지 <span class="df-tag add">신규 페이지</span></b><p>메인의 비교표는 <b>대표 관심 시술 1개</b>만 보여줍니다. <b>더 보기</b>를 누르면 <b>관심 등록한 시술(스마일라식·보톡스·임플란트 등) 전부</b>를 <b>시술별 비교표</b>로 모아 보는 새 페이지로 이동합니다.</p></div></div>
           </div>
           <p class="spec-src">기준: 개선 메인(TO-BE) + 추천 병원 비교표 · 프로토타입</p>
         </div>
@@ -1790,25 +1803,58 @@ function applyMainMarkers(){
   put(sec('후기 좋은'),'o','5','2px','2px');
 }
 /* ---------- 개선 메인2 — 추천 병원 빠른 시술 비교표 ---------- */
-const cmpRows = [
-  {hos:'강남 스마트안과', loc:'강남', prog:'스마일라식', price:'169만', ben:[['당일수술 -20만원','g'],['쿠폰 할인 가능','b'],['자가혈청 무료','p']], eq:'자이스', rate:'4.8'},
-  {hos:'서초 밝은눈안과', loc:'서초', prog:'스마일라식', price:'189만', ben:[['당일수술 -20만원','g'],['쿠폰 할인 가능','b'],['자가혈청 무료','p']], eq:'자이스', rate:'4.9'},
-  {hos:'송파 프리미엄안과', loc:'송파', prog:'스마일라식', price:'145만', ben:[['당일수술 -20만원','g'],['쿠폰 할인 가능','b']], eq:'아마리스', rate:'4.7'}
+/* 재원님이 관심 등록한 시술(여러 개) — 시술마다 추천 병원 비교 rows 보유 */
+const cmpProcGroups = [
+  {proc:'스마일라식', dept:'안과', rows:[
+    {hos:'강남 스마트안과', loc:'강남', prog:'스마일라식', price:'169만', ben:[['당일수술 -20만원','g'],['쿠폰 할인 가능','b'],['자가혈청 무료','p']], eq:'자이스', rate:'4.8'},
+    {hos:'서초 밝은눈안과', loc:'서초', prog:'스마일라식', price:'189만', ben:[['당일수술 -20만원','g'],['쿠폰 할인 가능','b'],['자가혈청 무료','p']], eq:'자이스', rate:'4.9'},
+    {hos:'송파 프리미엄안과', loc:'송파', prog:'스마일라식', price:'145만', ben:[['당일수술 -20만원','g'],['쿠폰 할인 가능','b']], eq:'아마리스', rate:'4.7'}
+  ]},
+  {proc:'보톡스 100U', dept:'피부과', rows:[
+    {hos:'강남 SW피부과', loc:'강남', prog:'보톡스 100U', price:'9.9만', ben:[['당일시술','g'],['쿠폰 할인 가능','b'],['리터치 1회 무료','p']], eq:'앨러간', rate:'4.9'},
+    {hos:'압구정 라비앙', loc:'압구정', prog:'보톡스 100U', price:'12만', ben:[['쿠폰 할인 가능','b'],['리터치 1회 무료','p']], eq:'휴젤', rate:'4.8'},
+    {hos:'신사 더스킨의원', loc:'신사', prog:'보톡스 100U', price:'8.5만', ben:[['당일시술','g'],['쿠폰 할인 가능','b']], eq:'메디톡스', rate:'4.7'}
+  ]},
+  {proc:'임플란트', dept:'치과', rows:[
+    {hos:'원데이치과', loc:'신논현', prog:'국산 임플란트', price:'39만', ben:[['당일진단','g'],['쿠폰 할인 가능','b']], eq:'오스템', rate:'4.8'},
+    {hos:'선릉 굿타임치과', loc:'선릉', prog:'수입 임플란트', price:'55만', ben:[['정찰가 공개','p'],['뼈이식 무료','p']], eq:'스트라우만', rate:'4.9'},
+    {hos:'강남 미소치과', loc:'강남', prog:'국산 임플란트', price:'45만', ben:[['당일진단','g'],['쿠폰 할인 가능','b'],['뼈이식 무료','p']], eq:'덴티움', rate:'4.7'}
+  ]}
 ];
-function cmpTable(){
-  return `<div class="sec"><div class="sec-h"><h3>추천 병원 <b>빠른 시술 비교</b></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openHospital('${HOSP_URL}')" onkeydown="if(event.key==='Enter'){openHospital('${HOSP_URL}')}">더 보기 ›</span></div>
-    <p class="cmpsub">추천 병원별 시술과 혜택을 한눈에 비교해보세요.</p>
-    <div class="cmpwrap"><table class="cmptbl">
+/* 비교표 마크업(재사용) — 인라인 메인2·관심시술 비교 페이지 공용 */
+function cmpTableEl(rows){
+  return `<div class="cmpwrap"><table class="cmptbl">
       <colgroup><col style="width:20%"><col style="width:14%"><col style="width:14%"><col style="width:25%"><col style="width:11%"><col style="width:16%"></colgroup>
       <thead><tr><th>병원</th><th>프로그램명</th><th>세이프닥 우대가</th><th>전용 혜택</th><th>장비</th><th>후기</th></tr></thead>
-      <tbody>${cmpRows.map(r=>`<tr onclick="openHospital('${HOSP_URL}')">
+      <tbody>${rows.map(r=>`<tr onclick="openHospital('${HOSP_URL}')">
         <td class="c-hos"><b>${r.hos}</b><small>[${r.loc}]</small></td>
         <td>${r.prog}</td>
         <td class="c-price">${r.price}</td>
         <td class="c-ben">${r.ben.map(([t,c])=>`<span class="bpill ${c}">${t}</span>`).join('')}</td>
         <td class="c-eq">${r.eq}</td>
         <td class="c-rate">${r.rate}${I.star}</td></tr>`).join('')}</tbody>
-    </table></div></div>`;
+    </table></div>`;
+}
+/* 메인2 인라인 비교표 — 대표 관심 시술(첫 번째)만, '더 보기'로 전체 관심 시술 비교 페이지 진입 */
+function cmpTable(){
+  return `<div class="sec"><div class="sec-h"><h3>추천 병원 <b>빠른 시술 비교</b></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openCmpMore()" onkeydown="if(event.key==='Enter'){openCmpMore()}">더 보기 ›</span></div>
+    <p class="cmpsub">추천 병원별 시술과 혜택을 한눈에 비교해보세요.</p>
+    ${cmpTableEl(cmpProcGroups[0].rows)}</div>`;
+}
+/* '더 보기' → 관심 등록한 시술을 시술별로 비교하는 새 페이지(서브스크린) */
+function openCmpMore(){
+  const o=ovl(); if(!o) return;
+  o.innerHTML=`<div class="subscreen">
+    <div class="sub-head"><button class="bk" onclick="closeOvl()" aria-label="뒤로">${I.back}</button><div class="ttl">관심 시술 비교</div></div>
+    <div class="sub-body"><div class="cmpmore">
+      <p class="cmpmore-lead">재원님이 <b>관심 등록한 시술 ${cmpProcGroups.length}개</b>를 병원별로 비교했어요.<small>시술마다 우대가·전용 혜택·장비·후기를 한눈에 확인하세요.</small></p>
+      ${cmpProcGroups.map(g=>`<div class="cmpmore-grp">
+        <div class="cmpmore-h"><span class="cmpmore-dept">${g.dept}</span><h4>${g.proc}</h4><span class="cmpmore-cnt">추천 ${g.rows.length}곳</span></div>
+        ${cmpTableEl(g.rows)}</div>`).join('')}
+      <p class="cmpmore-foot">관심 시술은 <b>온보딩 · 마이페이지 관심 진료과</b>에서 추가·변경할 수 있어요.</p>
+    </div></div>
+  </div>`;
+  o.hidden=false;
 }
 /* 개선 메인 본문 + 맞춤 추천 아래에 비교표 삽입 (원본 renderTOBE 재사용) */
 function renderTOBE2(){
