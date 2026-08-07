@@ -1868,10 +1868,10 @@ function openCmpDetail(prog){
   document.querySelectorAll('.ovl').forEach(o=>{o.hidden=true; o.innerHTML='';});  // 비교 페이지 등 오버레이 정리
   openDetailNm(nm);   // dtItem 설정 + 시술 상세 뷰로 전환
 }
-/* 개선 메인 본문 + 맞춤 추천 아래에 비교표 삽입 (원본 renderTOBE 재사용) */
+/* 개선 메인 본문 + 검색바(스샷2) 바로 아래에 비교표 삽입 (원본 renderTOBE 재사용) */
 function renderTOBE2(){
-  const anchor='<div class="sec"><div class="sec-h"><h3>이번 주 <b>핵심 특가</b>';
-  return renderTOBE().replace(anchor, cmpTable()+'\n    '+anchor);
+  const anchor='<span>어떤 시술을 찾으세요?</span></div>';
+  return renderTOBE().replace(anchor, anchor+'\n    '+cmpTable());
 }
 function renderMain2(){
   const sc=document.getElementById('main2Scroll'); if(!sc) return;
