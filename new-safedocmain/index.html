@@ -1076,7 +1076,7 @@
             <div class="sc"><div class="sc-n r">1</div><div class="sc-b"><b>관심 지역 선택 신설 <span class="df-tag add">추가</span></b><p><b>지역 지정(최대 3곳)</b>을 상단에 신설. 선택 지역 기준으로 추천·특가를 우선 노출합니다.</p></div></div>
             <div class="sc"><div class="sc-n r">2</div><div class="sc-b"><b>검색바 최상단 + 탑바 검색 버튼 <span class="df-tag add">추가</span></b><p>실제는 배너·프로모 아이콘에 밀려 검색이 하단에 묻힘 → <b>검색바를 최상단</b>에 두고, 스크롤로 검색바가 사라지면 <b>고정 탑바에 검색 버튼</b>이 다시 노출됩니다. 어느 위치에서든 즉시 검색 진입.</p></div></div>
             <div class="sc"><div class="sc-n r">3</div><div class="sc-b"><b>개인화 추천 영역 신설 <span class="df-tag add">추가</span></b><p>실제엔 없는 <b>‘재원님 맞춤 추천’</b>(관심 진료과·최근 본 시술 기반) + <b>‘요즘 인기 시술 바로 검색’ 칩</b>(비슷한 사용자 인기 시술을 눌러 바로 검색)을 상단에 배치.</p></div></div>
-            <div class="sc"><div class="sc-n o">4</div><div class="sc-b"><b>진료과 인기순 간소화 <span class="df-tag mod">변경</span></b><p>실제는 다수 진료과가 비정렬로 나열 → <b>활동 인기순 정렬 + 개수 축소</b>(▲순위 표기)로 첫 화면에서 바로 탐색.</p></div></div>
+            <div class="sc"><div class="sc-n o">4</div><div class="sc-b"><b>진료과 인기순 간소화 <span class="df-tag mod">변경</span></b><p>실제는 다수 진료과가 비정렬로 나열 → <b>주요 진료과를 인기순으로 정렬</b>해 첫 화면에서 바로 탐색.</p></div></div>
             <div class="sc"><div class="sc-n o">5</div><div class="sc-b"><b>후기 좋은 시술 → 리뷰 상세·예약 연결 <span class="df-tag mod">변경</span></b><p>AS-IS는 후기 클릭 시 <b>리뷰 확인만</b> 가능하고 예약으로 이어지지 않았습니다 → TO-BE는 <b>리뷰가 있는 시술 상세페이지로 이동해 해당 리뷰 위치로 자동 스크롤</b>되고, 그대로 <b>예약까지 연결</b>됩니다.</p></div></div>
             <div class="sc"><div class="sc-n g">6</div><div class="sc-b"><b>저활동 위젯 축소·제거 <span class="df-tag del">제거</span></b><p>큰 프로모션 배너·프로모 퀵아이콘 행·인기/주변/신규 병원 위젯·메인 리뷰 등 <b>클릭 저조 영역</b>을 하단 이동 또는 제거.</p></div></div>
           </div>
@@ -1385,7 +1385,7 @@ const I = {
 const depts = [
   {n:'피부과',ic:'skin',rk:'1위',img:'assets/dept-skin.png'},{n:'성형외과',ic:'face',rk:'2위',img:'assets/dept-face.png'},{n:'안과',ic:'eye',rk:'3위',img:'assets/dept-eye.png'},
   {n:'치과',ic:'tooth',rk:'4위',img:'assets/dept-tooth.png'},{n:'건강검진',ic:'heart',rk:'5위',img:'assets/dept-heart.png'},
-  {n:'모발이식',ic:'hair',img:'assets/dept-hair.png'},{n:'비만/체형',ic:'body',img:'assets/dept-body.png'},{n:'전체',ic:'grid'}
+  {n:'모발이식',ic:'hair',img:'assets/dept-hair.png'},{n:'비만/체형',ic:'body',img:'assets/dept-body.png'},{n:'한방',ic:'herb'},{n:'내과',ic:'heart'},{n:'전체',ic:'grid'}
 ];
 const perso = [
   {nm:'보톡스 이마 100U',price:'9,900원',was:'39,000원',disc:'74%',rv:'★4.9 (1,284)',img:'https://assets.safedoc.io/hospital/images/366df582-6e8a-4faa-b1df-eaca91792950.jpg'},
@@ -1756,8 +1756,8 @@ function renderTOBE(){
       <span class="sb-ic">${I.pin}</span>
       <span class="sb-tx"><b>관심 진료과·지역을 설정해 주세요</b><small>저장된 정보가 없어요 · 설정하면 첫 화면부터 맞춤 추천</small></span>
       <span class="sb-go">설정 ›</span></div>`}
-    <div class="sec"><div class="sec-h"><h3>진료과 <b>바로가기</b><span class="tag hot">활동 1위</span></h3></div>
-      ${deptGrid(true)}</div>
+    <div class="sec"><div class="sec-h"><h3>진료과 <b>바로가기</b></h3></div>
+      ${deptGrid(false)}</div>
     ${profileReady?`<div class="sec"><div class="sec-h"><h3>재원님 <b>맞춤 추천</b><span class="tag">관심정보 기반</span></h3><span class="more" role="button" tabindex="0" style="cursor:pointer" onclick="openPersoMore()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPersoMore();}">더보기 ›</span></div>
       <div class="perso"><div class="who"><span class="av">재</span><div><b>30대 · ${([...(ob.dept||[])].slice(0,2).join('·'))||'피부과'} 관심</b></div></div>
         <div class="rail">${persoRail()}</div></div></div>
