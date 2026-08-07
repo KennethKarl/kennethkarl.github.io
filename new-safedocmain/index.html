@@ -1119,7 +1119,7 @@
           <div class="spec-h">개선 메인 + <b>추천 병원 빠른 시술 비교표</b> 추가</div>
           <p class="caption" style="text-align:left;margin:0 0 16px">‘개선 메인’은 그대로 두고, 맞춤 추천 아래에 <b>추천 병원 빠른 시술 비교표</b>를 신설한 확장안입니다. 같은 시술(스마일라식)을 <b>여러 추천 병원끼리 우대가·전용 혜택·장비·후기로 한 줄 비교</b>해, 검색·상세 진입 없이 첫 화면에서 바로 병원을 고를 수 있게 합니다.</p>
           <div class="spec">
-            <div class="sc"><div class="sc-n r">1</div><div class="sc-b"><b>빠른 시술 비교표 신설 <span class="df-tag add">추가</span></b><p>추천 병원을 <b>병원 · 프로그램명 · 세이프닥 우대가 · 전용 혜택 · 장비 · 후기</b> 6개 열로 <b>가로 스크롤 비교</b>합니다. 행을 누르면 해당 병원으로 이동합니다.</p></div></div>
+            <div class="sc"><div class="sc-n r">1</div><div class="sc-b"><b>빠른 시술 비교표 신설 <span class="df-tag add">추가</span></b><p>추천 병원을 <b>병원 · 프로그램명 · 세이프닥 우대가 · 전용 혜택 · 장비 · 후기</b> 6개 열로 <b>한 줄 비교</b>합니다. 행을 누르면 해당 <b>시술 상세</b>로 이동합니다.</p></div></div>
             <div class="sc"><div class="sc-n r">2</div><div class="sc-b"><b>전용 혜택 색상 태그</b><p><b>당일수술 -20만원</b>(그린) · <b>쿠폰 할인 가능</b>(블루) · <b>자가혈청 무료</b>(퍼플)를 색상 칩으로 구분해 병원별 혜택 차이를 즉시 인지합니다.</p></div></div>
             <div class="sc"><div class="sc-n o">3</div><div class="sc-b"><b>우대가·장비·후기 동시 비교</b><p>세이프닥 <b>우대가</b>와 <b>장비(자이스·아마리스)</b>, <b>후기 별점</b>을 나란히 노출해 가격만이 아닌 <b>품질 기준 선택</b>을 돕습니다.</p></div></div>
             <div class="sc"><div class="sc-n g">·</div><div class="sc-b"><b>‘더 보기’ → 관심 시술 비교 페이지 <span class="df-tag add">신규 페이지</span></b><p>메인의 비교표는 <b>대표 관심 시술 1개</b>만 보여줍니다. <b>더 보기</b>를 누르면 <b>관심 등록한 시술(스마일라식·보톡스·임플란트 등) 전부</b>를 <b>시술별 비교표</b>로 모아 보는 새 페이지로 이동합니다.</p></div></div>
@@ -1826,7 +1826,7 @@ function cmpTableEl(rows){
   return `<div class="cmpwrap"><table class="cmptbl">
       <colgroup><col style="width:20%"><col style="width:14%"><col style="width:14%"><col style="width:25%"><col style="width:11%"><col style="width:16%"></colgroup>
       <thead><tr><th>병원</th><th>프로그램명</th><th>세이프닥 우대가</th><th>전용 혜택</th><th>장비</th><th>후기</th></tr></thead>
-      <tbody>${rows.map(r=>`<tr onclick="openHospital('${HOSP_URL}')">
+      <tbody>${rows.map(r=>`<tr onclick="openCmpDetail('${r.prog}')">
         <td class="c-hos"><b>${r.hos}</b><small>[${r.loc}]</small></td>
         <td>${r.prog}</td>
         <td class="c-price">${r.price}</td>
@@ -1855,6 +1855,18 @@ function openCmpMore(){
     </div></div>
   </div>`;
   o.hidden=false;
+}
+/* 비교표 행 클릭 → 해당 시술 상세로 이동 (프로그램명 → procList 시술 매핑) */
+const cmpDetailMap={
+  '스마일라식':'스마일라식',
+  '보톡스 100U':'보톡스 이마 100U',
+  '국산 임플란트':'국산 임플란트 1개',
+  '수입 임플란트':'국산 임플란트 1개'
+};
+function openCmpDetail(prog){
+  const nm=cmpDetailMap[prog]||prog;
+  document.querySelectorAll('.ovl').forEach(o=>{o.hidden=true; o.innerHTML='';});  // 비교 페이지 등 오버레이 정리
+  openDetailNm(nm);   // dtItem 설정 + 시술 상세 뷰로 전환
 }
 /* 개선 메인 본문 + 맞춤 추천 아래에 비교표 삽입 (원본 renderTOBE 재사용) */
 function renderTOBE2(){
